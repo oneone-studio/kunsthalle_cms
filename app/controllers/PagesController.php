@@ -5,7 +5,8 @@ class PagesController extends BaseController {
 	var $DOMAIN = '';
 
 	public function __construct() {
-		$this->DOMAIN = 'https://'. $_SERVER['SERVER_NAME'];
+		$http = (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTP/') >= 0) ? 'http' : 'https';
+		$this->DOMAIN = $http.'://'. $_SERVER['SERVER_NAME'];
 	}
 
 	public function index($menu_item_id, $cs_id = null)
@@ -114,6 +115,8 @@ class PagesController extends BaseController {
 			$page = new Page;
 			$page->title_de = Input::get('title_de');
 			$page->title_en = Input::get('title_en');
+			$page->seo_page_title = Input::get('seo_page_title');
+			$page->seo_page_desc = Input::get('seo_page_desc');
 			$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
 			$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 			foreach($reps as $char => $rep) {
@@ -393,6 +396,8 @@ class PagesController extends BaseController {
 
 		$page->title_de = Input::get('title_de');
 		$page->title_en = Input::get('title_en');
+		$page->seo_page_title = Input::get('seo_page_title');
+		$page->seo_page_desc = Input::get('seo_page_desc');
 		$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
@@ -539,7 +544,6 @@ class PagesController extends BaseController {
 			return Redirect::action('ContentSectionsController@index', ['menu_item_id' => $menu_item_id]);
 		}
 
-		// return Redirect::action('PagesController@index', ['cs_id' => $cs_id]);
 		return Redirect::action('ContentSectionsController@index', ['menu_item_id' => $menu_item_id]);
 	}
 
@@ -548,6 +552,8 @@ class PagesController extends BaseController {
 	}
 
 	public function deleteBanner() {
+		$f = fopen('logs/pages.log', 'w+');
+		fwrite($f, "deleteBanner()\n\n".print_r(Input::all(), true));
 		if(Input::has('banner_id')) {
 			Banner::where('id', Input::get('banner_id'))->delete();
 		}
@@ -567,8 +573,6 @@ class PagesController extends BaseController {
 			Session::forget('auth');
 			return Redirect::to('http://www.google.com');
 		}
-		// echo '<pre>'; print_r(Input::all()); exit;
-		// if(Request::ajax()) {
 		$page = Page::find(Input::get('id'));
 		$new_image = false;
 		$banner_img = '';
@@ -612,7 +616,7 @@ class PagesController extends BaseController {
 	        	'action' => 'banner']);
 		}
 
-        return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id')]);
+        return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id'), 'action' => 'banner']);
 	}
 
 	public function uploadPageImage() {
@@ -666,12 +670,13 @@ class PagesController extends BaseController {
 			$text = new BannerText();
 			$id = DB::table('banner_text')->insertGetId([
 						   'banner_id' => Input::get('banner_id'),
-						   'line' => Input::get('line'),
+						   'line_de' => Input::get('line_de'),
+						   'line_en' => Input::get('line_en'),
 			               'size' => Input::get('size')]);
 			$text = BannerText::find($id);
 		} else {
 			BannerText::where('id', Input::get('id'))
-			    ->update(['line' => Input::get('line'), 'size' => Input::get('size')]);
+			    ->update(['line_de' => Input::get('line_de'), 'line_en' => Input::get('line_en'), 'size' => Input::get('size')]);
 			$text = BannerText::find(Input::get('id'));
 		}
 
