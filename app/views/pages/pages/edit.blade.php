@@ -3,48 +3,41 @@
 @section('content')
     <div class="page_content">
     	<div style="width:100%; clear:both;">
-
-			<!-- <div class="form-group" style="text-align:right;">
-			    <a href="/content/contents/{{$cs_id}}">Add Content </a> 
-			    <div style="width:16px; text-align: center; display:inline; padding:0px 4px; color:#888;">|</div>
-			    <a href="/content/image-galleries/{{$cs_id}}">Add Image Gallery </a>
-			</div>
-	    </div> -->
-      <h4>Page: {{$content_section->title_de}}
-      		<a href="/content/pages/{{$menu_item_id}}/{{$cs_id}}" class="link" style="margin-left:2px;">back</a>
-      </h4>
-      <p>
-		<div style="list-style:none;">
+      		<h4>Page: {{$content_section->title_de}}
+      			<a href="/content/pages/{{$menu_item_id}}/{{$cs_id}}" class="link" style="margin-left:2px;">back</a>
+      		</h4>
+      		<p>
+			    <div style="list-style:none;">
 			
-				@include('pages.pages.sections.main')
-				<!--  ///////////////////////////   SPONSORS   ///////////////////////////////// -->
-				@include('pages.pages.sections.sponsors')
-				<!--  ///////////////////////////   DOWNLOADS   ///////////////////////////////// -->
-				@include('pages.pages.sections.downloads')
-				<!--  ///////////////////////////   TEASER   ///////////////////////////////// -->
-				@include('pages.pages.sections.teaser')
-				<!--  ///////////////////////////   CONTENT   ///////////////////////////////// -->
-				@include('pages.pages.sections.edit-menu')
-				<!--  ///////////////////////////   BANNERS   ///////////////////////////////// -->
-				@include('pages.pages.sections.banners')
-				<!--  ///////////////////////////   IMAGE GRID  ///////////////////////////////// -->
-				@include('pages.pages.sections.image_grid')
-				<!--  ///////////////////////////   IMAGE   ///////////////////////////////// -->
-				@include('pages.pages.sections.image')
-				<!--  ///////////////////////////   H2   ///////////////////////////////// -->
-				@include('pages.pages.sections.h2')
-				<!--  ///////////////////////////   H2 INTRO   ///////////////////////////////// -->
-				@include('pages.pages.sections.h2intro')
-				<!--  ///////////////////////////   PAGE CONTENT   ///////////////////////////////// -->
-				@include('pages.pages.sections.page_content')
-				<!--  ///////////////////////////   SLIDERS   ///////////////////////////////// -->
-				@include('pages.pages.sections.slider')
-				<!--  ///////////////////////////   YOUTUBE   ///////////////////////////////// -->
-				@include('pages.pages.sections.youtube')
-				<!--  ///////////////////////////   AUDIO   ///////////////////////////////// -->
-				@include('pages.pages.sections.audio')
-				<!--  ///////////////////////////   PAGE SECTIONS   ///////////////////////////////// -->
-				@include('pages.pages.sections.page_sections')
+					@include('pages.pages.sections.main')
+					<!--  ///////////////////////////   SPONSORS   ///////////////////////////////// -->
+					@include('pages.pages.sections.sponsors')
+					<!--  ///////////////////////////   DOWNLOADS   ///////////////////////////////// -->
+					@include('pages.pages.sections.downloads')
+					<!--  ///////////////////////////   TEASER   ///////////////////////////////// -->
+					@include('pages.pages.sections.teaser')
+					<!--  ///////////////////////////   CONTENT   ///////////////////////////////// -->
+					@include('pages.pages.sections.edit-menu')
+					<!--  ///////////////////////////   BANNERS   ///////////////////////////////// -->
+					@include('pages.pages.sections.banners')
+					<!--  ///////////////////////////   IMAGE GRID  ///////////////////////////////// -->
+					@include('pages.pages.sections.image_grid')
+					<!--  ///////////////////////////   IMAGE   ///////////////////////////////// -->
+					@include('pages.pages.sections.image')
+					<!--  ///////////////////////////   H2   ///////////////////////////////// -->
+					@include('pages.pages.sections.h2')
+					<!--  ///////////////////////////   H2 INTRO   ///////////////////////////////// -->
+					@include('pages.pages.sections.h2intro')
+					<!--  ///////////////////////////   PAGE CONTENT   ///////////////////////////////// -->
+					@include('pages.pages.sections.page_content')
+					<!--  ///////////////////////////   SLIDERS   ///////////////////////////////// -->
+					@include('pages.pages.sections.slider')
+					<!--  ///////////////////////////   YOUTUBE   ///////////////////////////////// -->
+					@include('pages.pages.sections.youtube')
+					<!--  ///////////////////////////   AUDIO   ///////////////////////////////// -->
+					@include('pages.pages.sections.audio')
+					<!--  ///////////////////////////   PAGE SECTIONS   ///////////////////////////////// -->
+					@include('pages.pages.sections.page_sections')
 
 
 	    	<?php $banner_id = 0; 
