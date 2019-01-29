@@ -24,8 +24,6 @@ class SponsorGroupsExbController extends BaseController {
 
 	public function show()
 	{
-		// $events = Event::all();	
-
 		return View::make('pages.sponsor_groups.index');//, ['events' => ['apples', 'oranges', 'mangoes'] ] ); // $events] );
 	}
 
@@ -106,13 +104,15 @@ class SponsorGroupsExbController extends BaseController {
 		// echo '<pre>'; print_r(Input::all()); exit;
 		if(Input::has('sponsor_grp_id') && is_numeric(Input::get('sponsor_grp_id')) && intval(Input::get('sponsor_grp_id')) > 0) {
 			$grp = SponsorGroup::find(Input::get('sponsor_grp_id'));
-			$grp->headline = Input::get('sponsor_group');
+			$grp->headline_de = Input::get('sponsor_group_de');
+			$grp->headline_en = Input::get('sponsor_group_en');
 			$grp->sort_order = Input::get('sort_order');
 			$grp->save();
 
 		} else {
 			$grp = new SponsorGroup();
-			$grp->headline = Input::get('sponsor_group');
+			$grp->headline_de = Input::get('sponsor_group_de');
+			$grp->headline_en = Input::get('sponsor_group_en');
 			$grp->page_id = Input::get('id');
 			$grp->sort_order = Input::get('sort_order');
 			$grp->save();

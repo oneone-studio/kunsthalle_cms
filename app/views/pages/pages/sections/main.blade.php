@@ -55,11 +55,20 @@
 		<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active" id="active" @if($page->active == 1) checked="checked" @endif ></label></div>
 	</div>
 
+	<div class="form-group">
+	    <label for="title">{{ Form::label('title', 'SEO Page Title:') }}</label>
+	    {{ Form::text('seo_page_title', $page->seo_page_title, ['placeholder' => 'SEO Page Title', 'style' => 'width:500px;']) }}
+	</div>    
+	<div class="form-group">
+	    <label for="title">{{ Form::label('title', 'SEO Page Description:') }}</label>
+	    {{ Form::text('seo_page_desc', $page->seo_page_desc, ['placeholder' => 'SEO Page Description', 'style' => 'width:500px;']) }}
+	</div>    
+
     <!-- <a href="javascript:deletePage({{$cs_id}}, {{$page->id}})" class="icon-fixed-width icon-trash" style="margin-left:20px;"></a> -->
 	<div class="form-group">
 	    <label for="exampleInputEmail1"></label>
 	     {{ Form::submit('Save Page', array('id' => 'save_page_btn', 'class' => 'pure-button button-small')) }}					     
-	     <a href="javascript:deletePage({{$cs_id}}, {{$menu_item_id}}, {{$page->id}})" class='button-error pure-button button-small' style="color:#fff; text-decoration:none;margin-top:2px;">Delete Page</a>
+	     <input type="button" onclick="deletePage({{$cs_id}}, {{$menu_item_id}}, {{$page->id}})" class='button-error pure-button button-small' style="color:#fff; text-decoration:none;padding-top:2px;" value="Delete Page"/>
 	</div>            
     {{ Form::hidden('id', $page->id) }}
     {{ Form::hidden('cs_id', $cs_id) }}

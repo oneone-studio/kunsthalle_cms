@@ -218,7 +218,9 @@ function deleteTeaser(id) {
 	    success:function(data) { 
 	    			console.log('deleteTeaser success..');
 	    			$('#teaser_form')[0].reset();
-	    			$('#teaser_caption').val('');
+					$('#teaser_caption_de').val(''); $('#teaser_caption_en').val('');
+					$('#line_1_de').val(''); $('#line_1_en').val('');
+					$('#line_2_de').val(''); $('#line_2_en').val('');
 	    			$('#teaser_preview').hide();
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
@@ -746,6 +748,7 @@ function deleteBanner(id) {
 	    success:function(data) { 
 	    			console.log('deleteBanner('+id+') success..');
 	    			$('#banner_preview').hide();
+	    			$('#banner_text_blk').html('');
 	    			$('#bnr_'+id).hide();
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {

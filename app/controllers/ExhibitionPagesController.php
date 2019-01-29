@@ -54,6 +54,8 @@ class ExhibitionPagesController extends BaseController {
 			$exhibition_page = new ExhibitionPage;
 			$exhibition_page->title_de = Input::get('title_de');
 			$exhibition_page->title_en = Input::get('title_en');
+			$exhibition_page->seo_page_title = Input::get('seo_page_title');
+			$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
 			$exhibition_page->cluster_id = Input::get('cluster_id');
 			$exhibition_page->active = Input::has('active') ? 1 : 0;
 			$exhibition_page->save();
@@ -74,12 +76,10 @@ class ExhibitionPagesController extends BaseController {
 	}
 
 	public function save() {
-		// echo 'update()<pre>'; print_r(Input::all()); exit;
 		$start_date = Input::get('start_date');
 		if($start_date && strlen($start_date) > 0) {
 			if(strpos($start_date, '/')) {
 				$arr = explode('/', $start_date);
-				// echo count($arr); exit;
 				$start_date = $arr[2].'-'.$arr[1].'-'.$arr[0];
 			}
 		}
@@ -87,11 +87,10 @@ class ExhibitionPagesController extends BaseController {
 		if($end_date && strlen($end_date) > 0) {
 			if(strpos($end_date, '/')) {
 				$arr = explode('/', $end_date);
-				// echo count($arr); exit;
 				$end_date = $arr[2].'-'.$arr[1].'-'.$arr[0];
 			}
 		}
-// echo $start_date . ' __ ' .$end_date; exit;
+
 		if(!Input::has('id')) {
 			$exhibition_page = new ExhibitionPage;
 			$exhibition_page->page_type = 'exhibition';
@@ -101,6 +100,8 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
+		$exhibition_page->seo_page_title = Input::get('seo_page_title');
+		$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
 		$exhibition_page->start_date = $start_date;
 		$exhibition_page->end_date = $end_date;
 		$exhibition_page->active = Input::has('active') ? 1 : 0;
@@ -155,7 +156,6 @@ class ExhibitionPagesController extends BaseController {
 	public function edit($id, $action = null)
 	{
 		$exhibition_page = Page::with(['page_image_sliders', 'sponsor_groups', 'sponsor_groups.sponsors', 'downloads', 'cluster', 'banner', 'banner.banner_text', 'page_image_sliders.page_slider_images', 'image_grids', 'image_grids.grid_images', 'tags'])->findOrFail($id);
-		// echo '<pre>'; print_r($exhibition_page); exit;
 		$tags = Tag::all()->sortBy('tag_de');
 		$_clusters = Cluster::all();
 		$clusters = [];
@@ -221,6 +221,8 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
+		$exhibition_page->seo_page_title = Input::get('seo_page_title');
+		$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
 		$exhibition_page->cluster_id = Input::get('cluster_id');
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
 			$exhibition_page->contacts()->sync(Input::get('contacts')); // attach contacts
@@ -398,7 +400,7 @@ class ExhibitionPagesController extends BaseController {
 	        return Redirect::action('ExhibitionPagesController@edit', ['id' => $exhibition_page->id, 'action' => 'banner']);
 		}
 
-        return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('id')]);
+        return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('id'), 'action' => 'banner']);
 	}
 
 	public function uploadExhibitionPageImage() {
@@ -447,12 +449,13 @@ class ExhibitionPagesController extends BaseController {
 			$text = new BannerText();
 			$id = DB::table('banner_text')->insertGetId([
 						   'banner_id' => Input::get('banner_id'),
-						   'line' => Input::get('line'),
+						   'line_de' => Input::get('line_de'),
+						   'line_en' => Input::get('line_en'),
 			               'size' => Input::get('size')]);
 			$text = BannerText::find($id);
 		} else {
 			BannerText::where('id', Input::get('id'))
-			    ->update(['line' => Input::get('line'), 'size' => Input::get('size')]);
+			    ->update(['line_de' => Input::get('line_de'), 'line_en' => Input::get('line_en'), 'size' => Input::get('size')]);
 			$text = BannerText::find(Input::get('id'));
 		}
 

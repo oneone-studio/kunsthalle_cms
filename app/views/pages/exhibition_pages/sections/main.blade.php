@@ -49,9 +49,18 @@
 				</div>
 
 				<div class="form-group">
+				    <label for="title">{{ Form::label('title', 'SEO Page Title:') }}</label>
+				    {{ Form::text('seo_page_title', $page->seo_page_title, ['placeholder' => 'SEO Page Title', 'style' => 'width:500px;']) }}
+				</div>    
+				<div class="form-group">
+				    <label for="title">{{ Form::label('title', 'SEO Page Description:') }}</label>
+				    {{ Form::text('seo_page_desc', $page->seo_page_desc, ['placeholder' => 'SEO Page Description', 'style' => 'width:500px;']) }}
+				</div>    
+
+				<div class="form-group">
 				    <label for="exampleInputEmail1"></label>
 				     {{ Form::submit('Save Page', array('id' => 'save_page_btn', 'class' => 'pure-button button-small')) }}					     
-				     <a href="javascript:deletePage({{$page->id}})" class='button-error pure-button button-small' style="color:#fff; text-decoration:none;margin-top:2px;">Delete Page</a>
+				     <input type="button" onclick="deletePage({{$page->id}})" class='button-error pure-button button-small' style="color:#fff; text-decoration:none;padding-top:2px;" value="Delete Page"/>
 				</div>            
 			    {{ Form::hidden('id', $page->id) }}
 
