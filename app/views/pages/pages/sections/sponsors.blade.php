@@ -1,13 +1,19 @@
-<label for="SponsorGroup" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('sponsors_block')">Sponsor Groups 
-  <span id="sponsors_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span></label>
-<?php $display = 'display:none;'; 
-	  if($action == 'new_sponsor' || $action == 'sponsor') { $display = ''; }
+<?php $display = 'display:none;'; $toggle_icon = '+';
+      if($action == 'new_sponsor' || $action == 'sponsor') { $display = ''; $toggle_icon = '-'; }
 ?>   
+<label for="SponsorGroup" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('sponsors_block')">Sponsor Groups 
+  <span id="sponsors_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">{{$toggle_icon}}</span></label>
 <div id="sponsors_block" class="form-group edit-section" style="margin-top:2px; {{$display}}">
   <form method="POST" action="/sponsor-groups/save" accept-charset="UTF-8">
     <div style="clear:both;height:10px;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Headline</div>
-    <input placeholder="" style="width:500px;float:left;" name="sponsor_group" type="text" id="sponsor_group">
+    <div style="width:70%;display:inline-block;">
+        <input placeholder="" style="width:500px;float:left;" name="sponsor_group_de" type="text" id="sponsor_group_de">
+        <div class="inp-de">DE</div><br/>
+        <div style="clear:both;"></div>
+        <input placeholder="" style="width:500px;float:left;" name="sponsor_group_en" type="text" id="sponsor_group_en">
+        <div class="inp-en">EN</div><br/>
+    </div>    
     <div style="clear:both;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Order</div>
     <select style="width:60px;float:left;" name="sort_order" id="sg_sort_order">
@@ -29,10 +35,9 @@
     <div style="clear:both;"></div>
     <ul style="width:100%;float:left;list-style:none;margin-left:0;padding:0;">
     @foreach($page->sponsor_groups as $grp)
-    	<li id="sp_group_{{$grp->id}}" style="font-weight:normal;">- <a href="javascript:editSponsorGroup({{$grp->id}})">{{$grp->headline}} </a>
-    	  <a href="javascript:addSponsor({{$grp->id}}, '{{$grp->headline}}')" style="font-size:12px;color:blue;font-weight:normal;position:relative;left:10px;">[+ Sponsor] </a>
+    	<li id="sp_group_{{$grp->id}}" style="font-weight:normal;">- <a href="javascript:editSponsorGroup({{$grp->id}})">{{$grp->headline_de}} </a>
+    	  <a href="javascript:addSponsor({{$grp->id}}, '{{$grp->headline_de}}')" style="font-size:12px;color:blue;font-weight:normal;position:relative;left:10px;">[+ Sponsor] </a>
     	  <a href="javascript:deleteSponsorGroup({{$grp->id}})" style="position:relative;left:15px;" class="icon-fixed-width icon-trash"></a>
-
 	      <div id="sg_form_blk_{{$grp->id}}" style="width:100%; margin:15px 0;float:left; display:none;">
 			  <form id="sponsor_form_{{$grp->id}}" method="POST" action="/sponsors/save" accept-charset="UTF-8" enctype="multipart/form-data">
 			    <label for="group" style="float:left;width:130px;">Group</label>
