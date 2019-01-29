@@ -7,8 +7,7 @@
       		   <a href="/content/pages/{{$menu_item_id}}/{{$cs_id}}" class="link" style="margin-left:2px;">back</a>
             </h4>
             <p>
-		        <div style="list-style:none;">
-			
+		        <div style="list-style:none;">			
 					@include('pages.pages.sections.main')
 					<!--  ///////////////////////////   SPONSORS   ///////////////////////////////// -->
 					@include('pages.pages.sections.sponsors')
@@ -133,14 +132,9 @@ function editH2(id) {
 	    data: { 'id': id },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('editH2 success..'+ "\n\n");
-	    			console.log(data);
-	    			// $('#save_content_btn').attr('onclick', 'updatePageContent(event)');
+	    			console.log('editH2 success..'); console.log(data);
 	    			$('#h2_de').val(data.h2.headline_de);
 	    			$('#h2_en').val(data.h2.headline_en);
-	    			// $('#content_title_en').val(data.h2.title_en);
-	    			// contentSortOrder = data.h2.sort_order;
-	    			// $('#sort_order').val(contentSortOrder);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
 	    		    console.log('editH2 failed..');
@@ -157,14 +151,9 @@ function saveH2(id) {
 	    data: { 'id': id, 'h2': $('#h2').val(), 'page_id': $('#page_id').val() },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('saveH2 success..');
-	    			console.log(data);
-	    			// $('#save_content_btn').attr('onclick', 'updatePageContent(event)');
+	    			console.log('saveH2 success..'); console.log(data);
 	    			$('#h2_de').val(data.h2.headline_de);
 	    			$('#h2_en').val(data.h2.headline_en);
-	    			// $('#content_title_en').val(data.h2.title_en);
-	    			// contentSortOrder = data.h2.sort_order;
-	    			// $('#sort_order').val(contentSortOrder);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
 	    		    console.log('saveH2 failed..');
@@ -192,7 +181,6 @@ function editH2text(id) {
 	    			$('#anchor_title_en').val(data.item.anchor_title_en);
 					tinyMCE.get('intro_de').setContent(data.item.intro_de);
 					tinyMCE.get('intro_en').setContent(data.item.intro_en);
-	    			// contentSortOrder = data.h2.sort_order;
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
 	    		    console.log('editH2text failed..');
@@ -222,42 +210,35 @@ function deleteImageSlider(id) {
 }
 
 function deleteTeaser(id) {
-	// if(confirm('Are you sure you want to delete (y/n)?')) {
-		$.ajax({
-		    type: 'GET',
-		    url: '/delete-teaser',
-		    data: { 'id': id },
-		    dataType: 'json',
-		    success:function(data) { 
-		    			console.log('deleteTeaser success..');
-		    			$('#teaser_form')[0].reset();
-		    			$('#teaser_caption').val('');
-		    			$('#teaser_preview').hide();
-					},
-		    error:  function(jqXHR, textStatus, errorThrown) {
-		    		    console.log('deleteTeaser failed..');
-		    	    }
-		});
-	// } else {
-	// 	return false;
-	// }	
+	$.ajax({
+	    type: 'GET',
+	    url: '/delete-teaser',
+	    data: { 'id': id },
+	    dataType: 'json',
+	    success:function(data) { 
+	    			console.log('deleteTeaser success..');
+	    			$('#teaser_form')[0].reset();
+	    			$('#teaser_caption').val('');
+	    			$('#teaser_preview').hide();
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('deleteTeaser failed..');
+	    	    }
+	});
 }
 
 function saveH2text(id) {
-	// $('#sort_order').show();
 	$.ajax({
 	    type: 'POST',
 	    url: '/save-h2text',
 	    data: { 'id': id, 'h2text': $('#h2text_h2').val(), 'page_id': $('#page_id').val() },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('saveH2text success..');
-	    			console.log(data);
+	    			console.log('saveH2text success..'); console.log(data);
 	    			$('#h2text_h2de').val(data.item.headline_de);
 	    			$('#h2text_h2en').val(data.item.headline_en);
 					tinyMCE.get('intro_de').setContent(data.item.intro_de);
 					tinyMCE.get('intro_en').setContent(data.item.intro_en);
-	    			// $('#sort_order').val(contentSortOrder);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
 	    		    console.log('saveH2text failed..');
@@ -274,8 +255,6 @@ function updatePageContent(event) {
 	var menu_item_id = $('#menu_item_id').val();
 	var cs_id = $('#cs_id').val();
 	var page_id = $('#page_id').val();
-	// if(!isNaN($('#id').val())) {
-	// var page_id = $('#id').val();
 	event.preventDefault();
 	var subtitle_de = tinyMCE.get('content_subtitle_de').getContent();
 	var subtitle_en = tinyMCE.get('content_subtitle_en').getContent();
@@ -301,7 +280,6 @@ function updatePageContent(event) {
 	    		    console.log('updatePageContent failed.. ');
 	    	    }
 	});
-	// }
 }
 
 function saveContent() {
@@ -316,8 +294,6 @@ function saveContent() {
 		    url: '/store-page-content',
 		    data: formData,
 		    dataType: 'json',
-		    // processData: false,
-	        // contentType: false,
 		    success:function(data) { 
 		    			console.log('saveContent success..'+ "\n\n");
 		    			console.log(data);
@@ -363,7 +339,6 @@ function showSliderImageForm(id) {
 	$('#slider_image_form_'+id).removeClass('no-display');
 	$('#slider_image_id').val(id);
 	$('#page_content').hide();
-	// $('#save_page_btn').hide();
 	$('#page_image_slider').removeClass('no-display').show();
 }
 
@@ -378,9 +353,7 @@ function hideSliderImageForm(id) {
 
 function showPageSliderImagePreview(id) {
 	var frm = document.getElementById('slider_image_form_'+id);
-	var formData = new FormData(frm); //$('#slider_image_form'));
-	// var formData = new FormData($('form')[2]);
-	// console.log(formData); return;
+	var formData = new FormData(frm);
 	$.ajax({
 	    type: 'POST',
 	    url: '/page-slider-image-preview',
