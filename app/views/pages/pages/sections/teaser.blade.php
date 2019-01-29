@@ -1,6 +1,6 @@
 <label for="Teasers" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('teasers_block')">Teaser
-  <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span></label>
-
+  <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span>
+</label>
 <div id="teasers_block" class="form-group edit-section" style="display:none;margin-top:2px;">
   <form id="teaser_form" method="POST" action="/teasers/save" accept-charset="UTF-8" enctype="multipart/form-data" 
      onsubmit="return checkTeasersForm()"><input name="_token" type="hidden">
@@ -19,32 +19,53 @@
       		if($page->teaser) {
       			$src = "/files/teasers/". $page->teaser->filename;
       			$display = '';
-      			$tsr_caption = $page->teaser->caption;
-            $line_1 = $page->teaser->line_1;
-            $line_2 = $page->teaser->line_2;
+            $tsr_caption_de = $page->teaser->caption_de;
+            $tsr_caption_en = $page->teaser->caption_en;
+            $line_1_de = $page->teaser->line_1_de;
+            $line_1_en = $page->teaser->line_1_en;
+            $line_2_de = $page->teaser->line_2_de;
+            $line_2_en = $page->teaser->line_2_en;
       			$teaser_id = $page->teaser->id;
       		}
       ?>
-	      <div style="width:100px !important; height:100px; cursor:pointer; display:inline-block; margin-top:5px; margin-left:0px; 
-	      	background-size:cover; border:1px dashed #e3e3e3;"><img id="teaser_preview" src="{{$src}}" style="max-width:100px; max-height:100px; 
-	      	float:left; <?php echo $display;?>">
-	      </div>
+      <div style="width:100px !important; height:100px; cursor:pointer; display:inline-block; margin-top:5px; margin-left:0px; 
+      	background-size:cover; border:1px dashed #e3e3e3;"><img id="teaser_preview" src="{{$src}}" style="max-width:100px; max-height:100px; 
+      	float:left; <?php echo $display;?>">
+      </div>
 	</div>      
     <div style="clear:both;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Caption</div>
-    <input placeholder="" style="width:500px;float:left;" name="caption" type="text" id="teaser_caption" value="{{$tsr_caption}}">
+    <div style="width:70%;display:inline-block;">
+      <input placeholder="DE" style="width:500px;float:left;" name="caption_de" type="text" id="teaser_caption_de" value="{{$tsr_caption_de}}">
+      <div class="inp-de">DE</div>
+      <div style="clear:both;"></div>
+      <input placeholder="EN" style="width:500px;float:left;" name="caption_en" type="text" id="teaser_caption_en" value="{{$tsr_caption_en}}">
+      <div class="inp-en">EN</div>
+    </div>
     <div style="clear:both;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Line 1</div>
-    <input placeholder="" style="width:500px;float:left;" name="line_1" type="text" id="line_1" value="{{$line_1}}">
+    <div style="width:70%;display:inline-block;">
+      <input placeholder="DE" style="width:500px;float:left;" name="line_1_de" type="text" id="line_1_de" value="{{$line_1_de}}">
+      <div class="inp-de">DE</div>
+      <div style="clear:both;"></div>
+      <input placeholder="EN" style="width:500px;float:left;" name="line_1_en" type="text" id="line_1_en" value="{{$line_1_en}}">
+      <div class="inp-en">EN</div>
+    </div>  
     <div style="clear:both;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Line 2 (Date)</div>
-    <input placeholder="" style="width:500px;float:left;" name="line_2" type="text" id="line_1" value="{{$line_2}}">
+    <div style="width:70%;display:inline-block;">
+      <input placeholder="EN" style="width:500px;float:left;" name="line_2_de" type="text" id="line_2_de" value="{{$line_2_de}}">
+      <div class="inp-de">DE</div>
+      <div style="clear:both;"></div>
+      <input placeholder="EN" style="width:500px;float:left;" name="line_2_en" type="text" id="line_2_en" value="{{$line_2_en}}">
+      <div class="inp-en">EN</div>
+    </div>  
 
     <div style="clear:both;"></div>
-	<div class="form-group" style="margin-left:0px; width:200px;position:relative;left:128px; padding-bottom:20px;">
+	  <div class="form-group" style="margin-left:0px; width:200px;position:relative;left:128px; padding-bottom:20px;">
         <input class="pure-button button-small" style="float:left;" type="submit" value="Save Teaser">
-	     <a href="javascript:deleteTeaser({{$teaser_id}})" class='button-error pure-button button-small' 
-	      style="color:#fff;float:left;margin-left:5px; text-decoration:none;margin-top:2px;">Delete</a>
+	      <input type="button" onclick="deleteTeaser({{$teaser_id}})" class="button-error pure-button button-small" 
+	        style="color:#fff;float:left;margin-left:5px; text-decoration:none;margin-top:2px;padding-top:2px;" value="Delete" />
     </div>
     {{ Form::hidden('page_id', $page->id, ['id' => 'page_id']) }}
     {{ Form::hidden('teaser_id', $teaser_id, ['id' => 'teaser_id']) }}
