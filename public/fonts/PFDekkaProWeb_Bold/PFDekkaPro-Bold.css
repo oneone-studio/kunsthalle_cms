@@ -1,0 +1,15 @@
+/* Webfont: PFDekkaPro-Bold */@font-face {
+    font-family: 'PFDekkaPro';
+    src: url('PFDekkaPro-Bold.eot'); /* IE9 Compat Modes */
+    src: url('PFDekkaPro-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('PFDekkaPro-Bold.woff') format('woff'), /* Modern Browsers */
+         url('PFDekkaPro-Bold.svg#PFDekkaPro-Bold') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: bold;
+}
+
+p {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
