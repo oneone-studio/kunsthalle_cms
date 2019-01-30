@@ -314,6 +314,36 @@ multiselect .dropdown-menu > li > a {
 .inp-de {
 	display:inline;font-size:11px;color:#888;position:relative;top:12px;left:4px;
 }
+.edit-section {
+	border:1px solid #E5E1E0; border-radius:2px; padding:5px 10px 40px 10px; margin-bottom: 20px; border-bottom:2px outset #E5E1E0;
+}
+.edit-hdr { float:left;padding-left:0px;border-radius:2px; text-decoration: none; }
+.eh50 { width:50px; }
+.eh60 { width:60px; }
+.eh70 { width:70px; }
+.eh90 { width:90px; }
+.eh100 { width:100px; }
+.eh130 { width:130px; }
+.eh180 { width:180px; }
+.edit-icon-div { display:inline-block;margin-left:4px;margin-top:3px; }
+.edit-icon { width:16px;height:16px;float:left;margin-right:3px; }
+.edit-icon-18 { width:18px;height:18px;float:left;margin-right:3px; }
+.edit-icon-20 { width:20px;height:20px;float:left;margin-right:3px; }
+.edit-banner-icon { margin-top:4px; }
+.edit-h2intro-icon { margin-top:4px; }
+.edit-h2-icon { margin-top:4px; }
+.edit-slider-icon { margin-top:4px; }
+.edit-image-icon { margin-top:-1px; }
+.edit-imagegrid-icon { margin-top:0px; }
+.edit-content-icon { margin-top:-1px; }
+.edit-youtube-icon { margin-top:-2px; }
+.edit-audio-icon { margin-top:-1px; }
+/*.edit-blk-top { width:100%; height:20px; clear:both; padding:5px; border-right:10px solid #fff; margin-left:-5px; margin-bottom: 15px; background:#fff; }*/
+.edit-blk-top { width:100%; height:20px; clear:both; padding:5px 0px; margin-bottom: 15px !important; }
+.page-content-hdr { width:100%;clear:both; margin:6px 0px; text-align:center;font-size:16px;font-weight:bold; }
+.image_grid_ul { width:580px; list-style:none; margin-left:0; margin-top:10px; padding-left:0; }
+
+.menu-icon-active img { opacity:.3; }
 
 @font-face {
 	font-family: "UniversNextPro-Cond";
@@ -323,24 +353,3 @@ multiselect .dropdown-menu > li > a {
          /*,
          url('woollaa../fonts/PFDekkaProWeb_Bold/PFDekkaPro-Bold.svg#PFDekkaPro-Bold') format('svg'); /* Legacy iOS */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

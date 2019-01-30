@@ -503,7 +503,7 @@ Route::post('save-page-image', ['before' => 'auth', 'uses' => 'FooterPagesContro
 Route::post('/content/footer-pages/saveBanner', array('before' => 'auth', 'as' => 'ftr-page.image.save', 'uses' => 'FooterPagesController@saveBanner'));
 Route::get('delete-page-image', ['before' => 'auth', 'uses' => 'FooterPagesController@deletePageImage']);
 Route::get('get-banner', ['before' => 'auth', 'uses' => 'FooterPagesController@getBanner']);
-Route::get('delete-banner', ['before' => 'auth', 'uses' => 'FooterPagesController@deleteBanner']);
+// Route::get('delete-banner', ['before' => 'auth', 'uses' => 'FooterPagesController@deleteBanner']);
 Route::post('save-banner', ['before' => 'auth', 'uses' => 'FooterPagesController@saveBanner']);
 Route::post('/save-ftr-dl-protection', ['before' => 'auth', 'uses' => 'FooterPagesController@saveDLProtection']);
 Route::get('/reset-ftr-dl-protection', ['before' => 'auth', 'uses' => 'FooterPagesController@resetDLProtection']);
@@ -545,7 +545,7 @@ Route::post('save-page-image', ['before' => 'auth', 'uses' => 'ExhibitionPagesCo
 Route::post('/content/exhibition-pages/saveBanner', array('before' => 'auth', 'as' => 'exb-page.image.save', 'uses' => 'ExhibitionPagesController@saveBanner'));
 Route::get('delete-page-image', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@deletePageImage']);
 Route::get('get-banner', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@getBanner']);
-Route::get('delete-banner', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@deleteBanner']);
+Route::get('delete-exb-banner', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@deleteBanner']);
 Route::post('save-banner', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@saveBanner']);
 Route::post('/save-exb-dl-protection', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@saveDLProtection']);
 Route::post('/reset-exb-dl-protection', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@resetDLProtection']);
@@ -701,7 +701,9 @@ Route::post('save-image', ['before' => 'auth', 'uses' => 'ImagesController@saveI
 // Image Grid
 // Route::post('/image-grid/save', array('as' => 'image_grid.store', 'uses' => 'ImageGridController@store'));
 Route::post('/image-grid/save', array('before' => 'auth', 'as' => 'image_grid.store', 'uses' => 'ImageGridController@store'));
+Route::get('delete-image-grid', ['before' => 'auth', 'uses' => 'ImageGridController@deleteImageGrid']);
 
+Route::get('delete-exb-image-grid', ['before' => 'auth', 'uses' => 'ImageGridExbController@deleteImageGrid']);
 // Grid Image
 // Route::post('upload-grid-image', 'GridImageController@uploadGridImage');
 // Route::get('get-grid-image', 'GridImageController@getImage');

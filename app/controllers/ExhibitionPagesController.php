@@ -54,8 +54,10 @@ class ExhibitionPagesController extends BaseController {
 			$exhibition_page = new ExhibitionPage;
 			$exhibition_page->title_de = Input::get('title_de');
 			$exhibition_page->title_en = Input::get('title_en');
-			$exhibition_page->seo_page_title = Input::get('seo_page_title');
-			$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
+			$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
+			$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
+			$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
+			$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
 			$exhibition_page->cluster_id = Input::get('cluster_id');
 			$exhibition_page->active = Input::has('active') ? 1 : 0;
 			$exhibition_page->save();
@@ -100,8 +102,10 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
-		$exhibition_page->seo_page_title = Input::get('seo_page_title');
-		$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
+		$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
+		$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
+		$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
 		$exhibition_page->start_date = $start_date;
 		$exhibition_page->end_date = $end_date;
 		$exhibition_page->active = Input::has('active') ? 1 : 0;
@@ -221,8 +225,10 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
-		$exhibition_page->seo_page_title = Input::get('seo_page_title');
-		$exhibition_page->seo_page_desc = Input::get('seo_page_desc');
+		$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
+		$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
+		$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
 		$exhibition_page->cluster_id = Input::get('cluster_id');
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
 			$exhibition_page->contacts()->sync(Input::get('contacts')); // attach contacts

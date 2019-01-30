@@ -43,7 +43,8 @@ class DownloadsController extends BaseController {
 	{
 		$download = Download::findOrFail(Input::get('id'));
 		$download->title = Input::get('title');
-		$download->link_title = Input::get('link_title');
+		$download->link_title_de = Input::get('link_title_de');
+		$download->link_title_en = Input::get('link_title_en');
 		$download_file = '';
 		if (Input::hasFile('download_file')) {
 			$new_image = true;
@@ -71,15 +72,13 @@ class DownloadsController extends BaseController {
 			$sp = Download::find(Input::get('download_id'));
 			$sp->sort_order = Input::has('sort_order') ? Input::get('sort_order') : count($page->downloads);
     		$sp->protected = Input::has('protected') ? 1 : 0;
-    		$link_title = (Input::has('link_title') && strlen(Input::get('link_title')) > 0) ? Input::get('link_title') : '';
+    		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+    		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $download_file);
 	    		$sp->filename = $download_file;
-	    		// if(!Input::has('link_title') || strlen(Input::get('link_title')) == 0) {
-	    		// 	$link_title = $file->getClientOriginalName();
-	    		// }
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');

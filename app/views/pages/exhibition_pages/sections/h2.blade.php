@@ -1,4 +1,4 @@
-				<div id="h2_block" class="form-group" style="margin-top:20px;display:none;">
+				<div id="h2_block" class="form-group edit-section" style="margin-top:20px;display:none;">
 				  <form method="POST" action="/exb-pages/h2/save" accept-charset="UTF-8"><input name="_token" type="hidden" value="pd4F2f9FOrU92JOgFLo3ynI1l90kVrHH3unm10LO">
 				    <label for="h2" style="float:left;">Small headline</label>
 				    <div style="clear:both;"></div>

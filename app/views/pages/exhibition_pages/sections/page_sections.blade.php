@@ -1,3 +1,4 @@
+			<div class="page-content-hdr">Page Content</div>
 			<!-- List of content sections -->
 			@if($sections) 
 			  <?php $sec_count = 0; ?>
@@ -201,7 +202,7 @@
 					  	@if($sec_count < count($sections))
 					  		<a href="/exb-page-sections/move-down/{{$page->id}}/{{$ps->ps_id}}" title="Edit" type="button" style="margin-left:2px;"><img src="/images/down_arrow.png" style="max-width:15px;"></a>
 					    @endif
-					  		<a href="javascript:openAndEditImageGrid({{$ps->id}})" title="Edit" type="button" class="icon-fixed-width icon-pencil" style="margin-left:5px;"><span class="glyphicon glyphicon-edit"></span></a>
+					  		<a href="javascript:editImageGrid({{$ps->id}})" title="Edit" type="button" class="icon-fixed-width icon-pencil" style="margin-left:5px;"><span class="glyphicon glyphicon-edit"></span></a>
 			                <a href="/exb-page-sections/del-page-section/{{$page->id}}/{{$ps->ps_id}}/{{$ps->id}}/slider" title="Delete" type="button" class="icon-fixed-width icon-trash" style="margin-left:5px;"><span class="glyphicon glyphicon-trash"></span></a>
 				  		</div>
 				  	  </div>	

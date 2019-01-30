@@ -115,8 +115,9 @@ class SponsorsController extends BaseController {
 	public function getSponsor() {
 		if(Input::has('id') && intval(Input::get('id')) > 0) {
 			$item = Sponsor::find(Input::get('id'));			
-			$grp = DB::table('sponsor_groups')->select('headline')->where('id', $item->sponsor_group_id)->first();
-			$item->headline = $grp->headline;
+			$grp = DB::table('sponsor_groups')->select(['headline_de', 'headline_en'])->where('id', $item->sponsor_group_id)->first();
+			$item->headline_de = $grp->headline_de;
+			$item->headline_en = $grp->headline_en;
 			return Response::json(array('error' => false, 'item' => $item), 200);
 		}
 

@@ -49,12 +49,20 @@
 				</div>
 
 				<div class="form-group">
-				    <label for="title">{{ Form::label('title', 'SEO Page Title:') }}</label>
-				    {{ Form::text('seo_page_title', $page->seo_page_title, ['placeholder' => 'SEO Page Title', 'style' => 'width:500px;']) }}
+				    <label for="title">SEO Page Title [de]:</label>
+				    {{ Form::text('seo_page_title_de', $page->seo_page_title_de, ['placeholder' => 'SEO Page Title [de]', 'style' => 'width:500px;']) }}
 				</div>    
 				<div class="form-group">
-				    <label for="title">{{ Form::label('title', 'SEO Page Description:') }}</label>
-				    {{ Form::text('seo_page_desc', $page->seo_page_desc, ['placeholder' => 'SEO Page Description', 'style' => 'width:500px;']) }}
+				    <label for="title">SEO Page Title [en]:</label>
+				    {{ Form::text('seo_page_title_en', $page->seo_page_title_en, ['placeholder' => 'SEO Page Title [en]', 'style' => 'width:500px;']) }}
+				</div>    
+				<div class="form-group">
+				    <label for="title">SEO Page Description [de]:</label>
+				    {{ Form::text('seo_page_desc_de', $page->seo_page_desc_de, ['placeholder' => 'SEO Page Description [de]', 'style' => 'width:500px;']) }}
+				</div>    
+				<div class="form-group">
+				    <label for="title">SEO Page Description [en]:</label>
+				    {{ Form::text('seo_page_desc_en', $page->seo_page_desc_en, ['placeholder' => 'SEO Page Description [en]', 'style' => 'width:500px;']) }}
 				</div>    
 
 				<div class="form-group">

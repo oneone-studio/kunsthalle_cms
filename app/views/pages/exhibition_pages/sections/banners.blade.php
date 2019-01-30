@@ -1,14 +1,14 @@
 			{{ Form::model($page, array('id' => 'banner_form', 'route' => array('exb-page.image.save', $page->id), 'files' => true)) }}
 			   <?php $display = 'display:none;';
-			   		 if($action && $action == 'banner') { $display = 'display:inline;'; }
+			   		 if($action && $action == 'banner') { $display = ''; }
 			   ?>
 
-				<div id="page_image_pane" class="form-group" style="margin-top:20px; <?php echo $display;?>">
-					<h4>Banner </h4>
-				    <label for="banner_image" style="float:left;"><?php echo Form::label('banner_image', 'Image'); ?> </label>
+				<div id="banner_blk" class="form-group edit-section" style="margin-top:20px; <?php echo $display;?>">
+					<label class="edit-hdr eh70">Banner</label>
+					<div style="clear:both;height:10px;"></div>
+				    <label for="banner_image" style="float:left;"><?php echo Form::label('banner_image', 'Image'); ?></label>
 				    <div style="width:50%; float:left; display:inline;">
 					    <?php echo Form::file('banner_image', ['id' => 'banner_image', 'onchange' => 'uploadPageImage()']); ?>				    
-					    <!-- <input type="button" id="upload_btn" value="Upload" class="btn btn-default" onclick="saveProfileImage()"> -->
 				    </div>				
 					<div class="form-groupz" style="width:100%; height:120px; clear:both;"> 
 					    <label for="" style="float:left;">Preview</label>
@@ -84,7 +84,7 @@
 					</div>
 				    <div style="clear:both;"></div>
 				    <!-- Banners -->
-				    <div style="width:60%;float:left;position:relative;left:190px;top:15px;margin-bottom:15px;">
+				    <div id="banner_images_blk" style="width:60%;float:left;position:relative;left:190px;top:15px;margin-bottom:15px;">
 				    	<?php $banner_id = 0; ?>
 				    	@if(isset($page->banner))
 				    	    <?php $banner_id = $page->banner->id; ?>

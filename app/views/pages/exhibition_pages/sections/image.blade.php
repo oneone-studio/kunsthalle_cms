@@ -1,8 +1,11 @@
 			{{ Form::model($page, array('id' => 'image_form', 'route' => array('exb-images.save'), 'files' => true)) }}
 
-				<div id="image_pane" class="form-group" style="margin-top:20px; display:none;">
-					<h4>Image with caption </h4>
-
+				<div id="image_block" class="form-group edit-section" style="margin-top:20px; display:none;">
+					<div class="edit-blk-top">
+						<label class="edit-hdr eh130">Image with caption </label>
+						<div class="edit-icon-div"> <img src="/images/new_image.png" class="edit-icon-20 edit-image-icon"></div>
+					</div>
+					<div style="clear:both;"></div>
 				    <label for="image" style="float:left;"><?php echo Form::label('image', 'Image'); ?> </label>
 				    <div style="width:50%; float:left; display:inline;">
 					    <?php echo Form::file('image', ['id' => 'image', 'onchange' => 'uploadImage()']); ?>				    
@@ -50,7 +53,7 @@
 
 				    <div style="clear:both;"></div>
 				    <button id="image_status_msg" class="pure-button" style="display:none; float:right;"></button>
-				    <div style="width:60%;float:left;position:relative;top:10px;left:180px;">
+				    <div style="width:60%;float:left;position:relative;top:10px;left:190px;">
 					    {{ Form::submit('Save Image', array('id' => 'save_image_btn', 'class' => 'button-success pure-button button-small', 'style' => 'height:30px; padding:3px 15px 5px 15px;')) }}
 					    {{ Form::button('Cancel', array('id' => 'cancel_image_btn', 'onclick' => 'hideImageSection()', 'class' => 'button-error pure-button button-small', 'style' => 'height:30px; margin-top:0px; padding:3px 15px 5px 15px')) }}
 					</div>

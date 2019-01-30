@@ -1,6 +1,9 @@
-<div id="youtube_block" class="form-group edit-section" style="margin-top:20px;display:none;">
+<div id="youtube_block" class="form-group edit-section" style="margin-top:-20px;display:none;">
   <form method="POST" action="/youtube/save" accept-charset="UTF-8"><input name="_token" type="hidden">
-    <label for="youtube" style="float:left;">Youtube</label>
+	<div class="edit-blk-top">
+	    <label for="youtube" class="edit-hdr eh60">Youtube</label>
+	    <div class="edit-icon-div"> <img src="/images/youtube.png" class="edit-icon-20 edit-youtube-icon"></div>
+    </div>
     <div style="clear:both;height:10px;"></div>
     <div style="float:left;margin-top:6px;margin-right:8px;">Link:</div>
     <input placeholder="" style="width:780px;float:left;" name="url" type="text" id="youtube_url">
@@ -18,6 +21,7 @@
 
 <script>
 function editYoutube(id, yUrl) {
+	scrollToMenu();
 	$('#youtube_id').val(id);
 	$.ajax({
 	    type: 'GET',

@@ -9,8 +9,10 @@
      <div id="igp" style="width:100%;">
 	  {{ Form::open(array('route' => 'exb_image_grid.store', 'method' => 'post')) }}
 
-		{{ Form::label('grid_title', 'Image Grid') }}
-
+		<div class="edit-blk-top">
+			<label class="edit-hdr eh90">Image Grid </label>
+			<div class="edit-icon-div"> <img src="/images/new_image.png" class="edit-icon edit-imagegrid-icon"></div>
+		</div>	
 	    <div id="grid_title"></div>
 	    {{ Form::submit('Create Image Grid', array('id' => 'save_image_grid_btn',
 	    	'class' => 'button-success pure-button button-small', 'style' => 'height:30px; padding:3px 15px 5px 15px')) }}
@@ -22,7 +24,7 @@
     @if(count($page->image_grids) > 0)
         <?php $grid_cnt = 0; $display = 'display:none;';	
         ?>
-        <ul style="width:580px; list-style:none; margin-left:0; margin-top:10px; padding-left:0;">
+        <ul class="image_grid_ul">
 	    	@foreach($page->image_grids as $image_grid)
 	    	    <?php 
 	    	    ++$grid_cnt;	
@@ -71,9 +73,9 @@
 					    <br>
 					    <div style="width:100%; float:left; display:block">
 						    <button id="grid_image_save_btn" class="button-success pure-button button-small" 
-						    	onclick="saveGridImage(event, {{$image_grid->id}})" style="float:left;">Save Image</button>
+						    	onclick="saveGridImage(event, {{$image_grid->id}})" style="float:left;height:30px; padding:3px 15px 5px 15px;">Save Image</button>
 						    <button id="cancel_grid_btn_{{$image_grid->id}}" class="button-error pure-button button-small" 
-						      onclick="hideGridImageForm( {{$image_grid->id}})" style="float:left; margin-left:3px;">Cancel</button>
+						      onclick="hideGridImageForm( {{$image_grid->id}})" style="float:left; margin-left:3px;height:30px; padding:3px 15px 5px 15px;">Cancel</button>
 						</div>
 					    <input name="grid_image_id" id="grid_image_id_{{$image_grid->id}}" type="hidden">
 				    </div>
