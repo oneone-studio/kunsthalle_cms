@@ -1,5 +1,71 @@
 <div class="footer-content" id="copyright text-right">
 	<!--© Copyright 2016 Kunshalle -->
+
+<script>
+// Shared vars, funcs
+
+var AUDIO_BID = 'audio_block';
+var BANNER_BID = 'banner_blk';
+var DOWNLOAD_BID = 'downloads_block';
+var H2_BID = 'h2_block';
+var H2TEXT_BID = 'h2text_block';
+var IMAGE_BID = 'image_block';
+var IMAGE_GRID_BID = 'image_grid_pane';
+var PAGE_CONTENT_BID = 'page_content_blk';
+var SLIDER_BID = 'page_image_slider';
+var TEASER_BID = 'teasers_block';
+var YOUTUBE_BID = 'youtube_block';
+var SPONSOR_BID = 'sponsors_block';
+
+var edit_block_ids = ['audio_block', 'banner_blk', 'downloads_block', 'h2_block', 'h2text_block', 'image_pane', 'image_grid_pane', 'page_image_slider', 'sponsors_block', 'teasers_block', 'youtube_block', 'page_content_blk'];
+
+function hideAllEditSections() {
+  var blk_id = '';
+  for(var i in edit_block_ids) {
+    blk_id = edit_block_ids[i];
+    if($('#'+blk_id).length) { 
+      $('#'+blk_id).hide(); 
+    }
+  }
+}
+
+function resetCurBlockId() {
+  cur_block_id = '';
+  cur_input = '';
+}
+
+function resetEdit() {
+  $('.edit-section').hide();
+}
+
+function resetH2Intro() {
+  $('#h2text_h2de').val('');
+  $('#h2text_h2en').val('');
+  tinyMCE.get('intro_de').setContent('');
+  tinyMCE.get('intro_en').setContent('');
+  $('#h2text_id').val('');
+}
+
+function resetAudio() {
+  $('#audio_url').val('');
+  $('#audio_id').val('');
+  $('#audio_preview').hide();
+}
+
+function resetYoutube() {
+  $('#youtube_url').val('');
+  $('#youtube_id').val('');
+  $('#youtube_preview').hide();
+}
+
+
+var menuBarScrollPos = $("#cp_block").offset().top - 70;
+
+function scrollToMenu() {
+    $('html, body').animate({ scrollTop: menuBarScrollPos }, 500);
+}
+</script>
+
 </div>
 	{{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'); }}
 	{{ HTML::script('js/chosen/chosen.jquery.js'); }}
