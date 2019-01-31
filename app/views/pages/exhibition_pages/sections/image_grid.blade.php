@@ -1,9 +1,7 @@
 <!-- ////////////////////   IMAGE GRID   ////////////////////// -->
-<?php 
-	$display = 'display:none;';
-	if(isset($action) && $action == 'image_grid') { $display = ''; }
+<?php $display = 'display:none;';
+	  if(isset($action) && $action == 'image_grid') { $display = ''; }
 ?>
-
 <div id="image_grid_pane" class="form-group edit-section" style="margin:20px 0px; <?php echo $display;?>">
    <div style="width:100%; clear:both; margin-bottom:15px;">
      <div id="igp" style="width:100%;">
@@ -75,7 +73,7 @@
 						    <button id="grid_image_save_btn" class="button-success pure-button button-small" 
 						    	onclick="saveGridImage(event, {{$image_grid->id}})" style="float:left;height:30px; padding:3px 15px 5px 15px;">Save Image</button>
 						    <button id="cancel_grid_btn_{{$image_grid->id}}" class="button-error pure-button button-small" 
-						      onclick="hideGridImageForm( {{$image_grid->id}})" style="float:left; margin-left:3px;height:30px; padding:3px 15px 5px 15px;">Cancel</button>
+						      onclick="return hideGridImageForm({{$image_grid->id}})" style="float:left; margin-left:3px;height:30px; padding:3px 15px 5px 15px;">Cancel</button>
 						</div>
 					    <input name="grid_image_id" id="grid_image_id_{{$image_grid->id}}" type="hidden">
 				    </div>
@@ -112,7 +110,7 @@ function hideImageGridForm(id) {
 }
 
 function editGridImage(image_grid_id, id) {
-	$("body").scrollTop(100);
+	scrollToMenu();
 	$('#grid_image_id_'+image_grid_id).val(id);
 	showSliderImageForm(image_grid_id);
 
@@ -135,6 +133,11 @@ function editGridImage(image_grid_id, id) {
 	    		    console.log('editGridImage failed.. ');
 	    	    }
 	});
+}
+
+function hideGridImageForm() {
+	$('.edit-section').hide();
+	return false;
 }
 
 function saveGridImage(event, id) {
@@ -255,7 +258,10 @@ function updateGridImage(event, id) {
 var cur_image_grid_id = 0;
 
 function editImageGrid(id) {
-	$("body").scrollTop(370);
+	scrollToMenu();
+	resetCurBlockId();
+	$('.edit-section').hide();
+	$('.image_grid_ul').show();
 	$('.image-grid-blk').hide();
 	$('.grid-images-blk').hide();
 	if(cur_image_grid_id > 0) {
@@ -263,14 +269,10 @@ function editImageGrid(id) {
 		$('#grid_image_list_blk_'+cur_image_grid_id).hide();
 	}
 	cur_image_grid_id = id;
-	// showSliderSection();
-	// showGridImageForm(id);
 	$('#image_grid_blk_'+id).show();
 	$('#image_grid_pane_'+id).removeClass('no-display').show();
 	$('#grid_image_list_blk_'+id).show();
 	$('#image_grid_pane').show();
-	// hideImageGridForm(id);
-	// editImageSlider(id);
 }
 
 var lastImageGridId = 0;

@@ -1,3 +1,4 @@
+			<div style="width:100%;clear:both;"></div>
 			<div class="page-content-hdr">Page Content</div>
 			<!-- List of content sections -->
 			@if($sections) 

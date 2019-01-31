@@ -17,6 +17,10 @@
 	    <?php echo Form::textarea('intro_de', null, ['id' => 'intro_de', 'style' => 'width:300px;', 'class' => 'tm_editor_h2intro', 'placeholder' => 'Intro DE']); ?>
 	    <div style="float:left;margin-top:6px;margin-right:8px;">Intro [en]:</div><div style="clear:both;"></div>
 	    <?php echo Form::textarea('intro_en', null, ['id' => 'intro_en', 'style' => 'width:300px;', 'class' => 'tm_editor_h2intro', 'placeholder' => 'Intro DE']); ?>
+	    <div style="clear:both;height:15px;"></div>
+	    <div style="float:left;margin-top:10px;margin-left:0px;margin-right:8px;">Anchor:</div>
+	    <?php echo Form::text('anchor_title_de', null, ['id' => 'anchor_title_de', 'style' => 'width:300px;float:left;', 'placeholder' => 'Anchor DE']); ?>
+	    <?php echo Form::text('anchor_title_en', null, ['id' => 'anchor_title_en', 'style' => 'width:300px;float:left;position:relative;left:15px;', 'placeholder' => 'Anchor EN']); ?>
 		<div class="form-group" style="margin-left:0px; padding-bottom:20px;">
 	        <input class="btn btn-primary" style="position:relative;top:10px;height:30px; padding:3px 15px 5px 15px" type="submit" value="Save">
 	    </div>

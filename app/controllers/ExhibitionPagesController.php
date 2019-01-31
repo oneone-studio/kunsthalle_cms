@@ -59,7 +59,8 @@ class ExhibitionPagesController extends BaseController {
 			$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
 			$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
 			$exhibition_page->cluster_id = Input::get('cluster_id');
-			$exhibition_page->active = Input::has('active') ? 1 : 0;
+			$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
+			$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
 			$exhibition_page->save();
 			if(Input::has('contacts') && count(Input::get('contacts'))) {
 				$exhibition_page->contacts()->sync(Input::get('contacts')); // attach contacts
@@ -108,7 +109,8 @@ class ExhibitionPagesController extends BaseController {
 		$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
 		$exhibition_page->start_date = $start_date;
 		$exhibition_page->end_date = $end_date;
-		$exhibition_page->active = Input::has('active') ? 1 : 0;
+		$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
+		$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
 		$exhibition_page->cluster_id = Input::get('cluster_id');
 		$exhibition_page->save();
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
@@ -132,7 +134,8 @@ class ExhibitionPagesController extends BaseController {
 			$exhibition_page->title_de = Input::get('title_de');
 			$exhibition_page->title_en = Input::get('title_en');
 			$exhibition_page->cluster_id = Input::get('cluster_id');
-			$exhibition_page->active = Input::has('active') ? 1 : 0;
+			$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
+			$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
 			$exhibition_page->save();
 			if(Input::has('contacts') && count(Input::get('contacts'))) {
 				$exhibition_page->contacts()->sync(Input::get('contacts')); // attach contacts
@@ -235,7 +238,8 @@ class ExhibitionPagesController extends BaseController {
 		} else {
 		    $exhibition_page->contacts()->detach(); // detatch contacts
 		}
-		$exhibition_page->active = Input::has('active') ? 1 : 0;
+		$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
+		$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
 		// $exhibition_page->sort_order = Input::get('sort_order');
 		$exhibition_page->save();
 
@@ -329,7 +333,8 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
-		$exhibition_page->active = Input::has('active') ? 1 : 0;
+		$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
+		$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
 		$exhibition_page->sort_order = Input::get('sort_order');
 		$exhibition_page->save();
 

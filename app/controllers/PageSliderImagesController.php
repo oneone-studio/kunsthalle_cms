@@ -41,8 +41,9 @@ class PageSliderImagesController extends BaseController {
 	    		$image->filename = $file->getClientOriginalName();
 	    		$image->path = '/sliders/';
 	    		$image->page_image_slider_id = Input::get('slider_id');
-	    		if(Input::has('image_detail')) {
-		    		$image->detail = Input::get('image_detail');
+	    		if(Input::has('image_detail_de')) {
+		    		$image->detail_de = Input::get('image_detail_de');
+		    		$image->detail_en = Input::get('image_detail_en');
 	    		}
 	    		$image->url = Input::get('url');
 	    		$image->text_position = Input::get('position');
@@ -105,24 +106,6 @@ class PageSliderImagesController extends BaseController {
 		fwrite($f, "updatePageSliderImage..\n\n". print_r(Input::all(), true));
 		if(Request::ajax()) {
 			if(Input::has('image_id') || Input::has('slide_id')) {
-	    // 		if(Input::has('sort_order')) {
-	    // 			$img = PageSliderImage::find(Input::get('slide_id'));
-					// fwrite($f, "\nimg:\nid: ". $img->id . ' __ order: '. $img->sort_order);
-	    // 			if($img) { 
-	    // 				$old_order = $img->sort_order;
-	    // 				fwrite($f, "\nold order: ". $old_order);
-	    // 				$img2 = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))
-	    // 						->where('sort_order', Input::get('sort_order'))
-	    // 						->first();
-    	// 				fwrite($f, "\n\nBefore img2:\nid: ". $img2->id . ' __ order: '. $img2->sort_order);
-	    // 				if($img2) { 
-	    // 					$img2->sort_order = $old_order;
-	    // 					$img2->save();
-	    // 					fwrite($f, "\n\nAfter img2:\nid: ". $img2->id . ' __ order: '. $img2->sort_order);
-	    // 				}	    				
-	    // 			} 
-	    // 		}
-
 				$image_id = Input::has('image_id') ? Input::get('image_id') : Input::get('slide_id');
 				$filename = '';
 				if(Input::hasFile('gallery_image')) {
@@ -136,8 +119,9 @@ class PageSliderImagesController extends BaseController {
 				if(strlen($filename) > 0) {
 		    		$image->filename = $filename;
 				}
-	    		if(Input::has('image_detail')) {
-		    		$image->detail = Input::get('image_detail');
+	    		if(Input::has('image_detail_de')) {
+		    		$image->detail_de = Input::get('image_detail_de');
+		    		$image->detail_en = Input::get('image_detail_en');
 	    		}
 	    		$image->url = Input::get('url');
 	    		$image->text_position = Input::get('position');

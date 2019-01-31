@@ -51,17 +51,29 @@
 	@endif	
 	
 	<div class="form-group nl" style="padding-top:10px;">
-		<label for="kevents" style="float:left;">Active:
-		<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active" id="active" @if($page->active == 1) checked="checked" @endif ></label></div>
+		<label for="kevents" style="float:left;">Active [DE]:</label>
+		<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_de" id="active_de" 
+			@if($page->active_de == 1) checked="checked" @endif ></label></div>
+		<div style="clear:both;"></div>
+		<label for="kevents" style="float:left;">Active [EN]:</label>
+		<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_en" id="active_en" 
+			@if($page->active_en == 1) checked="checked" @endif ></label></div>
 	</div>
-
 	<div class="form-group">
-	    <label for="title">{{ Form::label('title', 'SEO Page Title:') }}</label>
-	    {{ Form::text('seo_page_title', $page->seo_page_title, ['placeholder' => 'SEO Page Title', 'style' => 'width:500px;']) }}
+	    <label for="title">SEO Page Title [de]:</label>
+	    {{ Form::text('seo_page_title_de', $page->seo_page_title_de, ['placeholder' => 'SEO Page Title [de]', 'style' => 'width:500px;']) }}
+        <div class="inp-de" style="top:2px;">DE</div><br/>
+		<div style="clear:both;"></div>
+	    {{ Form::text('seo_page_title_en', $page->seo_page_title_en, ['placeholder' => 'SEO Page Title [en]', 'style' => 'width:500px;']) }}
+        <div class="inp-en" style="top:2px;">EN</div><br/>
 	</div>    
 	<div class="form-group">
-	    <label for="title">{{ Form::label('title', 'SEO Page Description:') }}</label>
-	    {{ Form::text('seo_page_desc', $page->seo_page_desc, ['placeholder' => 'SEO Page Description', 'style' => 'width:500px;']) }}
+	    <label for="title">SEO Page Description [de]:</label>
+	    {{ Form::text('seo_page_desc_de', $page->seo_page_desc_de, ['placeholder' => 'SEO Page Description [de]', 'style' => 'width:500px;']) }}
+        <div class="inp-de" style="top:2px;">DE</div><br/>
+		<div style="clear:both;"></div>
+	    {{ Form::text('seo_page_desc_en', $page->seo_page_desc_en, ['placeholder' => 'SEO Page Description [en]', 'style' => 'width:500px;']) }}
+        <div class="inp-en" style="top:2px;">EN</div><br/>
 	</div>    
 
     <!-- <a href="javascript:deletePage({{$cs_id}}, {{$page->id}})" class="icon-fixed-width icon-trash" style="margin-left:20px;"></a> -->

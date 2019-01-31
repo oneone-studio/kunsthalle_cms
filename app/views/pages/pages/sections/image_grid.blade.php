@@ -2,14 +2,15 @@
 <?php $display = 'display:none;'; 
 	  if($action == 'image_grid') { $display = ''; }
 ?>
-
 <div id="image_grid_pane" class="form-group edit-section" style="margin:20px 0px; <?php echo $display;?>">
    <div style="width:100%; clear:both; margin-bottom:15px;">
      <div id="igp" style="width:100%;">
 	  {{ Form::open(array('route' => 'image_grid.store', 'method' => 'post')) }}
 
-		{{ Form::label('grid_title', 'Image Grid') }}
-
+		<div class="edit-blk-top">
+			<label class="edit-hdr eh90">Image Grid </label>
+			<div class="edit-icon-div"> <img src="/images/new_image.png" class="edit-icon edit-imagegrid-icon"></div>
+		</div>	
 	    <div id="grid_title"></div>
 	    {{ Form::submit('Create Image Grid', array('id' => 'save_image_grid_btn',
 	    	'class' => 'button-success pure-button button-small', 'style' => 'height:30px; padding:3px 15px 5px 15px')) }}
@@ -23,7 +24,7 @@
     @if(count($page->image_grids) > 0)
         <?php $grid_cnt = 0; $display = 'display:none;';	
         ?>
-        <ul style="width:580px; list-style:none; margin-left:0; margin-top:10px; padding-left:0;">
+        <ul class="image_grid_ul">
 	    	@foreach($page->image_grids as $image_grid)
 	    	    <?php 
 	    	    ++$grid_cnt;	
@@ -72,9 +73,9 @@
 					    <br>
 					    <div style="width:100%; float:left; display:block">
 						    <button id="grid_image_save_btn" class="button-success pure-button button-small" 
-						    	onclick="saveGridImage(event, {{$image_grid->id}})" style="float:left;">Save Image</button>
+						    	onclick="saveGridImage(event, {{$image_grid->id}})" style="float:left;height:30px; padding:3px 15px 5px 15px">Save Image</button>
 						    <button id="cancel_grid_btn_{{$image_grid->id}}" class="button-error pure-button button-small" 
-						      onclick="hideGridImageForm( {{$image_grid->id}})" style="float:left; margin-left:3px;">Cancel</button>
+						      onclick="return hideGridImageForm({{$image_grid->id}})" style="float:left; margin-left:3px;height:30px; padding:3px 15px 5px 15px">Cancel</button>
 						</div>
 					    <input name="grid_image_id" id="grid_image_id_{{$image_grid->id}}" type="hidden">
 				    </div>
@@ -113,7 +114,7 @@ function hideImageGridForm(id) {
 }
 
 function editGridImage(image_grid_id, id) {
-	$("body").scrollTop(100);
+	scrollToMenu();
 	$('#grid_image_id_'+image_grid_id).val(id);
 	showSliderImageForm(image_grid_id);
 
@@ -136,6 +137,11 @@ function editGridImage(image_grid_id, id) {
 	    		    console.log('editGridImage failed.. ');
 	    	    }
 	});
+}
+
+function hideGridImageForm() {
+	$('.edit-section').hide();
+	return false;
 }
 
 function saveGridImage(event, id) {
@@ -170,7 +176,6 @@ function saveGridImage(event, id) {
 						'" style="max-width:90px; max-height:60px;"></a></div>';
 	    			}
 	    			list += '</div>';
-// console.log(list);	    			
 	    			$('#grid_image_list_'+id).html(list);
 	    			var html = '';
 	    			if(data.images.length > 0) {
@@ -248,7 +253,10 @@ function updateGridImage(event, id) {
 var cur_image_grid_id = 0;
 
 function editImageGrid(id) {
-	$("body").scrollTop(370);
+	scrollToMenu();
+	resetCurBlockId();
+	$('.edit-section').hide();
+	$('.image_grid_ul').show();
 	$('.image-grid-blk').hide();
 	$('.grid-images-blk').hide();
 	if(cur_image_grid_id > 0) {
@@ -256,14 +264,10 @@ function editImageGrid(id) {
 		$('#grid_image_list_blk_'+cur_image_grid_id).hide();
 	}
 	cur_image_grid_id = id;
-	// showSliderSection();
-	// showGridImageForm(id);
 	$('#image_grid_blk_'+id).show();
 	$('#image_grid_pane_'+id).removeClass('no-display').show();
 	$('#grid_image_list_blk_'+id).show();
 	$('#image_grid_pane').show();
-	// hideImageGridForm(id);
-	// editImageSlider(id);
 }
 
 var lastImageGridId = 0;

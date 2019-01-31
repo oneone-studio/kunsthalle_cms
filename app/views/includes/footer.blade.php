@@ -59,10 +59,21 @@ function resetYoutube() {
 }
 
 
-var menuBarScrollPos = $("#cp_block").offset().top - 70;
+var menuBarScrollPos = $("#cp_block").offset().top - 90;
 
 function scrollToMenu() {
     $('html, body').animate({ scrollTop: menuBarScrollPos }, 500);
+}
+
+function scrollTo(selector) {
+  var scrollPos = 100;
+  if($('#'+selector).length) {
+    scrollPos = $("#"+selector).offset().top - 40;
+  }
+  if($('.'+selector).length) {
+    scrollPos = $("."+selector).offset().top - 40;
+  }
+  $('html, body').animate({ scrollTop: scrollPos }, 500);
 }
 </script>
 

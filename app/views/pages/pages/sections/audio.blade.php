@@ -1,6 +1,9 @@
-<div id="audio_block" class="form-group edit-section" style="margin-top:20px;display:none;">
+<div id="audio_block" class="form-group edit-section" style="margin-top:-20px;display:none;">
   <form method="POST" action="/audio/save" accept-charset="UTF-8"><input name="_token" type="hidden">
-    <label for="audio" style="float:left;">Audio</label>
+    <div class="edit-blk-top">
+        <label for="audio" class="edit-hdr eh50">Audio</label>
+        <div class="edit-icon-div"> <img src="/images/audio1.png" class="edit-icon edit-audio-icon"></div>
+    </div>
     <div style="clear:both;height:10px;"></div>
     <div style="float:left;margin-top:6px;margin-right:8px;">Link:</div>
     <input placeholder="" style="width:600px;float:left;" name="url" type="text" id="audio_url">
@@ -20,6 +23,7 @@
 
 <script>
 function editAudio(id, aUrl) {
+    scrollToMenu();
     $('#audio_id').val(id);
     $.ajax({
         type: 'GET',

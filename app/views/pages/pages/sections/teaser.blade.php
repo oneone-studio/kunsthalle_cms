@@ -1,9 +1,9 @@
-<label for="Teasers" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('teasers_block')">Teaser
+<label id="teasers_block_lbl" class="lbl-1" onclick="toggleBlock('teasers_block')">Teaser
   <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span>
 </label>
 <div id="teasers_block" class="form-group edit-section" style="display:none;margin-top:2px;">
   <form id="teaser_form" method="POST" action="/teasers/save" accept-charset="UTF-8" enctype="multipart/form-data" 
-     onsubmit="return checkTeasersForm()"><input name="_token" type="hidden">
+     onsubmit="return checkTeasersForm()">
     <div style="clear:both;"></div>
     <label for="teaser_file" style="float:left;width:130px;">Image</label>
     <?php echo Form::file('teaser_file', ['id' => 'teaser_file', 'onchange' => 'uploadTeaser()']); ?>				    
@@ -12,9 +12,12 @@
     <div style="width:10%; float:left; display:inline;">
       <?php $display = 'display:none;'; 
       		$src = "#";
-      		$tsr_caption = '';
-          $line_1 = '';
-          $line_2 = '';
+          $tsr_caption_de = '';
+          $tsr_caption_en = '';
+          $line_1_de = '';
+          $line_1_en = '';
+          $line_2_de = '';
+          $line_2_en = '';
       		$teaser_id = 0;
       		if($page->teaser) {
       			$src = "/files/teasers/". $page->teaser->filename;

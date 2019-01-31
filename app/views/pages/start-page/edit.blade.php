@@ -88,8 +88,14 @@
 									    <div style="width:130px;float:left;"><label for="" style="float:left;">{{ Form::label('text', 'Text') }}</label></div>
 										<div style="width:70%;float:left; padding-bottom:10px;">
 										    <div style="width:100%;float:left;">
-											    {{ Form::text('slide_line', null, ['id' => 'slide_line', 'style' => 'width:350px;margin-top:-3px;float:left;']) }}
-											    <select name="slide_line_size" id="slide_line_size" style="width:80px;float:left;position:relative;top:-4px;left:4px;">
+											    <div style="width:100%;display:block;">
+												    {{ Form::text('slide_line_de', null, ['id' => 'slide_line_de', 'style' => 'width:350px;margin-top:-3px;float:left;', 'placeholder' => 'DE']) }} 
+												    <div class="inp-de">DE</div><br/>
+												    {{ Form::text('slide_line_en', null, ['id' => 'slide_line_en', 'style' => 'width:350px;margin-top:-3px;float:left;', 'placeholder' => 'EN']) }} 
+												    <div class="inp-en">EN</div>
+											    </div>
+											    <div style="clear:both;"></div>
+											    <select name="slide_line_size" id="slide_line_size" style="width:80px;float:left;position:relative;top:-4px;left:0px;">
 											    	<option value="xs">XS</option>
 											    	<option value="s">S</option>
 											    	<option value="m">M</option>
@@ -672,7 +678,8 @@ function editPageSliderImage(slider_id, id) {
 	cur_slider_id = slider_id;
 	$("body").scrollTop(10);
 	$('#slide_id_'+slider_id).val(id);
-	$('#slide_line').val('');
+	$('#slide_line_de').val('');
+	$('#slide_line_en').val('');
 	showSliderImageForm(slider_id);
 
 	$('#gallery_image_save_btn_'+slider_id).attr('onclick', 'updatePageSliderImage(event, '+slider_id+','+id+')');
@@ -695,7 +702,7 @@ function editPageSliderImage(slider_id, id) {
 	    				tx = data.image.slide_text[i];
 	    				html += '<div id="tsr_line_'+tx.id+'" style="width:100%;float:left;">'+
 	    						   '<span style="cursor:pointer;" onclick="editSlideLine('+tx.id+','+data.image.id+')"'+
-	    						   '>'+ ((tx.line.length > 0 && tx.line != "&nbsp;") ? tx.line : 'blank-line') + '</span>'+
+	    						   '>'+ ((tx.line_de.length > 0 && tx.line_de != "&nbsp;") ? tx.line_de : 'blank-line') + '</span>'+
 	    						   '<a href="javascript:deleteTsrLine('+tx.id+')" style="position:relative;left:5px;font-size:14px;">x</a>'+
 	    						'</div>';
 	    			}
@@ -1170,7 +1177,8 @@ var new_slide_line = 1;
 function addNewLineInput(e, btn) {
 	e.preventDefault();
 	btn.blur();
-	$('#slide_line').val('');
+	$('#slide_line_de').val('');
+	$('#slide_line_en').val('');
 	$('#slide_line_size').val('');
 	$('#slide_line_id').val('0');
 	new_slide_line = 1;
@@ -1201,7 +1209,8 @@ function editSlideLine(id, slider_id) {
 	    dataType: 'json',
 	    success:function(data) { 
 	    			console.log("editSlideLine success"); console.log(data);
-					$('#slide_line').val(data.text.line);
+					$('#slide_line_de').val(data.text.line_de);
+					$('#slide_line_en').val(data.text.line_en);
 					$('#slide_line_size').val(data.text.size);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
@@ -1211,23 +1220,28 @@ function editSlideLine(id, slider_id) {
 }
 
 function saveSlideText() {
-	var slide_line = $('#slide_line').val();
-	if(slide_line.length == 0) { slide_line = '&nbsp;'; }
+	var slide_line_de = $('#slide_line_de').val();
+	var slide_line_en = $('#slide_line_en').val();
+	if(slide_line_de.length == 0) { slide_line_de = '&nbsp;'; }
+	if(slide_line_en.length == 0) { slide_line_en = '&nbsp;'; }
 	$.ajax({
 	    type: 'POST',
 	    url: '/save-slide-text',
-	    data: { 'id': $('#slide_line_id').val(), 'page_id': $('#page_id').val(), 'slide_id': $('#slide_id_'+cur_slider_id).val(), 'slider_id': cur_slider_id, 'line': slide_line, 'size': $('#slide_line_size').val() },
+	    data: { 'id': $('#slide_line_id').val(), 'page_id': $('#page_id').val(), 'slide_id': $('#slide_id_'+cur_slider_id).val(), 'slider_id': cur_slider_id, 'line_de': slide_line_de, 'line_en': slide_line_en, 'size': $('#slide_line_size').val() },
 	    dataType: 'json',
 	    success:function(data) { 
 	    			console.log(data);
-	    			var line = '';
+	    			var line_de = '';
+	    			var line_en = '';
 	    			var blank = true;
-	    			if(data.text.line.length > 0 && data.text.line != '&nbsp;') { line = data.text.line; blank = false; }
-					$('#slide_line').val(line);
+	    			if(data.text.line_de.length > 0 && data.text.line_de != '&nbsp;') { line_de = data.text.line_de; blank = false; }
+	    			if(data.text.line_en.length > 0 && data.text.line_en != '&nbsp;') { line_en = data.text.line_en; blank = false; }
+					$('#slide_line_de').val(line_de);
+					$('#slide_line_en').val(line_en);
 					$('#slide_line_size').val(data.text.size);
 					$('#slide_text_msg').show().delay(20).fadeIn('slow');
 	    			$('#slide_text_msg').hide().delay(5000).fadeOut(2500);	    			
-	    			var line_text = data.text.line;
+	    			var line_text = data.text.line_de;
 	    			if(blank) { line_text = 'blank-line'; }
 	    			var html = '<div id="tsr_line_'+data.text.id+'" style="width:100%;float:left;">' +
 								 '<span style="cursor:pointer;" onclick="editSlideLine('+data.text.id+')">'+ line_text +'</span>' +
@@ -1236,7 +1250,7 @@ function saveSlideText() {
 					if(new_slide_line == 1) {
 						$('#slide_text').append(html);
 					} else {
-						html = '<span style="cursor:pointer;" onclick="editSlideLine('+data.text.id+')">'+data.text.line+'</span>' +
+						html = '<span style="cursor:pointer;" onclick="editSlideLine('+data.text.id+')">'+data.text.line_de+'</span>' +
 							   '<a href="javascript:deleteTsrLine('+data.text.id+')" style="position:relative;left:5px;font-size:14px;">x</a>';
 						$('#tsr_line_'+data.text.id).html(html);
 					}	   

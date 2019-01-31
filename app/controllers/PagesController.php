@@ -71,7 +71,8 @@ class PagesController extends BaseController {
 			$page = new Page;
 			$page->title_de = Input::get('title_de');
 			$page->title_en = Input::get('title_en');
-			$page->active = Input::has('active') ? 1 : 0;
+			$page->active_de = Input::has('active_de') ? 1 : 0;
+			$page->active_en = Input::has('active_en') ? 1 : 0;
 			if(Input::has('contacts') && count(Input::get('contacts'))) {
 				$page->contacts()->sync(Input::get('contacts')); // attach contacts
 			} else {
@@ -115,8 +116,10 @@ class PagesController extends BaseController {
 			$page = new Page;
 			$page->title_de = Input::get('title_de');
 			$page->title_en = Input::get('title_en');
-			$page->seo_page_title = Input::get('seo_page_title');
-			$page->seo_page_desc = Input::get('seo_page_desc');
+			$page->seo_page_title_de = Input::get('seo_page_title_de');
+			$page->seo_page_title_en = Input::get('seo_page_title_en');
+			$page->seo_page_desc_de = Input::get('seo_page_desc_de');
+			$page->seo_page_desc_en = Input::get('seo_page_desc_en');
 			$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
 			$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 			foreach($reps as $char => $rep) {
@@ -124,7 +127,8 @@ class PagesController extends BaseController {
 			}
 			$page->slug = $slug;
 			$page->cluster_id = Input::get('cluster_id');
-			$page->active = Input::has('active') ? 1 : 0;
+			$page->active_de = Input::has('active_de') ? 1 : 0;
+			$page->active_en = Input::has('active_en') ? 1 : 0;
 			$page->save();
 			if(Input::has('contacts') && count(Input::get('contacts'))) {
 				$page->contacts()->sync(Input::get('contacts')); // attach contacts
@@ -217,7 +221,8 @@ class PagesController extends BaseController {
 			$page->title_de = Input::get('title_de');
 			$page->title_en = Input::get('title_en');
 			$page->cluster_id = Input::get('cluster_id');
-			$page->active = Input::has('active') ? 1 : 0;
+			$page->active_de = Input::has('active_de') ? 1 : 0;
+			$page->active_en = Input::has('active_en') ? 1 : 0;
 			$page->save();
 			if(Input::has('contacts') && count(Input::get('contacts'))) {
 				$page->contacts()->sync(Input::get('contacts')); // attach contacts
@@ -396,8 +401,10 @@ class PagesController extends BaseController {
 
 		$page->title_de = Input::get('title_de');
 		$page->title_en = Input::get('title_en');
-		$page->seo_page_title = Input::get('seo_page_title');
-		$page->seo_page_desc = Input::get('seo_page_desc');
+		$page->seo_page_title_de = Input::get('seo_page_title_de');
+		$page->seo_page_title_en = Input::get('seo_page_title_en');
+		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
 		$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
@@ -416,7 +423,8 @@ class PagesController extends BaseController {
 		    $page->tags()->detach(); // detatch tags
 		}
 		// $page->sort_order = Input::get('sort_order');
-		$page->active = Input::has('active') ? 1 : 0;
+		$page->active_de = Input::has('active_de') ? 1 : 0;
+		$page->active_en = Input::has('active_en') ? 1 : 0;
 		$page->save();
 
 		$cs = ContentSection::find(Input::get('cs_id'));
@@ -518,7 +526,8 @@ class PagesController extends BaseController {
 		$page->title_de = Input::get('title_de');
 		$page->title_en = Input::get('title_en');
 		$page->sort_order = Input::get('sort_order');
-		$page->active = Input::has('active') ? 1 : 0;
+		$page->active_de = Input::has('active_de') ? 1 : 0;
+		$page->active_en = Input::has('active_en') ? 1 : 0;
 		$page->save();
 
 		// $cs = ContentSection::find(Input::get('cs_id'));
@@ -752,12 +761,13 @@ class PagesController extends BaseController {
 			$text = new SlideText();
 			$id = DB::table('slide_text')->insertGetId([
 						   'page_slider_image_id' => Input::get('slide_id'),
-						   'line' => Input::get('line'),
+						   'line_de' => Input::get('line_de'),
+						   'line_en' => Input::get('line_en'),
 			               'size' => Input::get('size')]);
 			$text = SlideText::find($id);
 		} else {
 			SlideText::where('id', Input::get('id'))
-			    		->update(['line' => Input::get('line'), 'size' => Input::get('size')]);
+			    		->update(['line_de' => Input::get('line_de'), 'line_en' => Input::get('line_en'), 'size' => Input::get('size')]);
 			$text = SlideText::find(Input::get('id'));
 		}
 

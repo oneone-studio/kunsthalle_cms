@@ -1,9 +1,9 @@
-			    <label id="downloads_block_lbl" for="Downloads" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('downloads_block')">Downloads 
-			      <span id="downloads_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span></label>
-
-			    <?php $display = 'display:none;'; 
-			    	  if($action == 'downloads') { $display = ''; }
+			    <?php $display = 'display:none;'; $toggle_icon = '+';
+			    	  if($action == 'downloads') { $display = ''; $toggle_icon = '-'; }
 			    ?>   
+			    <label id="downloads_block_lbl" class="lbl-1" onclick="toggleBlock('downloads_block')">Downloads 
+			      <span id="downloads_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">{{$toggle_icon}}</span></label>
+
 				<div id="downloads_block" class="form-group edit-section" style="margin-top:2px; {{$display}}">
 				  <form id="dl_protection_form" method="post" action="/save-dl-protection" enctype="multipart/form-data" onsubmit="return checkDownloadsForm()">
 				    <div style="clear:both;"></div>
@@ -56,7 +56,13 @@
 					</div>      
 				    <div style="clear:both;"></div>
 				    <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Download link title</div>
-				    <input placeholder="" style="width:500px;float:left;" name="link_title" type="text" id="download_link_title">
+				    <div style="width:70%;display:inline-block;">
+					    <input placeholder="" style="width:500px;float:left;" name="link_title_de" type="text" id="download_link_title_de">
+				        <div class="inp-de">DE</div><br/>
+				        <div style="clear:both;"></div>
+				        <input placeholder="" style="width:500px;float:left;" name="link_title_en" type="text" id="download_link_title_en">
+				        <div class="inp-en">EN</div><br/>
+				    </div>    
 				    <div style="clear:both;"></div>
 				    <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Protection:</div>
 				    <input type="checkbox"  style="float:left;margin-right:15px;" name="protected" type="text" id="protected_chk">

@@ -1,4 +1,4 @@
-<label for="Teasers" style="width:100%; float:left;margin-top:20px;cursor:pointer;" onclick="toggleBlock('teasers_block')">Teaser
+<label id="teasers_block_lbl" class="lbl-1" onclick="toggleBlock('teasers_block')">Teaser
   <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span></label>
 
 <div id="teasers_block" class="form-group edit-section" style="display:none;margin-top:2px;">

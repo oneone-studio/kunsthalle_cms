@@ -55,6 +55,7 @@
 var lastSliderId = 0;
 var pageContentId = 0;
 var contentSortOrder = 0;
+var cur_block_id = '';
 
 function showContentInput() {
 	tinyMCE.get('content_de').setContent('');
@@ -75,6 +76,8 @@ function hideContentInput() {
 }
 
 function editSection(sec, id) {
+	scrollToMenu();
+	resetCurBlockId();
 	$.ajax({
 	    type: 'GET',
 	    url: '/get-page-section',
@@ -91,7 +94,10 @@ function editSection(sec, id) {
 }
 
 function editPageContent(id) {
-	$("body").scrollTop(10);
+	resetEdit();
+	scrollToMenu();
+	resetCurBlockId();
+	if($('#'+PAGE_CONTENT_BID).length) { $('#'+PAGE_CONTENT_BID).show(); }
 	pageContentId = id;
 	$('#pc_id').val(id);
 	showContentInput();
@@ -121,6 +127,8 @@ var h2Id = 0;
 var h2textId = 0;
 
 function editH2(id) {
+	scrollToMenu();
+	resetCurBlockId();
 	h2Id = id;
 	$('#h2_id').val(id);
 	$("body").scrollTop(10); //$('#h2_de').click();
@@ -162,10 +170,12 @@ function saveH2(id) {
 }
 
 function editH2text(id) {
+	scrollToMenu();
+	resetCurBlockId();
 	h2textId = id;
 	$('#h2text_id').val(id);
-	$("body").scrollTop(10);
-	toggleInput('h2text');
+	resetEdit();
+	$('#'+H2TEXT_BID).show();
 	$('#sort_order').show();
 	$.ajax({
 	    type: 'GET',
@@ -207,6 +217,27 @@ function deleteImageSlider(id) {
 	} else {
 		return false;
 	}	
+}
+
+function deleteImageGrid(id) {
+	// if(confirm('Are you sure you want to delete (y/n)?')) {
+		$.ajax({
+		    type: 'GET',
+		    url: '/delete-image-grid',
+		    data: { 'id': id },
+		    dataType: 'json',
+		    success:function(data) { 
+		    			console.log('deleteImageGrid success..');
+		    			$('#image_grid_lbl_'+id).hide();
+		    			$('#grid_image_list_'+id).html('');
+					},
+		    error:  function(jqXHR, textStatus, errorThrown) {
+		    		    console.log('deleteImageGrid failed..');
+		    	    }
+		});
+	// } else {
+	// 	return false;
+	// }	
 }
 
 function deleteTeaser(id) {
@@ -399,15 +430,20 @@ function showNewSliderForm() {
 var lastImageGridId = 0;
 // Image Grid
 // function editImageGrid(id) {
+// 	$('.image_grid_ul').show();
+// 	scrollToMenu();
+// 	resetCurBlockId();
 // 	if(lastImageGridId > 0) {
 // 		$('#image_grid_blk_'+listImageGridId).hide();
 // 	}
-// 	$('#image_grid_pane').show();
+// 	$('#'+IMAGE_GRID_BID).show();
 // 	$('#image_grid_blk_'+id).show();	
 // 	lastImageGridId = id;
 // }
 
 function editImageSlider(id) {
+	scrollToMenu();
+	resetCurBlockId();
 	hideNewSliderImageForm();
 	if(lastSliderId > 0) {
 		$('#slider_lbl_'+lastSliderId).removeClass('no-display').show();
@@ -444,7 +480,7 @@ function cancelEditSlider(event, id) {
 var cur_slider_id = 0;
 
 function openAndEditImageSlider(id) {
-	$("body").scrollTop(570);
+	scrollToMenu();
 	$('.slider-blk').hide();
 	$('.slider-images-blk').hide();
 	if(cur_slider_id > 0) {
@@ -456,7 +492,6 @@ function openAndEditImageSlider(id) {
 	$('#slider_blk_'+id).show();
 	$('#slider_image_list_blk_'+id).show();
 	hideSliderImageForm(id);
-	// editImageSlider(id);
 }
 
 function updatePageImageSlider(event, page_id, id) {
@@ -545,8 +580,10 @@ function hideNewSliderImageForm() {
 }
 
 function editPageSliderImage(slider_id, id) {
-	$("body").scrollTop(10);
+	scrollToMenu();
+	resetCurBlockId();
 	$('#image_id_'+slider_id).val(id);
+	$('#slider_id').val(slider_id);
 	showSliderImageForm(slider_id);
 
 	$('#gallery_image_save_btn').attr('onclick', 'updatePageSliderImage(event, '+slider_id+')');
@@ -556,13 +593,13 @@ function editPageSliderImage(slider_id, id) {
 	    data: { 'id': id },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('editPageSliderImage success..'+ "\n\n");
-	    			console.log(data);
+	    			console.log('editPageSliderImage('+slider_id+', '+id+') success..'+ "\n\n"); console.log(data);
 	    			$('#preview_lbl_'+slider_id).hide('');
 	    			$('#preview_'+slider_id).prop('src', DOMAIN +'/files/'+ data.image.path + data.image.filename);
 	    			$('#preview_'+slider_id).show();
-	    			// alert(tinyMCE.get('_image_detail_'+slider_id).getContent());
-	    			tinyMCE.get('_image_detail_'+slider_id).setContent(data.image.detail);
+	    			$('#sl_img_order_'+slider_id).val(data.image.sort_order);
+	    			tinyMCE.get('_image_detail_de_'+slider_id).setContent(data.image.detail_de);
+	    			tinyMCE.get('_image_detail_en_'+slider_id).setContent(data.image.detail_en);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
 	    		    console.log('editPageSliderImage failed.. ');
@@ -645,7 +682,8 @@ function deletePageSliderImage(id) {
 
 function updatePageSliderImage(event, id) {
 	event.preventDefault();
-	$('#image_detail_'+id).val(tinyMCE.get('_image_detail_'+id).getContent());
+	$('#image_detail_de_'+id).val(tinyMCE.get('_image_detail_de_'+id).getContent());
+	$('#image_detail_en_'+id).val(tinyMCE.get('_image_detail_en_'+id).getContent());
 	var frm = document.getElementById('slider_image_form_'+id);
 	var formData = new FormData(frm);
 	console.log(formData);
@@ -662,9 +700,8 @@ function updatePageSliderImage(event, id) {
 			hideNewSliderImageForm();
 			$('#preview_'+id).hide();
 			$('#image_id').val('');
-			// setTextareaContent('_image_detail_'+id, '');
 			$('#gi_'+id).prop('src', DOMAIN + '/images/gallery/' + data.item.image);
-			$('#desc_'+id).html(data.item.detail.substr(0, 10) + '...');
+			$('#desc_'+id).html(data.item.detail_de.substr(0, 10) + '...');
 			$('#gallery_image_save_btn').attr('onclick', 'savePageSliderImage(event, '+lastSliderId+')');
 
 			$("#slider_image_status_msg").removeClass('btn-danger').removeClass('btn-info').addClass('btn-success');
@@ -691,18 +728,21 @@ function resetPageSliderImageForm() {
 
 
 function showPageImageSection() {
-	$('#page_image_pane').show();
+	$('#'+BANNER_BID).show();
 }
 
 function hidePageImageSection() {
-	$('#page_image_pane').hide();	
+	$('#'+BANNER_BID).hide();	
 }
 
 function hideImageSection() {
-	$('#image_pane').hide();	
+	$('#image_block').hide();	
 }
 
 function editBanner(id) {
+	scrollToMenu();
+	resetCurBlockId();
+	if($('#'+BANNER_BID).length) { $('#'+BANNER_BID).show(); }
 	$('#banner_id').val(id);
 	$.ajax({
 	    type: 'GET',
@@ -757,27 +797,29 @@ function deleteBanner(id) {
 	});	
 }
 
-// function editImage(id) {
-// 	$('#image_id').val(id);
-// 	toggleInput('image');
-// 	$.ajax({
-// 	    type: 'GET',
-// 	    url: '/get-image',
-// 	    data: {'id': id},
-// 	    dataType: 'json',
-// 	    success:function(data) { 
-// 	    			console.log('editImage success..');
-// 	    			console.log(data);
-// 	    			$('#image_preview').prop('src', DOMAIN +'/files/image/'+ data.image.filename);
-// 	    			$('#image_preview').show();
-// 	    			tinyMCE.get('image_caption_de').setContent(data.image.caption_de);
-// 	    			tinyMCE.get('image_caption_en').setContent(data.image.caption_en);
-// 				},
-// 	    error:  function(jqXHR, textStatus, errorThrown) {
-// 	    		    console.log('editImage failed.. ');
-// 	    	    }
-// 	});	
-// }
+function editImage(id) {
+	scrollToMenu();
+	resetCurBlockId();
+	$('#image_id').val(id);
+	if($('#'+IMAGE_BID).length) { $('#'+IMAGE_BID).show(); }
+	$.ajax({
+	    type: 'GET',
+	    url: '/get-image',
+	    data: {'id': id},
+	    dataType: 'json',
+	    success:function(data) { 
+	    			console.log('editImage success..');
+	    			console.log(data);
+	    			$('#image_preview').prop('src', DOMAIN +'/files/image/'+ data.image.filename);
+	    			$('#image_preview').show();
+	    			tinyMCE.get('image_caption_de').setContent(data.image.caption_de);
+	    			tinyMCE.get('image_caption_en').setContent(data.image.caption_en);
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('editImage failed.. ');
+	    	    }
+	});	
+}
 
 function uploadPageImage() {
 	var frm = document.getElementById('banner_form');
@@ -1003,7 +1045,7 @@ function deletePageImage(id) {
 var cur_input = '';
 
 function toggleInput(type) {
-	if($('#'+cur_block_id)) { toggleBlock(cur_block_id); } // Close already opened block
+	if($('#'+cur_block_id).length) { toggleBlock(cur_block_id); } // Close already opened block
 	if(cur_input == type) {
 		$('.edit-section').hide();
 		cur_input = '';
@@ -1080,6 +1122,7 @@ function addNewLineInput(e, btn) {
 }
 
 function editBannerLine(id, banner_id) {
+	scrollToMenu();
 	new_banner_line = 0;
 	$('#bnr_line_id').val(id);
 	$('#banner_id').val(banner_id);
@@ -1166,7 +1209,8 @@ function deletePage(cs_id, menu_item_id, id) {
 }
 
 function editSponsorGroup(id) {
-	$('#sponsor_grp_id').val(id);
+	scrollToMenu();
+	if($('#'+SPONSOR_BID).length) { $('#'+SPONSOR_BID).show(); }
 	$.ajax({
 	    type: 'GET',
 	    url: '/get-sponsor-group',
@@ -1191,6 +1235,7 @@ function addSponsor(id, grp_title) {
 }
 
 function editSponsor(grp_id, id) {
+	scrollTo('sponsors_block');
 	$('#sponsor_grp_id').val(grp_id);
 	$('#sponsor_id').val(id);
 	$.ajax({
@@ -1200,7 +1245,7 @@ function editSponsor(grp_id, id) {
 	    dataType: 'json',
 	    success:function(data) { 
 	    			console.log('editSponsor success'); console.log(data);
-	    			$('#sponsor_group_val').html(data.item.headline);
+	    			$('#sponsor_group_val').html(data.item.headline_de);
 	    			$('#sponsor_url').val(data.item.url);
 	    			$('#sponsor_preview_'+grp_id).attr('src', DOMAIN+'/files/sponsors/'+ data.item.logo);
 	    			$('#sponsor_preview_'+grp_id).show();
@@ -1248,6 +1293,8 @@ function deleteSponsorGroup(id) {
 }
 
 function editDownload(id) {
+	scrollTo('downloads_block');
+	if($('#'+DOWNLOAD_BID).length) { $('#'+DOWNLOAD_BID).show(); }
 	$('#download_id').val(id);
 	$.ajax({
 	    type: 'GET',
@@ -1274,7 +1321,10 @@ function editDownload(id) {
 	    			} else {
 	    				$('#thumb_preview').hide();
 	    			}
-	    			if(data.item.link_title.length > 0) { $('#download_link_title').val(data.item.link_title); }
+	    			if(data.item.link_title_de.length > 0) { 
+	    				$('#download_link_title_de').val(data.item.link_title_de);
+	    				$('#download_link_title_en').val(data.item.link_title_en);
+	    			}
 	    			if(data.item.sort_order != undefined) { $('#download_sort_order').val(data.item.sort_order); }
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
@@ -1301,7 +1351,6 @@ function deleteDownload(id) {
 	}	
 }
 
-var cur_block_id = '';
 var url = document.URL;
 if(url.indexOf('/new_sponsor') > -1) { cur_block_id = 'sponsors_block'; }
 if(url.indexOf('/downloads') > -1) { cur_block_id = 'downloads_block'; }
@@ -1369,7 +1418,8 @@ function deleteDLTermsFile(id) {
 function resetDownloadForm() {
 	$('#download_file').val('');
 	$('#thumb').val('');
-	$('#download_link_title').val('');
+	$('#download_link_title_de').val('');
+	$('#download_link_title_en').val('');
 	$('#download_id').val('');
 	$('#download_preview').hide();
 	$('#thumb_preview').hide();
