@@ -982,9 +982,9 @@ function deletePageImage(id) {
 function toggleInput(type) {
 	scrollToMenu();
 	if($('#'+cur_block_id).length) { $('#'+cur_block_id).hide(); } // Close already opened block
-
+	// alert(cur_input +" __ "+type + " ----- "+ cur_block_id);
 	if(cur_input == type) {
-		$('.edit-section').hide();
+		resetEdit();
 		$('.menu-icon-active').removeClass('menu-icon-active');
 		cur_input = '';
 		cur_block_id = '';
@@ -1040,6 +1040,7 @@ function toggleInput(type) {
 	if(type == 'slider') {
 		$('#page_image_slider_block').show();
 	}
+	cur_input = type;
 }
 
 var tsr_line_count = 1;
