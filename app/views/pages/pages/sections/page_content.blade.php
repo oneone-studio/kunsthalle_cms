@@ -1,6 +1,7 @@
 			{{ Form::open(array('route' => 'page_contents.save', 'method' => 'post')) }}
 
-				<div id="page_content_blk" class="form-group edit-section edit-section" style="position:relative; top:40px; display:none;">
+				<div id="page_content_block" class="form-group edit-section edit-section" style="position:relative; top:40px; display:none;">
+				    <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 				    <label for="exampleInputEmail1">{{ Form::label('content_de', 'Content (de)') }}</label>
 				    {{ Form::textarea('content_de', null, ['id' => 'content_de', 'style' => 'width:500px; height:100px;', 'class' => 'tm_editor', 'placeholder' => 'de']) }}<br>
 				    <label for="exampleInputEmail1">{{ Form::label('content_en', 'Content (en)') }}</label>			    

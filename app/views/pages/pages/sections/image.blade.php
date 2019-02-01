@@ -1,6 +1,7 @@
 {{ Form::model($page, array('id' => 'image_form', 'route' => array('images.save'), 'files' => true)) }}
 
-	<div id="image_pane" class="form-group edit-section" style="margin-top:20px; display:none;">
+	<div id="image_block" class="form-group edit-section" style="margin-top:20px; display:none;">
+		<div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 		<div class="edit-blk-top">
 			<label class="edit-hdr eh130">Image with caption </label>
 			<div class="edit-icon-div"> <img src="/images/new_image.png" class="edit-icon-20 edit-image-icon"></div>
@@ -66,30 +67,3 @@
     {{ Form::hidden('image_id', 0, ['id' => 'image_id']) }}
 
 {{ Form::close() }}		
-
-<script>
-function editImage(id) {
-	$('#image_id').val(id);
-	toggleInput('image');
-	$.ajax({
-	    type: 'GET',
-	    url: '/get-image',
-	    data: {'id': id},
-	    dataType: 'json',
-	    success:function(data) { 
-	    			console.log('editImage success..');
-	    			console.log(data);
-	    			$('#image_preview').prop('src', DOMAIN +'/files/image/'+ data.image.filename);
-	    			$('#image_preview').show();
-	    			tinyMCE.get('image_caption_de').setContent(data.image.caption_de);
-	    			tinyMCE.get('image_caption_en').setContent(data.image.caption_en);
-	    			$('#image_pane').show();
-	    			$('#image_grid_pane_1').removeClass('no-display').show();
-				},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('editImage failed.. ');
-	    	    }
-	});	
-}
-
-</script>

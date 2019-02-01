@@ -39,6 +39,8 @@ class H2textExbController extends BaseController {
 			$h2text->headline_en = Input::get('h2_en');
 			$h2text->intro_de = Input::get('intro_de');
 			$h2text->intro_en = Input::get('intro_en');
+			$h2text->anchor_title_de = Input::get('anchor_title_de');
+			$h2text->anchor_title_en = Input::get('anchor_title_en');
 			$h2text->save();
 		} else {
 			$max_sort_order = 1;
@@ -54,6 +56,8 @@ class H2textExbController extends BaseController {
 			$h2text->headline_en = Input::get('h2_en');
 			$h2text->intro_de = Input::get('intro_de');
 			$h2text->intro_en = Input::get('intro_en');
+			$h2text->anchor_title_de = Input::get('anchor_title_de');
+			$h2text->anchor_title_en = Input::get('anchor_title_en');
 			$h2text->page_id = Input::get('id');
 			$h2text->save();
 

@@ -2,6 +2,7 @@
   <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span>
 </label>
 <div id="teasers_block" class="form-group edit-section" style="display:none;margin-top:2px;">
+  <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
   <form id="teaser_form" method="POST" action="/teasers/save" accept-charset="UTF-8" enctype="multipart/form-data" 
      onsubmit="return checkTeasersForm()">
     <div style="clear:both;"></div>

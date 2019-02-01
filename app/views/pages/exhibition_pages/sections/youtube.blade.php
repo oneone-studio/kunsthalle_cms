@@ -1,4 +1,5 @@
 <div id="youtube_block" class="form-group edit-section" style="margin-top:-20px;display:none;">
+  <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
   <form method="POST" action="/youtube/save" accept-charset="UTF-8"><input name="_token" type="hidden">
 	<div class="edit-blk-top">
 	    <label for="youtube" class="edit-hdr eh60">Youtube</label>
@@ -18,28 +19,3 @@
     {{ Form::hidden('youtube_id', 0, ['id' => 'youtube_id']) }}
   </form>  
 </div>
-
-<script>
-function editYoutube(id, yUrl) {
-	scrollToMenu();
-	$('#youtube_id').val(id);
-	$.ajax({
-	    type: 'GET',
-	    url: '/get-youtube',
-	    data: { 'id': id, 'page_id': $('#page_id').val() },
-	    dataType: 'json',
-	    success:function(data) { 
-	    			console.log('editYoutube success..');
-	    			console.log(data);
-	    			$('#youtube_preview').attr('src', 'https://i1.ytimg.com/vi/'+yUrl+'/default.jpg');
-	    			$('#youtube_preview').show();
-	    			$('#youtube_block').show();
-	    			$("body").scrollTop(400);
-	    			$('#youtube_url').focus();
-				},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('editYoutube failed..');
-	    	    }
-	});
-}
-</script>

@@ -5,6 +5,8 @@
 			      <span id="downloads_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">{{$toggle_icon}}</span></label>
 
 				<div id="downloads_block" class="form-group edit-section" style="margin-top:2px; {{$display}}">
+				    <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
+
 				  <form id="dl_protection_form" method="post" action="/save-dl-protection" enctype="multipart/form-data" onsubmit="return checkDownloadsForm()">
 				    <div style="clear:both;"></div>
 				    <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Terms file:</div>

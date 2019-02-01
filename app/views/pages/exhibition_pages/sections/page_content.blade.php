@@ -1,6 +1,7 @@
 {{ Form::open(array('route' => 'exb_page_contents.save', 'method' => 'post')) }}
 
-	<div id="page_content_blk" class="form-group edit-section" style="position:relative; top:20px; display:none;">
+	<div id="page_content_block" class="form-group edit-section" style="position:relative; top:20px; display:none;">
+		<div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 		<div class="edit-blk-top">
 		    <label for="exampleInputEmail1" class="edit-hdr eh90">Content (de)</label>
 		    <div class="edit-icon-div"> <img src="/images/text_image.png" class="edit-icon edit-content-icon"></div>

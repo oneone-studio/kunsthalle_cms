@@ -2,8 +2,9 @@
 <?php $display = 'display:none;';
 	  if(isset($action) && $action == 'image_grid') { $display = ''; }
 ?>
-<div id="image_grid_pane" class="form-group edit-section" style="margin:20px 0px; <?php echo $display;?>">
-   <div style="width:100%; clear:both; margin-bottom:15px;">
+<div id="image_grid_block" class="form-group edit-section" style="margin:20px 0px; <?php echo $display;?>">
+    <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
+    <div style="width:100%; clear:both; margin-bottom:15px;">
      <div id="igp" style="width:100%;">
 	  {{ Form::open(array('route' => 'exb_image_grid.store', 'method' => 'post')) }}
 
@@ -42,7 +43,7 @@
 	    		   </div>	
 	    		  </form>
 	    		</li>
-	    		<li id="image_grid_pane_{{$image_grid->id}}" class="no-display" style="padding:10px 0px;">
+	    		<li id="image_grid_block_{{$image_grid->id}}" class="no-display" style="padding:10px 0px;">
 	    		  <div style="width:100%; clear:both;">
 	    		  	<button id="grid_image_status_msg" class="pure-button" style="display:none; float:right;"></button>
 	    		  </div>
@@ -105,7 +106,7 @@
 </div>
 <script>
 function hideImageGridForm(id) {
-	$('#image_grid_pane_'+id).addClass('no-display');
+	$('#image_grid_block_'+id).addClass('no-display');
 	$('#grid_image_form_blk_'+id).hide();
 }
 
@@ -270,21 +271,21 @@ function editImageGrid(id) {
 	}
 	cur_image_grid_id = id;
 	$('#image_grid_blk_'+id).show();
-	$('#image_grid_pane_'+id).removeClass('no-display').show();
+	$('#image_grid_block_'+id).removeClass('no-display').show();
 	$('#grid_image_list_blk_'+id).show();
-	$('#image_grid_pane').show();
+	$('#image_grid_block').show();
 }
 
 var lastImageGridId = 0;
 function showGridImageForm(id) {
-	if(lastImageGridId > 0 && $('#image_grid_pane_'+lastImageGridId)) {
-		$('#image_grid_pane_'+lastImageGridId).addClass('no-display');
+	if(lastImageGridId > 0 && $('#image_grid_block_'+lastImageGridId)) {
+		$('#image_grid_block_'+lastImageGridId).addClass('no-display');
 	}
-	image_grid_pane_ = id;
+	image_grid_block_ = id;
 	$('#image_grid_blk_'+id).show();
-	$('#image_grid_pane_'+id).removeClass('no-display').show();
+	$('#image_grid_block_'+id).removeClass('no-display').show();
 	$('#grid_image_form_blk_'+id).removeClass('no-display').show();
-	$('#image_grid_pane').removeClass('no-display').show();
+	$('#image_grid_block').removeClass('no-display').show();
 }
 
 function showGridImagePreview(id) {

@@ -1,6 +1,7 @@
 {{ Form::model($page, array('id' => 'image_form', 'route' => array('exb-images.save'), 'files' => true)) }}
 
 	<div id="image_block" class="form-group edit-section" style="margin-top:20px; display:none;">
+		<div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 		<div class="edit-blk-top">
 			<label class="edit-hdr eh130">Image with caption </label>
 			<div class="edit-icon-div"> <img src="/images/new_image.png" class="edit-icon-20 edit-image-icon"></div>

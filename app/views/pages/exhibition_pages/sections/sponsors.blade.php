@@ -5,6 +5,7 @@
 			    <label id="sponsors_block_lbl" class="lbl-1" onclick="toggleBlock('sponsors_block')">Sponsor Groups 
 			      <span id="sponsors_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span></label>
 				<div id="sponsors_block" class="form-group edit-section" style="margin-top:2px; {{$display}}">
+				  <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 				  <form method="POST" action="/exb-sponsor-groups/save" accept-charset="UTF-8">
 				    <div style="clear:both;height:10px;"></div>
 				    <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Headline</div>

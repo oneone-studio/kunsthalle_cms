@@ -1,4 +1,5 @@
 	<div id="h2text_block" class="form-group edit-section" style="margin-top:20px;display:none;">
+      <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 	  <form method="POST" action="/h2text/save" accept-charset="UTF-8"><input name="_token" type="hidden">
 		<div class="edit-blk-top">
 		    <label for="h2" class="edit-hdr eh60">Headline</label>

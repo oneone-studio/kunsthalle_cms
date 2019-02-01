@@ -3,7 +3,8 @@
 			   		 if($action && $action == 'banner') { $display = ''; }
 			   ?>
 
-				<div id="banner_blk" class="form-group edit-section" style="margin-top:20px; <?php echo $display;?>">
+				<div id="banner_block" class="form-group edit-section" style="margin-top:20px; <?php echo $display;?>">
+					<div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
 					<label class="edit-hdr eh70">Banner</label>
 					<div style="clear:both;height:10px;"></div>
 				    <label for="banner_image" style="float:left;"><?php echo Form::label('banner_image', 'Image'); ?></label>

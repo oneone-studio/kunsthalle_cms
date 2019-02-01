@@ -264,9 +264,19 @@ a {
 	text-decoration: underline;
 }
 
+.close-link-div { width:16px; text-align: center; display:inline; padding:0px 4px; float:right; margin-right:-2px; color:#666; }
+.close-link { color:#999; font-weight:normal !important; font-size:12px; }
+.close-link:hover { color:orangered; text-decoration: none; }
+
 .no-display {
 	display:none;
 }
+
+/* Edit page */
+.slider_image_list_blk {
+	width:90%; font-family:georgia; font-size:14px; font-weight:normal; float:left; margin-bottom:10px; border:0px solid #e1e1e1; padding:5px;
+}
+
 
 
 /* Buttons

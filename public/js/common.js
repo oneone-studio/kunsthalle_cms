@@ -1,2 +1,2 @@
-var HTTP = 'https';
-var DOMAIN = 'https://cms.kunsthalle-bremen.net/';
+var HTTP = 'http';
+var DOMAIN = 'http://kunsthalle-cms.dv';

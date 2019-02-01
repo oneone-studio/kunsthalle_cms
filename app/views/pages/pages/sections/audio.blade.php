@@ -1,4 +1,5 @@
 <div id="audio_block" class="form-group edit-section" style="margin-top:-20px;display:none;">
+  <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
   <form method="POST" action="/audio/save" accept-charset="UTF-8"><input name="_token" type="hidden">
     <div class="edit-blk-top">
         <label for="audio" class="edit-hdr eh50">Audio</label>
@@ -20,28 +21,3 @@
     {{ Form::hidden('audio_id', 0, ['id' => 'audio_id']) }}
   </form>  
 </div>
-
-<script>
-function editAudio(id, aUrl) {
-    scrollToMenu();
-    $('#audio_id').val(id);
-    $.ajax({
-        type: 'GET',
-        url: '/get-audio',
-        data: { 'id': id, 'page_id': $('#page_id').val() },
-        dataType: 'json',
-        success:function(data) { 
-                    console.log('editYoutube success..');
-                    console.log(data);
-                    $('#audio_preview').html('<iframe width="345" height="120" src="https://voicerepublic.com/embed/talks/'+aUrl+'" frameborder="0" scrolling="no" allowfullscreen></iframe>');
-                    $('#audio_preview').show();
-                    $('#audio_block').show();
-                    $("body").scrollTop(400);
-                    $('#audio_url').focus();
-                },
-        error:  function(jqXHR, textStatus, errorThrown) {
-                    console.log('editYoutube failed..');
-                }
-    });
-}
-</script>

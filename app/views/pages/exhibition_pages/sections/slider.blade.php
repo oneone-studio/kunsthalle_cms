@@ -1,7 +1,8 @@
 <?php $display = 'display:none;'; 
 	  if($action == 'new_slider') { $display = ''; }
 ?>
-<div id="page_image_slider" class="form-group edit-section" style="margin:-20px 0px; <?php echo $display;?>">
+<div id="page_image_slider_block" class="form-group edit-section" style="margin:-20px 0px; <?php echo $display;?>">
+   <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
    <div style="width:100%; clear:both; margin-bottom:15px;">
      <div id="page_image_slider_pane" style="width:100%;">
 	  {{ Form::open(array('route' => 'exb_page_image_sliders.store', 'method' => 'post')) }}
@@ -91,7 +92,7 @@
 					    <div style="width:100%; float:left; display:block">
 						    <button id="gallery_image_save_btn" class="button-success pure-button button-small" onclick="savePageSliderImage(event, {{$slider->id}})" style="float:left;">Save Image</button>
 						    <button id="cancel_slider_btn_{{$slider->id}}" class="button-error pure-button button-small" 
-						      onclick="hideSliderImageForm( {{$slider->id}})" style="float:left; margin-left:3px;">Cancel</button>
+						      onclick="hideSliderImageForm( {{$slider->id}})" style="height:26px;margin-left:3px;margin-top:-1px; padding-top:2px;'">Cancel</button>
 						</div>
 					    <input name="image_id" id="image_id_{{$slider->id}}" type="hidden">
 					    <input name="image_detail_de" id="image_detail_de_{{$slider->id}}" type="hidden">
@@ -110,10 +111,9 @@
     			    <a href="javascript:reloadPage()" style="font-size:11px;color:blue;margin:10px 0;">Refresh</a><br>
     				@if($slider->page_slider_images)
     					@foreach($slider->page_slider_images as $sl_image)
-    						<div id="slider_image_{{$sl_image->id}}" style="width:90%; font-family:georgia; font-size:14px; 
-    							font-weight:normal; float:left; margin-bottom:10px; border:0px solid #e1e1e1; padding:5px;">
+    						<div id="slider_image_{{$sl_image->id}}" class="slider_image_list_blk">
     						<a href="javascript:deletePageSliderImage({{$sl_image->id}})" title="Delete" type="button" 
-    						class="icon-fixed-width icon-trash" style="margin-left:5px; vertical-align:bottom; position:relative;top:6px;"><span class="glyphicon glyphicon-trash"></span></a>
+    						class="icon-fixed-width icon-trash" class="slider_image_del_list_blk"><span class="glyphicon glyphicon-trash"></span></a>
     						<a href="javascript:editPageSliderImage({{$slider->id}}, {{$sl_image->id}})"><img id="slider_img_{{$sl_image->id}}" src="{{$DOMAIN}}/files/sliders/{{$sl_image->filename}}" style="max-width:90px; max-height:60px;"></a></div>
     					@endforeach
     				@endif

@@ -28,6 +28,6 @@
 		    <a href="javascript:toggleInput('slider')" class="form-link menu-icon-slider"><img src="/images/gallery.png" style="width:22px;height:22px;float:left;margin-right:3px;"> </a>
 		    
 		    <div style="width:16px; text-align: center; display:inline; padding:0px 4px; float:left; color:#888;">|</div>
-		    <a href="http://kunsthalle-site.dev/page/{{$page->id}}" target="_blank" class="form-link">View </a>
+		    <a href="http://kunsthalle-site.dev/page/{{$page->id}}" target="_blank" class="form-link">View </a>		    
     </div>
 </div>
