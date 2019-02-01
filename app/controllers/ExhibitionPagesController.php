@@ -69,7 +69,9 @@ class ExhibitionPagesController extends BaseController {
 			}
 
 			$cs = ContentSection::find(Input::get('cs_id'));
-			$cs->active = Input::has('active') ? 1 : 0;
+			$cs->active = Input::has('active_de') ? 1 : 0;
+			$cs->active_de = Input::has('active_de') ? 1 : 0;
+			$cs->active_en = Input::has('active_en') ? 1 : 0;
 			$cs->exhibition_pages()->save($exhibition_page);
 
 	        return Redirect::action('ExhibitionPagesController@edit', ['id' => $exhibition_page->id]);
@@ -146,7 +148,7 @@ class ExhibitionPagesController extends BaseController {
 			$cs = ContentSection::find(Input::get('cs_id'));
 			$cs->title_de = Input::get('title_de');
 			$cs->title_en = Input::get('title_en');
-			$cs->active = Input::has('active') ? 1 : 0;
+			$cs->active = Input::has('active_de') ? 1 : 0;
 			$cs->save();
 
 			$cs->exhibition_pages()->save($exhibition_page);
@@ -247,7 +249,9 @@ class ExhibitionPagesController extends BaseController {
 		if($cs->type == 'exhibition_page') {
 			$cs->title_de = Input::get('title_de');
 			$cs->title_en = Input::get('title_en');
-			$cs->active = Input::has('active') ? 1 : 0;
+			$cs->active = Input::has('active_de') ? 1 : 0;
+			$cs->active_de = Input::has('active_de') ? 1 : 0;
+			$cs->active_en = Input::has('active_en') ? 1 : 0;
 			$cs->save();
 		}
 

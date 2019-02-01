@@ -81,8 +81,11 @@ class PagesController extends BaseController {
 			$page->save();
 
 			$cs = ContentSection::find(Input::get('cs_id'));
-			$cs->active = Input::has('active') ? 1 : 0;
+			$cs->active = Input::has('active_de') ? 1 : 0;
+			$cs->active_de = Input::has('active_de') ? 1 : 0;
+			$cs->active_en = Input::has('active_en') ? 1 : 0;
 			$cs->pages()->save($page);
+			$cs->save();
 
 			$menu = MenuItem::find(Input::get('menu_item_id'));
 			$menu->content_sections()->save($cs);
@@ -138,7 +141,9 @@ class PagesController extends BaseController {
 
 			$cs = ContentSection::find(Input::get('cs_id'));
 			if($cs->type == 'page') {
-				$cs->active = Input::has('active') ? 1 : 0;
+				$cs->active = Input::has('active_de') ? 1 : 0;
+				$cs->active_de = Input::has('active_de') ? 1 : 0;
+				$cs->active_en = Input::has('active_en') ? 1 : 0;
 				$cs->pages()->save($page);
 				$cs->save();
 			}	
@@ -148,6 +153,8 @@ class PagesController extends BaseController {
 				if($res) {
 					if($res[0]->cnt == 0) {
 						$cs->active = 0;
+						$cs->active_de = 0;
+						$cs->active_en = 0;
 						$cs->save();
 					}
 				}
@@ -234,7 +241,9 @@ class PagesController extends BaseController {
 			if($cs->type == 'page') {
 				$cs->title_de = Input::get('title_de');
 				$cs->title_en = Input::get('title_en');
-				$cs->active = Input::has('active') ? 1 : 0;
+				$cs->active = Input::has('active_de') ? 1 : 0;
+				$cs->active_de = Input::has('active_de') ? 1 : 0;
+				$cs->active_en = Input::has('active_en') ? 1 : 0;
 				$cs->save();
 			}	
 
@@ -422,7 +431,6 @@ class PagesController extends BaseController {
 		} else {
 		    $page->tags()->detach(); // detatch tags
 		}
-		// $page->sort_order = Input::get('sort_order');
 		$page->active_de = Input::has('active_de') ? 1 : 0;
 		$page->active_en = Input::has('active_en') ? 1 : 0;
 		$page->save();
@@ -431,7 +439,9 @@ class PagesController extends BaseController {
 		if($cs->type == 'page') {
 			$cs->title_de = Input::get('title_de');
 			$cs->title_en = Input::get('title_en');
-			$cs->active = Input::has('active') ? 1 : 0;
+			$cs->active = Input::has('active_de') ? 1 : 0;
+			$cs->active_de = Input::has('active_de') ? 1 : 0;
+			$cs->active_en = Input::has('active_en') ? 1 : 0;
 			$cs->save();
 		}
 		if($cs->type == 'page_section') {
@@ -440,6 +450,8 @@ class PagesController extends BaseController {
 			if($res) {
 				if($res[0]->cnt == 0) {
 					$cs->active = 0;
+					$cs->active_de = 0;
+					$cs->active_en = 0;
 					$cs->save();
 				}
 			}
