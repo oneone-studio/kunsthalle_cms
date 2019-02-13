@@ -6,8 +6,9 @@
 	    {{ Form::text('title_en', $page->title_en, ['placeholder' => 'Title [en]', 'style' => 'width:300px;']) }}
 	</div>    
 	<div class="form-group nl">
-	    <?php echo Form::label('slug', 'Slug'); ?>
-	    <?php echo Form::text('slug', null, ['style' => 'width:300px;', 'placeholder' => 'Slug']); ?>
+	    <?php echo Form::label('slug', 'Slug [de]'); ?>
+	    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [de]', 'onkeyup' => 'convToSlug(this)']); ?>
+	    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'onkeyup' => 'convToSlug(this)']); ?>
 	</div>    
 	<div class="form-group"> 
 	    {{ Form::label('calendar', 'Calendar') }}

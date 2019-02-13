@@ -59,8 +59,11 @@ function resetYoutube() {
   $('#youtube_preview').hide();
 }
 
+var menuBarScrollPos = 0;
 
-var menuBarScrollPos = $("#cp_block").offset().top - 90;
+if($("#cp_block").length) {
+  menuBarScrollPos = $("#cp_block").offset().top - 90;  
+}
 
 function scrollToMenu() {
     $('html, body').animate({ scrollTop: menuBarScrollPos }, 500);

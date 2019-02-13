@@ -54,6 +54,15 @@ class ExhibitionPagesController extends BaseController {
 			$exhibition_page = new ExhibitionPage;
 			$exhibition_page->title_de = Input::get('title_de');
 			$exhibition_page->title_en = Input::get('title_en');
+			$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+			$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
+			$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
+			foreach($reps as $char => $rep) {
+				$slug_de = str_replace($char, $rep, $slug_de);
+				$slug_en = str_replace($char, $rep, $slug_en);
+			}
+			$exhibition_page->slug_de = $slug_de;
+			$exhibition_page->slug_en = $slug_en;
 			$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
 			$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
 			$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
@@ -105,6 +114,15 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
+		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
+		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
+		foreach($reps as $char => $rep) {
+			$slug_de = str_replace($char, $rep, $slug_de);
+			$slug_en = str_replace($char, $rep, $slug_en);
+		}
+		$exhibition_page->slug_de = $slug_de;
+		$exhibition_page->slug_en = $slug_en;
 		$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
 		$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
 		$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
@@ -230,6 +248,15 @@ class ExhibitionPagesController extends BaseController {
 
 		$exhibition_page->title_de = Input::get('title_de');
 		$exhibition_page->title_en = Input::get('title_en');
+		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
+		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
+		foreach($reps as $char => $rep) {
+			$slug_de = str_replace($char, $rep, $slug_de);
+			$slug_en = str_replace($char, $rep, $slug_en);
+		}
+		$exhibition_page->slug_de = $slug_de;
+		$exhibition_page->slug_en = $slug_en;
 		$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
 		$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
 		$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');

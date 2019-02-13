@@ -123,12 +123,15 @@ class PagesController extends BaseController {
 			$page->seo_page_title_en = Input::get('seo_page_title_en');
 			$page->seo_page_desc_de = Input::get('seo_page_desc_de');
 			$page->seo_page_desc_en = Input::get('seo_page_desc_en');
-			$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
+			$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+			$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
 			$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 			foreach($reps as $char => $rep) {
-				$slug = str_replace($char, $rep, $slug);
+				$slug_de = str_replace($char, $rep, $slug_de);
+				$slug_en = str_replace($char, $rep, $slug_en);
 			}
-			$page->slug = $slug;
+			$page->slug_de = $slug_de;
+			$page->slug_en = $slug_en;
 			$page->cluster_id = Input::get('cluster_id');
 			$page->active_de = Input::has('active_de') ? 1 : 0;
 			$page->active_en = Input::has('active_en') ? 1 : 0;
@@ -393,7 +396,6 @@ class PagesController extends BaseController {
 			$action_val = $action;
 		}		  
 		$params['action'] = $action_val;
-		// echo '<pre>'; print_r($page->image_grids);exit;
 
 		return View::make('pages.pages.edit', $params);
 	}
@@ -405,7 +407,6 @@ class PagesController extends BaseController {
 			Session::forget('auth');
 			return Redirect::to('http://www.google.com');
 		}
-		// echo 'update()<pre>'; print_r(Input::all()); exit;	
 		$page = Page::findOrFail(Input::get('id'));
 
 		$page->title_de = Input::get('title_de');
@@ -414,12 +415,15 @@ class PagesController extends BaseController {
 		$page->seo_page_title_en = Input::get('seo_page_title_en');
 		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
 		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
-		$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
+		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
-			$slug = str_replace($char, $rep, $slug);
+			$slug_de = str_replace($char, $rep, $slug_de);
+			$slug_en = str_replace($char, $rep, $slug_en);
 		}
-		$page->slug = $slug;
+		$page->slug_de = $slug_de;
+		$page->slug_en = $slug_en;
 		$page->cluster_id = Input::get('cluster_id');
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
 			$page->contacts()->sync(Input::get('contacts')); // attach contacts

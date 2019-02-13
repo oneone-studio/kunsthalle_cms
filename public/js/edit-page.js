@@ -592,7 +592,7 @@ function savePageSliderImage(event, id) {
 	    			if(data.images.length > 0) {
 		    			for(i=0; i<data.images.length; i++) {
 		    				img = data.images[i];
-		    				html += '<div style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
+		    				html += '<div id="slider_image_blk_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
 						  			 '<img src="/files/sliders/'+img.filename+'" style="max-width:60px;border:none;">'+
 						  		   '</div>';
 						  	$('#slider_val_'+id).html(html);	   
@@ -1431,4 +1431,10 @@ function editAudio(id, aUrl) {
                     console.log('editYoutube failed..');
                 }
     });
+}
+
+function convToSlug(fld) {
+	var str = fld.value;
+	str = str.trim().toLowerCase().replace(' ', '-');
+	fld.value = str;
 }
