@@ -6,7 +6,7 @@
 {{ HTML::script('js/common.js'); }}
 
 {{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'); }}
-{{ HTML::script('https://code.jquery.com/qunit/qunit-1.19.0.js'); }}
+<!-- {{ HTML::script('https://code.jquery.com/qunit/qunit-1.19.0.js'); }} -->
 {{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'); }}
 
 {{ HTML::style('//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'); }}

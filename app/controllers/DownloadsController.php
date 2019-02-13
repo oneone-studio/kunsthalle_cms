@@ -85,7 +85,7 @@ class DownloadsController extends BaseController {
 				$terms_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $terms_file);
 	    		$sp->terms_file = $terms_file;
-	    		if(!Input::has('link_title') || strlen(Input::get('link_title')) == 0) {
+	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
 	    	}	
@@ -94,13 +94,13 @@ class DownloadsController extends BaseController {
 				$thumb = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $thumb);
 	    		$sp->thumb_image = $thumb;
-	    		if(!Input::has('link_title') || strlen(Input::get('link_title')) == 0) {
+	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
 	    	}	
 
-			$link_title = (Input::has('link_title') && strlen(Input::get('link_title')) > 0) ? Input::get('link_title') : $link_title;
-			$sp->link_title = $link_title;
+    		$sp->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+    		$sp->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
 			$sp->save();
 
 		} else {
@@ -130,10 +130,12 @@ class DownloadsController extends BaseController {
 	    		$sp->thumb_image = $thumb;
 	    	}	
 			$sp->page_id = Input::get('page_id');	
-			$link_title = (Input::has('link_title') && strlen(Input::get('link_title')) > 0) ? Input::get('link_title') : '';
-			$link_title = substr($link_title, 0, strpos($link_title, '.'));
-			$sp->link_title = $link_title;
-// echo '<pre>'; print_r($sp); exit;	    	
+    		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+			$link_title_de = substr($link_title_de, 0, strpos($link_title_de, '.'));
+			$sp->link_title_de = $link_title_de;
+    		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+			$link_title_en = substr($link_title_en, 0, strpos($link_title_en, '.'));
+			$sp->link_title_en = $link_title_en;
 			$sp->save();
 
 			$page->downloads()->save($sp);

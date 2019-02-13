@@ -67,6 +67,7 @@ class TeasersController extends BaseController {
 	}
 
 	public function save() {
+		// echo '<pre>';print_r(Input::all());exit;			
 		if(Input::has('teaser_id') && is_numeric(Input::get('teaser_id')) && intval(Input::get('teaser_id')) > 0) {
 			$sp = Teaser::find(Input::get('teaser_id'));
 			$sp->caption_de = Input::get('caption_de');

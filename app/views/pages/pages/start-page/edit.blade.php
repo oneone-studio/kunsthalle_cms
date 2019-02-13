@@ -101,7 +101,7 @@
 					    		<li id="slider_blk_{{$slider->id}}" class="slider-blk" style="width:580px; <?php echo $display;?>">
 					    		  <form id="image_slider_form_<?php echo $slider->id;?>" method="post" action="">
 					    		   <div id="slider_lbl_{{$slider->id}}" 
-					    		  	  style="width:100%; font-size:12px;float:left;">Image Slider<a href="javascript:showSliderImageForm({{$slider->id}})" class="form-link"
+					    		  	  style="width:100%; font-size:12px;float:left;">Image Slider<a href="javascript:showSliderImageForm({{$slider->id}}, true)" class="form-link"
 					    		  	    style="margin-left:5px;font-weight:normal;font-size:12px;">(Add Image)</a>
 					    		  	   <a href="javascript:deleteImageSlider({{$slider->id}})" title="Delete" type="button" 
 				    						class="icon-fixed-width icon-trash" style="margin-left:5px; vertical-align:bottom; position:relative;top:2px;"><span class="glyphicon glyphicon-trash"></span></a> 

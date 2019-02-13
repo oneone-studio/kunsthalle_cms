@@ -112,9 +112,33 @@ class ImageGridController extends BaseController {
 	}
 	
 	public function destroy($id) {
-		MenuItem::where('id', $id)->delete();
+		$grid = ImageGrid::with(['grid_images'])->where('id', $id)->first();
+		$imgs = $grid->grid_images;
+		if($imgs) {
+			foreach($imgs as $im) {
+				$im->delete();
+			}
+		}
+		$grid->delete();			
 
 		return Redirect::action('MenuItemsController@index');
+	}
+
+	public function deleteImageGrid() {
+		if(Input::has('id')) {
+			$grid = ImageGrid::with(['grid_images'])->where('id', Input::get('id'))->first();
+			$imgs = $grid->grid_images;
+			if($imgs) {
+				foreach($imgs as $im) {
+					$im->delete();
+				}
+			}
+			$grid->delete();			
+
+			return Response::json(array('error' => false), 200);
+		}
+
+		return Response::json(array('error' => true), 400);
 	}
 
 	public function getImage() {

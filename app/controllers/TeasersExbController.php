@@ -70,9 +70,12 @@ class TeasersExbController extends BaseController {
 		// echo '<pre>'; print_r(Input::all()); exit;
 		if(Input::has('teaser_id') && is_numeric(Input::get('teaser_id')) && intval(Input::get('teaser_id')) > 0) {
 			$sp = Teaser::find(Input::get('teaser_id'));
-			$sp->caption = Input::get('caption');
-			$sp->line_1 = Input::get('line_1');
-			$sp->line_2 = Input::get('line_2');
+			$sp->caption_de = Input::get('caption_de');
+			$sp->caption_en = Input::get('caption_en');
+			$sp->line_1_de = Input::get('line_1_de');
+			$sp->line_1_en = Input::get('line_1_en');
+			$sp->line_2_de = Input::get('line_2_de');
+			$sp->line_2_en = Input::get('line_2_en');
 			if (Input::hasFile('teaser_file')) {
 				$file = Input::file('teaser_file');
 				$teaser_file = strtolower($file->getClientOriginalName());
@@ -83,9 +86,12 @@ class TeasersExbController extends BaseController {
 
 		} else {
 			$sp = new Teaser();
-			$sp->caption = Input::get('caption');
-			$sp->line_1 = Input::get('line_1');
-			$sp->line_2 = Input::get('line_2');
+			$sp->caption_de = Input::get('caption_de');
+			$sp->caption_en = Input::get('caption_en');
+			$sp->line_1_de = Input::get('line_1_de');
+			$sp->line_1_en = Input::get('line_1_en');
+			$sp->line_2_de = Input::get('line_2_de');
+			$sp->line_2_en = Input::get('line_2_en');
 			if (Input::hasFile('teaser_file')) {
 				$file = Input::file('teaser_file');
 				$teaser_file = strtolower($file->getClientOriginalName());

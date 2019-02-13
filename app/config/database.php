@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'sql556.your-server.de',
-			'database'  => 'khb_db2',
-			'username'  => 'khb_db2', //'khb_db2',
-			'password'  => '0weB62iI3mRqkYAP', //$_ENV['DB_PW'], //'n55wfXPKWbPvwsR5',
+			'host'      => 'localhost',
+			'database'  => 'khdb_jan23_19',
+			'username'  => 'dev',
+			'password'  => 'test123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

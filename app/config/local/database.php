@@ -23,9 +23,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'kunsthalle',
-			'username'  => 'oneone_wim',
-			'password'  => 'one2three',
+			'database'  => 'khdb2', //_dec_07_2017',
+			'username'  => 'dev',
+			'password'  => 'test123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

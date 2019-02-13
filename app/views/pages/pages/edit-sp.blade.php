@@ -2,13 +2,7 @@
 
 @section('content')
     <div class="page_content">
-    	<div style="width:100%; clear:both;">
-			<!-- <div class="form-group" style="text-align:right;">
-			    <a href="/content/contents/{{$cs_id}}">Add Content </a> 
-			    <div style="width:16px; text-align: center; display:inline; padding:0px 4px; color:#888;">|</div>
-			    <a href="/content/image-galleries/{{$cs_id}}">Add Image Gallery </a>
-			</div>
-	    </div> -->
+      <div style="width:100%; clear:both;">
       <h4>Page: {{$content_section->title_de}}
       		<a href="/content/pages/{{$menu_item_id}}/{{$cs_id}}" class="link" style="margin-left:2px;">back</a>
       </h4>

@@ -98,7 +98,7 @@
 					 	 <a href="javascript:deleteGalleryImage(<?php echo $img->id;?>)" class="close" style="float:left; color:#333; margin-right:15px; font-size:12px;">x</a>
 					     <input type="checkbox" name="gallery_image[]" value="<?php echo $img->id;?>" style="display:none;">
 					     <a href="javascript:editGalleryImage(<?php echo $img->id;?>)"><img id="gi_<?php echo $img->id;?>" src="/images/gallery/<?php echo $img->image; ?>" 
-					 	 style="max-height:30px; border:none;clear:both; cursor:pointer;""></a>
+					 	 style="max-height:30px; border:none;clear:both; cursor:pointer;"></a>
 <!-- 					 	 <div id="desc_< ?php echo $img->id;?>" style="cursor:pointer; width:150px; float:right; text-align:left; font-weight:normal; color:#222; font-size:11px;" onclick="editGalleryImage(< ?php echo $img->id;?>)">< ?php echo substr($img->detail, 0, 10) . '...';?></div>					 	 
  -->					 </li>
 			<?php endforeach; ?>    
