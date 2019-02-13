@@ -79,6 +79,14 @@ function scrollTo(selector) {
   }
   $('html, body').animate({ scrollTop: scrollPos }, 500);
 }
+
+var url = document.URL;
+
+$(function() {
+  if(url.indexOf('/sponsor') > -1) { scrollTo(SPONSOR_BID); }
+});
+
+
 </script>
 
 </div>

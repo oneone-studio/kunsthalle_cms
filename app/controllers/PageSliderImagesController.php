@@ -27,7 +27,7 @@ class PageSliderImagesController extends BaseController {
 
 	    		$slider = PageImageSlider::with(['page_slider_images'])->find(Input::get('slider_id'));
 	    		$order = 1;
-	    		if($slider->page_slider_images) {
+	    		if(isset($slider->page_slider_images)) {
 	    			foreach($slider->page_slider_images as $img) {
 	    				$img->sort_order = $img->sort_order + 1;
 	    				$img->save();

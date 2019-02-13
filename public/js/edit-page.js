@@ -1167,8 +1167,9 @@ function deletePage(cs_id, menu_item_id, id) {
 }
 
 function editSponsorGroup(id) {
-	scrollToMenu();
+	scrollTo(SPONSOR_BID);
 	if($('#'+SPONSOR_BID).length) { $('#'+SPONSOR_BID).show(); }
+	$('#sponsor_grp_id').val(id);
 	$.ajax({
 	    type: 'GET',
 	    url: get_sponsor_group_url,
