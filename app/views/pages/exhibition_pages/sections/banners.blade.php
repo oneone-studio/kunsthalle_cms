@@ -90,7 +90,7 @@
 				    	@if(isset($page->banner))
 				    	    <?php $banner_id = $page->banner->id; ?>
 				    		<div id="bnr_{{$page->banner->id}}" style="width:60px;float:left;margin-right:3px;">
-				    			<a href="javascript:deleteBanner({{$page->banner->id}}, {{$page->id}})" style="color:#555;font-size:14px;margin-right:4px;">x</a>				    			
+				    			<a href="javascript:deleteBanner({{$page->banner->id}})" style="color:#555;font-size:14px;margin-right:4px;">x</a>				    			
 				    			<div onclick="editBanner({{$page->banner->id}})" style="width:60px;height:60px;cursor:pointer;float:left; background:url('/files/exhibition_pages/{{$page->banner->image}}') no-repeat;background-size:cover; border:1px solid #eeee88;">&nbsp;</div>
 				    		</div>
 				    	@endif

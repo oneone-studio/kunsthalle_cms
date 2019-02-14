@@ -736,7 +736,7 @@ function deleteBanner(id) {
 	    			$('#bnr_'+id).hide();
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('deleteBanner('+id+') failed..');
+	    		    console.log('deleteBanner('+id+') failed...');
 	    	    }
 	});	
 }
@@ -761,7 +761,7 @@ function editImage(id) {
 	    			tinyMCE.get('image_caption_en').setContent(data.image.caption_en);
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('editImage failed.. ');
+	    		    console.log('editImage failed..');
 	    	    }
 	});	
 }
@@ -1014,6 +1014,7 @@ function toggleInput(type) {
 	$('.menu-icon-active').removeClass('menu-icon-active');
 	if($('.menu-icon-'+type).length) { $('.menu-icon-'+type).addClass('menu-icon-active'); }
 	$('.edit-section').hide();
+	// if($('#'+cur_block_id).length) { scrollTo(cur_block_id); }
 
 	if(type == 'h2') {
 		$('#h2_block').show();
@@ -1031,7 +1032,7 @@ function toggleInput(type) {
 		$('#'+IMAGE_GRID_BID).show();
 	}
 	if(type == 'banner') {
-		$('#page_image_pane').show();
+		$('#'+BANNER_BID).show();
 		if(!isNaN(banner_id) && parseInt(banner_id) > 0) {
 			$('#add_line_btn').attr('disabled', false);
 			editBanner(banner_id);
@@ -1080,7 +1081,7 @@ function addNewLineInput(e, btn) {
 }
 
 function editBannerLine(id, banner_id) {
-	scrollToMenu();
+	scrollTo(BANNER_BIDn );
 	new_banner_line = 0;
 	$('#bnr_line_id').val(id);
 	$('#banner_id').val(banner_id);

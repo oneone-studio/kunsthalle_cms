@@ -578,7 +578,7 @@ class PagesController extends BaseController {
 
 	public function deleteBanner() {
 		$f = fopen('logs/pages.log', 'w+');
-		fwrite($f, "deleteBanner()\n\n".print_r(Input::all(), true));
+		fwrite($f, "deleteBanner().. [date('Y-m-d H:i')]\n\n".print_r(Input::all(), true));
 		if(Input::has('banner_id')) {
 			Banner::where('id', Input::get('banner_id'))->delete();
 		}

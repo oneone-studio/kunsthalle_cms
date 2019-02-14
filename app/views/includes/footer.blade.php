@@ -69,6 +69,10 @@ function scrollToMenu() {
     $('html, body').animate({ scrollTop: menuBarScrollPos }, 500);
 }
 
+function scrollToTop() {
+    $('html, body').animate({ scrollTop: 0 }, 500);
+}
+
 function scrollTo(selector) {
   var scrollPos = 100;
   if($('#'+selector).length) {
