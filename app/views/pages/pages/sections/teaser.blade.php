@@ -58,7 +58,7 @@
     <div style="clear:both;"></div>
     <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Line 2 (Date)</div>
     <div style="width:70%;display:inline-block;">
-      <input placeholder="EN" style="width:500px;float:left;" name="line_2_de" type="text" id="line_2_de" value="{{$line_2_de}}">
+      <input placeholder="DE" style="width:500px;float:left;" name="line_2_de" type="text" id="line_2_de" value="{{$line_2_de}}">
       <div class="inp-de">DE</div>
       <div style="clear:both;"></div>
       <input placeholder="EN" style="width:500px;float:left;" name="line_2_en" type="text" id="line_2_en" value="{{$line_2_en}}">

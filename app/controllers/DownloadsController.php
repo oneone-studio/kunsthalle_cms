@@ -69,22 +69,23 @@ class DownloadsController extends BaseController {
 		// echo '<pre>'; print_r(Input::all()); exit;
 		$page = Page::find(Input::get('page_id'));
 		if(Input::has('download_id') && is_numeric(Input::get('download_id')) && intval(Input::get('download_id')) > 0) {
-			$sp = Download::find(Input::get('download_id'));
-			$sp->sort_order = Input::has('sort_order') ? Input::get('sort_order') : count($page->downloads);
-    		$sp->protected = Input::has('protected') ? 1 : 0;
+			$dl = Download::find(Input::get('download_id'));
+			$dl->sort_order = Input::has('sort_order') ? Input::get('sort_order') : count($page->downloads);
+    		$dl->protected = Input::has('protected') ? 1 : 0;
     		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
     		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $download_file);
-	    		$sp->filename = $download_file;
+	    		$dl->filename = $download_file;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $terms_file);
-	    		$sp->terms_file = $terms_file;
+	    		$dl->terms_file = $terms_file;
 	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
@@ -93,26 +94,26 @@ class DownloadsController extends BaseController {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $thumb);
-	    		$sp->thumb_image = $thumb;
+	    		$dl->thumb_image = $thumb;
 	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
 	    	}	
 
-    		$sp->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$sp->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
-			$sp->save();
+    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+			$dl->save();
 
 		} else {
-			$sp = new Download();
-			$sp->sort_order = Input::has('sort_order') ? Input::get('sort_order') : count($page->downloads)+1;
-    		$sp->protected = Input::has('protected') ? 1 : 0;
+			$dl = new Download();
+			$dl->sort_order = Input::has('sort_order') ? Input::get('sort_order') : count($page->downloads)+1;
+    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
     		$link_title = '';
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $download_file);
-	    		$sp->filename = $download_file;
+	    		$dl->filename = $download_file;
 	    		// if(!Input::has('link_title') || strlen(Input::get('link_title')) == 0) {
 	    		// 	$link_title = $file->getClientOriginalName();
 	    		// }
@@ -121,24 +122,24 @@ class DownloadsController extends BaseController {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $terms_file);
-	    		$sp->terms_file = $terms_file;
+	    		$dl->terms_file = $terms_file;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $thumb);
-	    		$sp->thumb_image = $thumb;
+	    		$dl->thumb_image = $thumb;
 	    	}	
-			$sp->page_id = Input::get('page_id');	
+			$dl->page_id = Input::get('page_id');	
     		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
 			$link_title_de = substr($link_title_de, 0, strpos($link_title_de, '.'));
-			$sp->link_title_de = $link_title_de;
+			$dl->link_title_de = $link_title_de;
     		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
 			$link_title_en = substr($link_title_en, 0, strpos($link_title_en, '.'));
-			$sp->link_title_en = $link_title_en;
-			$sp->save();
+			$dl->link_title_en = $link_title_en;
+			$dl->save();
 
-			$page->downloads()->save($sp);
+			$page->downloads()->save($dl);
 		}
 
 		return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('page_id'), 

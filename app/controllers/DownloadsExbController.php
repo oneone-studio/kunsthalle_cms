@@ -70,55 +70,57 @@ class DownloadsExbController extends BaseController {
 	public function save() {
 		// echo '<pre>'; print_r(Input::all()); exit;
 		if(Input::has('download_id') && is_numeric(Input::get('download_id')) && intval(Input::get('download_id')) > 0) {
-			$sp = Download::find(Input::get('download_id'));
-    		$sp->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$sp->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+			$dl = Download::find(Input::get('download_id'));
+    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $download_file);
-	    		$sp->filename = $download_file;
+	    		$dl->filename = $download_file;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $terms_file);
-	    		$sp->terms_file = $terms_file;
+	    		$dl->terms_file = $terms_file;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $thumb);
-	    		$sp->thumb_image = $thumb;
+	    		$dl->thumb_image = $thumb;
 	    	}	
-			$sp->save();
+			$dl->save();
 
 		} else {
-			$sp = new Download();
-    		$sp->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$sp->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+			$dl = new Download();
+    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $download_file);
-	    		$sp->filename = $download_file;
+	    		$dl->filename = $download_file;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $terms_file);
-	    		$sp->terms_file = $terms_file;
+	    		$dl->terms_file = $terms_file;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
 	    		$file->move('files/downloads/', $thumb);
-	    		$sp->thumb_image = $thumb;
+	    		$dl->thumb_image = $thumb;
 	    	}	
-			$sp->save();
+			$dl->save();
 
 			$page = Page::find(Input::get('page_id'));
-			$page->downloads()->save($sp);
+			$page->downloads()->save($dl);
 		}
 
 		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('page_id'), 'action' => 'downloads']);

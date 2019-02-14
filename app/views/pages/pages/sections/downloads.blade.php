@@ -71,9 +71,14 @@
 				    <div style="clear:both;"></div>
 				    <div style="width:120px;float:left;margin-top:6px;margin-right:8px;">Order</div>
 				    <select style="width:110px;float:left;" name="sort_order" type="text" id="download_sort_order">
-				    @for($c=1; $c<=count($page->downloads); $c++)
-				       <option value="{{$c}}">{{$c}} </option>
-				    @endfor
+				    @if(count($page->downloads) == 0)
+				    	<option value="1">1 </option>
+				    @endif
+				    @if(count($page->downloads) > 0)
+					    @for($c=1; $c<=count($page->downloads)+1; $c++)
+					       <option value="{{$c}}">{{$c}} </option>
+					    @endfor
+					@endif
 				    </select>
 				    <div style="clear:both;"></div>
 					<div class="form-group" style="margin-left:0px; padding-bottom:20px;">

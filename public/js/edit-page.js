@@ -1082,7 +1082,7 @@ function addNewLineInput(e, btn) {
 }
 
 function editBannerLine(id, banner_id) {
-	scrollTo(BANNER_BIDn );
+	scrollTo(BANNER_BID );
 	new_banner_line = 0;
 	$('#bnr_line_id').val(id);
 	$('#banner_id').val(banner_id);
