@@ -72,8 +72,8 @@
 <script src="/js/edit-page.js"></script>
 <script>
 var DOMAIN = HTTP+'://<?php echo $_SERVER['SERVER_NAME'];?>';
-var cur_block_id = '<?php echo $cur_block_id;?>';
-var cur_input = '<?php echo $cur_input;?>';
+var cur_block_id = '';
+var cur_input = '';
 var banner_id = '<?php echo $banner_id; ?>';
 
 </script>
