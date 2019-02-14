@@ -69,11 +69,16 @@ class DownloadsExbController extends BaseController {
 
 	public function save() {
 		// echo '<pre>'; print_r(Input::all()); exit;
+		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+    	$protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
+		$sort_order = (Input::has('sort_order') && is_numeric(Input::get('sort_order'))) ? Input::get('sort_order') : 1;
 		if(Input::has('download_id') && is_numeric(Input::get('download_id')) && intval(Input::get('download_id')) > 0) {
 			$dl = Download::find(Input::get('download_id'));
-    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
-    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
+    		$dl->link_title_de = $link_title_de;
+    		$dl->link_title_en = $link_title_en;
+    		$dl->protected = $protected;
+    		$dl->sort_order = $sort_order;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
@@ -96,9 +101,10 @@ class DownloadsExbController extends BaseController {
 
 		} else {
 			$dl = new Download();
-    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
-    		$dl->protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
+    		$dl->link_title_de = $link_title_de;
+    		$dl->link_title_en = $link_title_en;
+    		$dl->protected = $protected;
+    		$dl->sort_order = $sort_order;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
