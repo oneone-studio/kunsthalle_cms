@@ -1,5 +1,5 @@
 <?php $display = 'display:none;'; $toggle_icon = '+';
-      if($action == 'new_sponsor' || $action == 'sponsor') { $display = ''; $toggle_icon = '-'; }
+      // if($action == 'new_sponsor' || $action == 'sponsor') { $display = ''; $toggle_icon = '-'; }
 ?>   
 <label id="sponsors_block_lbl" class="lbl-1" onclick="toggleBlock('sponsors_block')">Sponsor Groups 
 <span id="sponsors_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">{{$toggle_icon}}</span></label>

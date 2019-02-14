@@ -1082,7 +1082,7 @@ function addNewLineInput(e, btn) {
 }
 
 function editBannerLine(id, banner_id) {
-	scrollTo(BANNER_BID );
+	// scrollTo(BANNER_BID );
 	new_banner_line = 0;
 	$('#bnr_line_id').val(id);
 	$('#banner_id').val(banner_id);
@@ -1323,7 +1323,6 @@ function toggleBlock(bid) {
 		$('#'+bid+'_icon').html('+');
 		cur_block_id = '';
 	} else {
-		// if($('#'+cur_block_id)) { toggleBlock(cur_block_id); } // Close already opened block
 		$('#'+bid).show();
 		// if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', 'orangered'); }
 		$('#'+bid+'_icon').html('-');

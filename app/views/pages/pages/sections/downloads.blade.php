@@ -1,5 +1,5 @@
 			    <?php $display = 'display:none;'; $toggle_icon = '+';
-			    	  if($action == 'downloads') { $display = ''; $toggle_icon = '-'; }
+			    	  // if($action == 'downloads') { $display = ''; $toggle_icon = '-'; }
 			    ?>   
 			    <label id="downloads_block_lbl" class="lbl-1" onclick="toggleBlock('downloads_block')">Downloads 
 			      <span id="downloads_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">{{$toggle_icon}}</span></label>
