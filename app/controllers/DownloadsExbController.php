@@ -69,6 +69,13 @@ class DownloadsExbController extends BaseController {
 
 	public function save() {
 		// echo '<pre>'; print_r(Input::all()); exit;
+		$f = fopen('logs/downloads.log', 'w+');
+		fwrite($f, "\nsave() [date('Y-m-d H:i')\n\n".print_r(Input::all(), true));
+
+		$local_dir = 'files/downloads/';
+		// $remote_dir = '/Applications/MAMP/htdocs/'.SITE_DIR.'/public/files/downloads/';
+		$remote_dir = '../../'.SITE_DIR.'/public/files/downloads/';
+
 		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
 		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
     	$protected = (Input::has('protected') && Input::get('protected') == 'on') ? 1 : 0;
@@ -81,21 +88,24 @@ class DownloadsExbController extends BaseController {
     		$dl->sort_order = $sort_order;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
-				$download_file = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $download_file);
-	    		$dl->filename = $download_file;
+				$filename = strtolower($file->getClientOriginalName());
+	    		// $file->move($local_dir, $download_file);
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->filename = $filename;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
-				$terms_file = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $terms_file);
-	    		$dl->terms_file = $terms_file;
+				$filename = strtolower($file->getClientOriginalName());
+	    		// $file->move('files/downloads/', $terms_file);
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->terms_file = $filename;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
-				$thumb = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $thumb);
-	    		$dl->thumb_image = $thumb;
+				$filename = strtolower($file->getClientOriginalName());
+	    		// $file->move('files/downloads/', $thumb);
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->thumb_image = $filename;
 	    	}	
 			$dl->save();
 
@@ -107,29 +117,42 @@ class DownloadsExbController extends BaseController {
     		$dl->sort_order = $sort_order;
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
-				$download_file = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $download_file);
-	    		$dl->filename = $download_file;
+				$filename = strtolower($file->getClientOriginalName());
+	    		// $file->move('files/downloads/', $download_file);
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->filename = $filename;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
-				$terms_file = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $terms_file);
-	    		$dl->terms_file = $terms_file;
+				$filename = strtolower($file->getClientOriginalName());
+	    		// $file->move('files/downloads/', $filename);
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->terms_file = $filename;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
-				$thumb = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $thumb);
-	    		$dl->thumb_image = $thumb;
+				$filename = strtolower($file->getClientOriginalName());
+	    		self::moveFile($local_dir, $remote_dir, $file);
+	    		$dl->thumb_image = $filename;
 	    	}	
 			$dl->save();
 
 			$page = Page::find(Input::get('page_id'));
 			$page->downloads()->save($dl);
 		}
-
+		
 		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('page_id'), 'action' => 'downloads']);
+	}
+
+	public static function moveFile($loc_dir, $rem_dir, $file) {
+		$filename = $file->getClientOriginalName();
+		if(!$file->move($rem_dir, $filename)) {
+    		$file->move($loc_dir, $filename);
+    		if(!copy($loc_dir.$filename, $rem_dir.$filename)) {
+    			return false;
+    		}
+		}
+		return true;
 	}
 
 	public function uploadDownloadFile() {
