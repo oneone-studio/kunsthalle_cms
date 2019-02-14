@@ -733,6 +733,7 @@ function deleteBanner(id) {
 	    			console.log('deleteBanner('+id+') success..');
 	    			$('#banner_preview').hide();
 	    			$('#banner_text_blk').html('');
+	    			$('#banner_id').val('');
 	    			$('#bnr_'+id).hide();
 				},
 	    error:  function(jqXHR, textStatus, errorThrown) {
