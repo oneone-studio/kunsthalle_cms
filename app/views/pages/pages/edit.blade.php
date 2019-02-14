@@ -53,15 +53,15 @@
     <?php
     	$action = ''; $cur_block_id = ''; $cur_input = '';
     	if(strpos($_SERVER['REQUEST_URI'], '/banner')) { 
-    		$action = 'banner'; $cur_block_id = 'banner'; $cur_input = 'banner'; 
+    		$action = 'banner'; $cur_block_id = 'banner_block'; $cur_input = 'banner'; 
     	}
     	if(strpos($_SERVER['REQUEST_URI'], '/downloads')) { 
-    		$action = 'downloads'; $cur_block_id = 'downloads_block_lbl'; $cur_input = 'downloads_block_lbl'; 
+    		$action = 'downloads'; $cur_block_id = 'downloads_block'; $cur_input = 'downloads_block_lbl'; 
     	}
     	if(strpos($_SERVER['REQUEST_URI'], '/image_grid')) { 
     		$action = 'image_grid'; $cur_block_id = 'image_grid_block'; $cur_input = 'image_grid_block'; 
     	}
-    	if(strpos($_SERVER['REQUEST_URI'], '/new_slider')) { 
+    	if(strpos($_SERVER['REQUEST_URI'], '/new_slider') || strpos($_SERVER['REQUEST_URI'], '/slider')) { 
     		$action = 'page_image_slider_block'; $cur_block_id = 'page_image_slider_block'; $cur_input = 'page_image_slider_block';
     	}
     	if(strpos($_SERVER['REQUEST_URI'], '/new_sponsor') || strpos($_SERVER['REQUEST_URI'], '/sponsor')) { 

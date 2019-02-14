@@ -1319,13 +1319,13 @@ if(url.indexOf('/downloads') > -1) { cur_block_id = 'downloads_block'; }
 function toggleBlock(bid) {
 	if(bid == cur_block_id) {
 		$('#'+bid).hide();
-		if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', '#000'); }
+		// if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', '#000'); }
 		$('#'+bid+'_icon').html('+');
 		cur_block_id = '';
 	} else {
-		if($('#'+cur_block_id)) { toggleBlock(cur_block_id); } // Close already opened block
+		// if($('#'+cur_block_id)) { toggleBlock(cur_block_id); } // Close already opened block
 		$('#'+bid).show();
-		if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', 'orangered'); }
+		// if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', 'orangered'); }
 		$('#'+bid+'_icon').html('-');
 		cur_block_id = bid;
 	}
