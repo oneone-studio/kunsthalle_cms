@@ -60,7 +60,14 @@ class PageImageSlidersController extends BaseController {
 
 			PageSection::insert(['page_id' => $page->id, 'gallery_id' => $slider->id, 'sort_order' => $max_sort_order]);
 
-			return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('page_id'), 'action'=>'new_slider']);
+			if(Input::has('page_type') && Input::get('page_type') == 'start_page') {
+				return Redirect::action('PagesController@editStartPage');
+			}
+
+			$params = ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('page_id'), 
+					   'action'=>'new_slider'];
+
+			return Redirect::action('PagesController@edit', $params);
 		}	
 
 		return Redirect::action('ClustersController@index');

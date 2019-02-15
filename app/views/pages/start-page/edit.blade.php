@@ -22,12 +22,25 @@
 
 				<!-- ////////////////////   IMAGE SLIDER   ////////////////////// -->
 				<?php $display = ''; 
-					  if(isset($action) && $action == 'new_slider') { $display = ''; }
+					  // if(isset($action) && $action == 'new_slider') { $display = ''; }
 				?>
 
 				<div id="page_image_slider" class="form-group" style="margin:10px 0px; <?php echo $display;?>">
-			       <div style="width:100%; clear:both; margin-bottom:15px;">
-
+				   <div style="width:100%; clear:both; margin-bottom:15px;">
+				     
+				   	@if(!isset($page->page_image_sliders) || count($page->page_image_sliders) == 0)
+					    <div id="page_image_slider_pane" style="width:100%;">
+						  {{ Form::open(array('route' => 'page_image_sliders.store', 'method' => 'post')) }}
+							{{ Form::label('slider_title', 'Image Slider') }}
+						    <div id="slider_title"></div>
+						    {{ Form::submit('Create New Slider', array('id' => 'save_image_slider_btn',
+						    	'class' => 'button-success pure-button button-small', 'style' => 'height:30px; padding:3px 15px 5px 15px')) }}
+						    {{ Form::button('Cancel', array('id' => 'cancel_slider_btn', 'onclick' => 'cancelPageImageSlider()', 'class' => 'button-error button-small pure-button', 'style' => 'height:30px; margin-top:1px; padding:3px 15px 5px 15px')) }}
+						    {{ Form::hidden('page_id', $page->id) }}
+						    <input type="hidden" name="page_type" value="start_page">
+						  {{ Form::close() }}
+						</div>  
+					@endif 
 				    
 				    <!-- <a href="javascript:showNewSliderForm()" style="font-size:11px; font-weight:normal;">Image Slider</a><br> -->
 			        @if(count($page->page_image_sliders) > 0)
@@ -47,6 +60,8 @@
 					    		   <div id="slider_lbl_{{$slider->id}}" 
 					    		  	  style="width:100%; font-size:12px;float:left;">Image Slider<a href="javascript:showSliderImageForm({{$slider->id}})" class="form-link"
 					    		  	    style="margin-left:5px;font-weight:normal;font-size:12px;">(Add Image)</a>
+					    		  	   <a href="javascript:deleteImageSlider({{$slider->id}})" title="Delete" type="button" 
+				    						class="icon-fixed-width icon-trash" style="margin-left:5px; vertical-align:bottom; position:relative;top:2px;"><span class="glyphicon glyphicon-trash"></span></a> 
 					    		   </div>
 					    		   <div style="width:100%; display:block; float:left; margin:10px 0px 15px 0px;">
 					    		     <input name='title' id="slider_inp_{{$slider->id}}" value="{{ $slider->title }}" class="no-display"
@@ -120,7 +135,7 @@
 									    <div style="width:70%; float:left; display:block; margin-left:130px;">
 										    <button id="gallery_image_save_btn_{{$slider->id}}" class="button-success pure-button button-small" onclick="savePageSliderImage(event, {{$slider->id}})" style="float:left;">Save Slide</button>
 										    <button id="cancel_slider_btn_{{$slider->id}}" class="button-error pure-button button-small" 
-										      onclick="hideSliderImageForm( {{$slider->id}})" style="float:left; margin-left:3px;">Cancel</button>
+										      onclick="hideSliderImageForm( {{$slider->id}})" style="display:inline-block;position:relative;top:-2px; margin-left:3px;height:27px; margin-top:1px; padding:3px 15px 5px 15px">Cancel</button>
 										</div>
 									    <input name="slide_id" id="slide_id_{{$slider->id}}" type="hidden">
 									    <input name="image_detail" id="image_detail_{{$slider->id}}" type="hidden">

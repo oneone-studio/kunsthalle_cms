@@ -178,7 +178,7 @@ class PagesController extends BaseController {
 		// echo 'updatsaveDLProtectione()<pre>'; print_r(Input::all()); exit;	
 		if(Input::has('page_id')) {
 			$page = Page::find(Input::get('page_id'));		
-			$page->dl_protected = Input::has('protected') ? 1 : 0;	
+			$page->protected = Input::has('protected') ? 1 : 0;	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
@@ -195,7 +195,7 @@ class PagesController extends BaseController {
 	public function deleteDLTermsFile() {
 		if(Input::has('page_id')) {
 			$page = Page::find(Input::get('page_id'));		
-    		$page->dl_protected = 0;
+    		$page->protected = 0;
     		$page->dl_terms_file = '';
 	    	$page->save();
 
@@ -208,7 +208,7 @@ class PagesController extends BaseController {
 	public function resetDLProtection() {
 		if(Input::has('page_id')) {
 			$page = Page::find(Input::get('page_id'));		
-    		$page->dl_protected = 0;
+    		$page->protected = 0;
     		$page->dl_terms_file = '';
 	    	$page->save();
 
@@ -735,12 +735,13 @@ class PagesController extends BaseController {
 				$slider->save();
 			}
 		} else {
-			// print_r($page->page_image_sliders[0]); exit;
-			$slider = $page->page_image_sliders[0];
+			if(isset($page->page_image_sliders) && count($page->page_image_sliders)) {
+				$slider = $page->page_image_sliders[0];
+				$slider_id = $slider->id;
+			}
 		}
-		// echo '<pre>'; print_r($page); exit;
 
-		$params = ['page' => $page, 'slider' => $slider, 'slider_id' => $slider->id];
+		$params = ['page' => $page, 'slider' => $slider, 'slider_id' => $slider_id];
 
 		return View::make('pages.start-page.edit', $params);
 	}	
