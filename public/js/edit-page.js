@@ -54,8 +54,8 @@ function editPageContent(id) {
 	    			console.log('editPageContent success..'); console.log(data);
 	    			tinyMCE.get('content_de').setContent(data.item.content_de);	
 	    			tinyMCE.get('content_en').setContent(data.item.content_en);	
-	    			$('#anchor_title_de_content').val(data.item.anchor_title_de);	
-	    			$('#anchor_title_en_content').val(data.item.anchor_title_en);	
+	    			$('#pc_anchor_title_de').val(data.item.anchor_title_de);
+	    			$('#pc_anchor_title_en').val(data.item.anchor_title_en);
 	    			contentSortOrder = data.item.sort_order;
 	    			$('#sort_order').val(contentSortOrder);
 				},
@@ -826,9 +826,18 @@ function uploadDLFile() {
 	    			console.log(data);
 	    			var file = $('#download_file').val();
 	    			file = file.substr(file.lastIndexOf("\\")+1, file.length);
+	    			if(data.type != 'pdf') { 
+	    				$('.dl-filename-data').hide();
+	    				$('.preview-data').show(); 
+	    			}
 	    			if((file.indexOf('.png') > -1) || (file.indexOf('.jpg') > -1) || (file.indexOf('.gif') > -1)) {
 		    			$('#download_preview').prop('src', DOMAIN + data.preivew);
 		    			$('#download_preview').show();
+	    			}
+	    			if(data.type == 'pdf') {
+	    				$('.preview-data').hide(); 
+	    				$('.dl-filename-data').show();
+	    				$('#dl_filename').html(data.filename);
 	    			}
 	    			// $('#download_item').html('Item: '+ file);
 
@@ -988,18 +997,14 @@ function deletePageImage(id) {
 	});	
 }
 
-function toggleInput(type) {
-	scrollToMenu();
+function toggleInput(type) {	
 	if($('#'+cur_block_id).length) { $('#'+cur_block_id).hide(); } // Close already opened block
-	// alert(cur_input +" __ "+type + " ----- "+ cur_block_id);
 	if(cur_input == type) {
 		resetEdit();
 		$('.menu-icon-active').removeClass('menu-icon-active');
 		cur_input = '';
 		cur_block_id = '';
 		return;
-	} else {
-		cur_input = type;
 	}
 
 	if(type == 'audio') { cur_block_id = AUDIO_BID; }
@@ -1011,6 +1016,9 @@ function toggleInput(type) {
 	if(type == 'content') { cur_block_id = PAGE_CONTENT_BID; }
 	if(type == 'slider') { cur_block_id = SLIDER_BID; }
 	if(type == 'youtube') { cur_block_id = YOUTUBE_BID; }
+	
+	resetEdit();
+	if(type != 'banner') { scrollToMenu(); }
 
 	$('.menu-icon-active').removeClass('menu-icon-active');
 	if($('.menu-icon-'+type).length) { $('.menu-icon-'+type).addClass('menu-icon-active'); }
@@ -1266,6 +1274,16 @@ function editDownload(id) {
 	    			console.log('editDownload success'); console.log(data);
 	    			if(data.item.protected == 1) { $('#protected_chk').prop('checked', true); }
 	    			  else { $('#protected_chk').prop('checked', false); }
+
+	    			if(data.type != 'pdf') { 
+	    				$('.dl-filename-data').hide(); $('.preview-data').show(); 
+	    			}
+	    			if(data.type == 'pdf') { 
+	    				$('.preview-data').hide(); 
+	    				$('.dl-filename-data').show();
+	    				$('#dl_filename').html(data.filename);
+	    			}
+
 	    			var file = data.item.filename;
 	    			file = file.substr(file.lastIndexOf("\\")+1, file.length);
 	    			if((file.indexOf('.png') > -1) || (file.indexOf('.jpg') > -1) || (file.indexOf('.gif') > -1)) {
@@ -1319,13 +1337,14 @@ if(url.indexOf('/downloads') > -1) { cur_block_id = 'downloads_block'; }
 function toggleBlock(bid) {
 	if(bid == cur_block_id) {
 		$('#'+bid).hide();
-		// if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', '#000'); }
-		$('#'+bid+'_icon').html('+');
+		if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', '#000'); }
+		$('.'+bid+'_icon').removeClass('collapse').addClass('expand');
 		cur_block_id = '';
 	} else {
+		resetEdit();
 		$('#'+bid).show();
-		// if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', 'orangered'); }
-		$('#'+bid+'_icon').html('-');
+		if($('#'+bid+'_lbl').length) { $('#'+bid+'_lbl').css('color', '#0E73C0'); }
+		$('.'+bid+'_icon').removeClass('expand').addClass('collapse');
 		cur_block_id = bid;
 	}
 }
@@ -1439,4 +1458,44 @@ function convToSlug(fld) {
 	var str = fld.value;
 	str = str.trim().toLowerCase().replace(' ', '-');
 	fld.value = str;
+}
+
+function saveSpGroup() {
+	var page_id = $('#id').val();
+	var sponsor_grp_id = $('#sponsor_grp_id').val();
+	console.log("saveSpGroup()..\npage_id: "+page_id+"\nsponsor_grp_id: "+sponsor_grp_id);
+	$.ajax({
+	    type: 'GET',
+	    url: delete_sp_group_url,
+	    data: { 'page_id': page_id, 'sponsor_grp_id': sponsor_grp_id },
+	    dataType: 'json',
+	    success:function(data) { 
+	    			console.log('saveSpGroup success..');
+	    			$('#sp_grp_block_'+id).hide();
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('saveSpGroup failed..');
+	    	    }
+	});
+
+}
+
+function deleteSpGroup(id) {
+	if(confirm('Are you sure you want to delete (y/n)?')) {
+		$.ajax({
+		    type: 'GET',
+		    url: delete_sp_group_url,
+		    data: { 'id': id },
+		    dataType: 'json',
+		    success:function(data) { 
+		    			console.log('deleteSpGroup success..');
+		    			$('#sp_grp_block_'+id).hide();
+					},
+		    error:  function(jqXHR, textStatus, errorThrown) {
+		    		    console.log('deleteSpGroup failed..');
+		    	    }
+		});
+	} else {
+		return false;
+	}	
 }

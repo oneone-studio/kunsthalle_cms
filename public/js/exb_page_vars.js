@@ -49,3 +49,4 @@ var create_new_slider_url = '/create-new-slider';
 var delete_dl_teerms_file_url = '/delete-dl-terms-file';
 var get_audio_url = '/get-audio';
 var get_youtube_url = '/get-youtube';
+var delete_sp_group_url = '/delete-exb-sp-group';
