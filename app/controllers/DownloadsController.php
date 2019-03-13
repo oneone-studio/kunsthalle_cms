@@ -175,11 +175,13 @@ class DownloadsController extends BaseController {
 		if(Request::ajax()) {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
-				$img = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $img);
-	    		$preivew = '/files/downloads/' . $img;
+				$filename = strtolower($file->getClientOriginalName());
+	    		$file->move('files/downloads/', $filename);
+	    		$preivew = '/files/downloads/' . $filename;
 
-				return Response::json(array('error' => false, 'preivew' => $preivew), 200);
+	    		$type = strpos($filename, '.pdf') > 0 ? 'pdf' : 'image';	    		
+
+				return Response::json(array('error' => false, 'preivew' => $preivew, 'type' => $type, 'filename' => $filename), 200);
 			}
 		}
 
@@ -190,9 +192,9 @@ class DownloadsController extends BaseController {
 		if(Request::ajax()) {
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
-				$img = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $img);
-	    		$preivew = '/files/downloads/' . $img;
+				$filename = strtolower($file->getClientOriginalName());
+	    		$file->move('files/downloads/', $filename);
+	    		$preivew = '/files/downloads/' . $filename;
 
 				return Response::json(array('error' => false, 'preivew' => $preivew), 200);
 			}
@@ -204,8 +206,10 @@ class DownloadsController extends BaseController {
 	public function getDownload() {
 		if(Input::has('id') && intval(Input::get('id')) > 0) {
 			$item = Download::find(Input::get('id'));			
+			$filename = $item->filename;
+			$type = strpos($filename, '.pdf') > 0 ? 'pdf' : 'image';
 
-			return Response::json(array('error' => false, 'item' => $item), 200);
+			return Response::json(array('error' => false, 'item' => $item, 'type' => $type, 'filename' => $filename), 200);
 		}
 
 		return Response::json(array('error' => true, 'message' => 'Error processing request'), 422);

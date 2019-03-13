@@ -1,5 +1,5 @@
 <label id="teasers_block_lbl" class="lbl-1" onclick="toggleBlock('teasers_block')">Teaser
-  <span id="teasers_block_icon" style="font-size:14px;font-weight:bold;margin-left:5px;">+</span>
+  <div class="teasers_block_icon expand">&nbsp;</div>
 </label>
 <div id="teasers_block" class="form-group edit-section" style="display:none;margin-top:2px;">
   <div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>

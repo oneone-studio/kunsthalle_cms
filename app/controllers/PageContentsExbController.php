@@ -43,7 +43,6 @@ class PageContentsExbController extends BaseController {
 	}
 
 	public function save() {
-		// echo '<pre>'; print_r(Input::all());exit;
 		if(Input::has('pc_id') && intval(Input::get('pc_id')) > 0) {
 			$content = PageContent::find(Input::get('pc_id'));
 			$content->content_de = Input::get('content_de');

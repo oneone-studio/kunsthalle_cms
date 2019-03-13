@@ -289,7 +289,7 @@ class ExhibitionPagesController extends BaseController {
 		// echo 'updatsaveDLProtectione()<pre>'; print_r(Input::all()); exit;	
 		if(Input::has('page_id')) {
 			$page = Page::find(Input::get('page_id'));		
-			$page->dl_protected = Input::has('protected') ? 1 : 0;	
+			$page->protected = Input::has('protected') ? 1 : 0;	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
@@ -299,7 +299,7 @@ class ExhibitionPagesController extends BaseController {
 	    	$page->save();
 		}
 
-		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('page_id')]);
+		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('page_id'), 'action' => 'downloads']);
 	}
 
 	public static function getExhibitionPageSections($exhibition_page_id = 0) {

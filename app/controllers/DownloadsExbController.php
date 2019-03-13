@@ -73,7 +73,6 @@ class DownloadsExbController extends BaseController {
 		fwrite($f, "\nsave() [date('Y-m-d H:i')\n\n".print_r(Input::all(), true));
 
 		$local_dir = 'files/downloads/';
-		// $remote_dir = '/Applications/MAMP/htdocs/'.SITE_DIR.'/public/files/downloads/';
 		$remote_dir = '../../'.SITE_DIR.'/public/files/downloads/';
 
 		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
@@ -159,11 +158,13 @@ class DownloadsExbController extends BaseController {
 		if(Request::ajax()) {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
-				$img = strtolower($file->getClientOriginalName());
-	    		$file->move('files/downloads/', $img);
-	    		$preivew = '/files/downloads/' . $img;
+				$filename = strtolower($file->getClientOriginalName());
+	    		$file->move('files/downloads/', $filename);
+	    		$preivew = '/files/downloads/' . $filename;
 
-				return Response::json(array('error' => false, 'preivew' => $preivew), 200);
+	    		$type = strpos($filename, '.pdf') > 0 ? 'pdf' : 'image';
+
+				return Response::json(array('error' => false, 'preivew' => $preivew, 'type' => $type, 'filename' => $filename), 200);
 			}
 		}
 
@@ -173,8 +174,10 @@ class DownloadsExbController extends BaseController {
 	public function getDownload() {
 		if(Input::has('id') && intval(Input::get('id')) > 0) {
 			$item = Download::find(Input::get('id'));			
+			$filename = $item->filename;
+			$type = strpos($filename, '.pdf') > 0 ? 'pdf' : 'image';
 
-			return Response::json(array('error' => false, 'item' => $item), 200);
+			return Response::json(array('error' => false, 'item' => $item, 'type' => $type, 'filename' => $filename), 200);
 		}
 
 		return Response::json(array('error' => true, 'message' => 'Error processing request'), 422);
