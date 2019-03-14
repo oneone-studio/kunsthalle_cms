@@ -90,7 +90,12 @@
 									</div>    
 								    <div style="clear:both;padding:10px 0;"></div>
 								    <label for="" style="width:130px;float:left;">{{ Form::label('url', 'URL') }}</label>
-									{{ Form::text('url', null, ['placeholder' => '', 'style' => 'width:450px;']) }}
+									<div style="width:500px;float:left;">								    	
+										{{ Form::text('url_de', null, ['id' => 'url_de', 'placeholder' => '', 'style' => 'width:450px;', 'placeholder' => 'DE']) }}
+										<div class="inp-de" style="top:2px;">DE</div><br>
+										{{ Form::text('url_en', null, ['id' => 'url_en', 'placeholder' => '', 'style' => 'width:450px;', 'placeholder' => 'EN']) }}
+										<div class="inp-en" style="top:2px;">EN</div>
+									</div>
 								    <div style="clear:both;padding:10px 0;"></div>
 								    <label for="" style="width:130px;float:left;">{{ Form::label('position', 'Position') }}</label>
 								    <select name="position" id="position_{{$slider->id}}">
@@ -105,9 +110,9 @@
 										    <div style="width:100%;float:left;">
 											    <div style="width:100%;display:block;">
 												    {{ Form::text('slide_line_de', null, ['id' => 'slide_line_de', 'style' => 'width:350px;margin-top:-3px;float:left;', 'placeholder' => 'DE']) }} 
-												    <div class="inp-de">DE</div><br/>
+												    <div class="inp-de" style="top:6px;">DE</div><br/>
 												    {{ Form::text('slide_line_en', null, ['id' => 'slide_line_en', 'style' => 'width:350px;margin-top:-3px;float:left;', 'placeholder' => 'EN']) }} 
-												    <div class="inp-en">EN</div>
+												    <div class="inp-en" style="top:20px;">EN</div>
 											    </div>
 											    <div style="clear:both;"></div>
 											    <select name="slide_line_size" id="slide_line_size" style="width:80px;float:left;position:relative;top:-4px;left:0px;">
@@ -143,8 +148,7 @@
 									<!-- <div id="slide_image_list" class="form-group nl2"></div> -->
 								    {{ Form::hidden('page_id', $page->id) }}
 								    {{ Form::hidden('slider_id', $slider->id) }}
-								    {{ Form::hidden('slider_image_id', 0)}}
-								  
+								    {{ Form::hidden('slider_image_id', 0)}}								  
 								  </form>
 								 </div>
 				    			</li>
@@ -178,9 +182,9 @@
 			</div>
 	    </div>
 
-			@if($errors->any())
-			    <ul>{{ implode('', $errors->all('<li class="error">:message</li>')) }}</ul>
-			@endif
+		@if($errors->any())
+		    <ul>{{ implode('', $errors->all('<li class="error">:message</li>')) }}</ul>
+		@endif
       </p> 
     </div>
 
@@ -704,14 +708,14 @@ function editPageSliderImage(slider_id, id) {
 	    data: { 'id': id },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('editPageSliderImage success..'+ "\n\n");
-	    			console.log(data);
+	    			console.log('editPageSliderImage success..'); console.log(data);
 	    			$('#preview_lbl_'+slider_id).hide('');
 	    			$('#preview_'+slider_id).prop('src', DOMAIN +'/files/'+ data.image.path + data.image.filename);
 	    			$('#preview_'+slider_id).show();
 	    			$('#position_'+slider_id).val(data.image.text_position);
 	    			$('#sort_order_'+slider_id).val(data.image.sort_order);
-	    			$('#url').val(data.image.url);
+	    			$('#url_de').val(data.image.url_de);
+	    			$('#url_en').val(data.image.url_en);
 	    			var html = '';
 	    			for(var i in data.image.slide_text) {
 	    				tx = data.image.slide_text[i];
