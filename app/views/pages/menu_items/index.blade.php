@@ -9,7 +9,7 @@
       </p>
       <table class="table table-striped table-bordered" style="width:100%; height:auto; position:absolute; top:45px; font-size:12px; font-weight:normal;">
          <tr>
-          <th style="width:40px; text-align:center;"><a href="/content/content_sections/delete-all" title="Delete" type="button" class="icon-fixed-width icon-trash"></a></span>
+          <th style="width:40px; text-align:center;"><!-- <a href="/content/content_sections/delete-all" title="Delete" type="button" class="icon-fixed-width icon-trash"></a> --></span>
           <th style="width:65%;"><strong>Menu Item</strong></th>
           <th style="width:10%;"><strong>Order</strong></th>
           <th style="width:100px;"><strong></strong></th>

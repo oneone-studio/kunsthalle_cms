@@ -4,7 +4,7 @@
 @section('content')
 
     <div class="page_content">
-      <h3>Menu Item Item</h3>
+      <h3>Menu Item</h3>
       <p>
 		{{ Form::open(array('route' => 'menu_items.store', 'method' => 'post')) }}
 		    
@@ -13,6 +13,13 @@
 			    <?php echo Form::text('title_de', null, ['style' => 'width:300px;', 'placeholder' => 'Title DE']); ?>
 			    <?php echo Form::text('title_en', null, ['id' => 'title_en', 'style' => 'width:300px;', 'placeholder' => 'Title EN']); ?> <span style="color:#9e9e9e; display:none; vertical-align:bottom;">en</span>
 			</div>
+			<div class="form-group nl">
+			    <?php echo Form::label('slug', 'Slug'); ?>
+			    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug DE', 'onclick' => 'setSlug(this)', 
+			            'onkeyup' => 'setSlug(this)']); ?>
+			    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug EN', 'onclick' => 'setSlug(this)', 
+			            'onkeyup' => 'setSlug(this)']); ?>
+			</div>    
 
 			<div class="form-group">
 			    <label for="exampleInputEmail1"></label>
