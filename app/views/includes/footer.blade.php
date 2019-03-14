@@ -17,6 +17,14 @@ var IMAGE_SLIDER_BID = SLIDER_BID;
 var TEASER_BID = 'teasers_block';
 var YOUTUBE_BID = 'youtube_block';
 var SPONSOR_BID = 'sponsors_block';
+var url = document.URL;
+
+<?php if(isset($cur_block_id)) { ?>
+  cur_block_id = '<?php echo $cur_block_id; ?>';
+<?php } ?>
+<?php if(isset($cur_input)) { ?>
+  cur_input = '<?php echo $cur_input; ?>';
+<?php } ?>
 
 var edit_block_ids = ['audio_block', 'banner_blk', 'downloads_block', 'h2_block', 'h2text_block', 'image_pane', 'image_grid_pane', 'page_image_slider', 'sponsors_block', 'teasers_block', 'youtube_block', 'page_content_blk'];
 
@@ -36,7 +44,11 @@ function resetCurBlockId() {
 }
 
 function resetEdit() {
+  $('div[class*="_icon"]').removeClass('collapse').addClass('expand');
+  $('.menu-icon-active').removeClass('menu-icon-active');
+  $('.lbl-1').css('color', '#000000');
   $('.edit-section').hide();
+  cur_block_id = '';
 }
 
 function resetH2Intro() {
@@ -62,7 +74,11 @@ function resetYoutube() {
 var menuBarScrollPos = 0;
 
 if($("#cp_block").length) {
-  menuBarScrollPos = $("#cp_block").offset().top - 90;  
+  menuBarScrollPos = $("#cp_block").offset().top;
+  var minus_val = 70;
+  if(url.indexOf('/pages') > -1) { minus_val = 125; }
+  menuBarScrollPos -= minus_val;
+  menuBarScrollPos = parseInt(menuBarScrollPos);
 }
 
 function scrollToMenu() {
@@ -75,19 +91,41 @@ function scrollToTop() {
 
 function scrollTo(selector) {
   var scrollPos = 100;
-  if($('#'+selector).length) {
-    scrollPos = $("#"+selector).offset().top - 40;
-  }
-  if($('.'+selector).length) {
-    scrollPos = $("."+selector).offset().top - 40;
-  }
+  if($('#'+selector).length) { scrollPos = $("#"+selector).offset().top; }
+  if($('.'+selector).length) { scrollPos = $("."+selector).offset().top; }
+  if(scrollPos > 0) { scrollPos -= 40; }
+
   $('html, body').animate({ scrollTop: scrollPos }, 500);
 }
 
-var url = document.URL;
+function doToggleBlock(BID) {
+  if($('#'+BID).length) {
+    scrollTo(BID);
+    toggleBlock(BID);
+    return;
+  }
+  setTimeout('doToggleBlock('+BID+')', 100);
+}
+
+function doToggleInput(type) {
+    toggleInput(type);
+}
 
 $(function() {
-  if(url.indexOf('/sponsor') > -1) { scrollTo(SPONSOR_BID); }
+  var do_toggle_block = false;
+  var do_toggle_input = false;
+  var BID = '';
+  // if(url.indexOf('/sponsor') > -1) { BID = SPONSOR_BID; do_toggle_block = true; }
+  // if(url.indexOf('/downloads') > -1) { BID = DOWNLOAD_BID; do_toggle_block = true; }
+  if(url.indexOf('image_grid') > -1) { BID = IMAGE_GRID_BID; type = 'image_grid'; do_toggle_input = true; }
+
+  // if(do_toggle_block && BID.length > 0) {
+  //   resetEdit();
+  //   doToggleBlock(BID);
+  // }
+  if(do_toggle_input) {
+    doToggleInput(type);
+  }
 });
 
 
