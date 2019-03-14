@@ -461,7 +461,8 @@ class PagesController extends BaseController {
 			}
 		}
 
-        return Redirect::action('ContentSectionsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
+        // return Redirect::action('ContentSectionsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
+		return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id')]);
 	}
 
 	public static function getPageSections($page_id = 0) {

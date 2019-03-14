@@ -50,3 +50,22 @@ var delete_dl_teerms_file_url = '/delete-dl-terms-file';
 var get_audio_url = '/get-audio';
 var get_youtube_url = '/get-youtube';
 var delete_sp_group_url = '/delete-exb-sp-group';
+var get_grid_image_url = '/get-grid-image';
+var delete_sp_group_url = '/delete-sp-group';
+var save_grid_image_url = '/save-grid-image';
+var delete_grid_image_url = '/delete-grid-image';
+var update_image_grid_url = '/update-page-image_grid-image';
+var grid_image_preview_url = '/grid-image-preview';
+
+
+
+
+
+
+
+
+
+
+
+
+

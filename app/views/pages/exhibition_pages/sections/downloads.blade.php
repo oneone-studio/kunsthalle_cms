@@ -1,5 +1,8 @@
 			    <?php $display = 'display:none;'; $icon_class = 'expand';
-			    	  if($action == 'downloads') { $display = ''; $icon_class = 'collapse'; }
+			    	  if($action == 'downloads') { 
+			    	  	// $display = '';
+			    	  	// $icon_class = 'collapse'; 
+			    	  }
 			    ?>   
 			    <label id="downloads_block_lbl" class="lbl-1" onclick="toggleBlock(DOWNLOAD_BID)">Downloads
 			      <div class="downloads_block_icon {{$icon_class}}">&nbsp;</div></label>

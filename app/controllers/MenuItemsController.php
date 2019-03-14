@@ -29,12 +29,15 @@ class MenuItemsController extends BaseController {
 		$menu_item = new MenuItem();
 		$menu_item->title_de = Input::get('title_de');
 		$menu_item->title_en = Input::get('title_en');
-		$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
+		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
-			$slug = str_replace($char, $rep, $slug);
+			$slug_de = str_replace($char, $rep, $slug_de);
+			$slug_en = str_replace($char, $rep, $slug_en);
 		}
-		$menu_item->slug = $slug;
+		$menu_item->slug_de = $slug_de;
+		$menu_item->slug_en = $slug_en;
 		$menu_item->save();
 
         return Redirect::action('MenuItemsController@index');
@@ -91,13 +94,15 @@ class MenuItemsController extends BaseController {
 
 		$menu_item->title_de = Input::get('title_de');
 		$menu_item->title_en = Input::get('title_en');
-		$slug = strtolower(str_replace(' ', '-', Input::get('slug')));
+		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
+		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
-			$slug = str_replace($char, $rep, $slug);
+			$slug_de = str_replace($char, $rep, $slug_de);
+			$slug_en = str_replace($char, $rep, $slug_en);
 		}
-		$menu_item->slug = $slug;
-		// $menu_item->sort_order = Input::get('sort_order');
+		$menu_item->slug_de = $slug_de;
+		$menu_item->slug_en = $slug_en;
 		$menu_item->save();
 
         return Redirect::action('MenuItemsController@index');

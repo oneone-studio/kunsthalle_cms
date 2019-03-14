@@ -58,7 +58,7 @@
     		$action = 'downloads'; $cur_block_id = 'downloads_block'; $cur_input = 'downloads_block_lbl'; 
     	}
     	if(strpos($_SERVER['REQUEST_URI'], '/image_grid')) { 
-    		$action = 'image_grid'; $cur_block_id = 'image_grid_pane'; $cur_input = 'image_grid_pane'; 
+    		$action = 'image_grid'; $cur_block_id = 'image_grid_block'; $cur_input = 'image_grid_block'; 
     	}
     	if(strpos($_SERVER['REQUEST_URI'], '/new_slider') || strpos($_SERVER['REQUEST_URI'], '/slider')) { 
     		$action = 'page_image_slider'; $cur_block_id = 'page_image_slider_block'; $cur_input = 'page_image_slider';

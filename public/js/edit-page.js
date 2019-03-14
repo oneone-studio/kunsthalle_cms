@@ -539,11 +539,13 @@ function editPageSliderImage(slider_id, id) {
 	    data: { 'id': id },
 	    dataType: 'json',
 	    success:function(data) { 
-	    			console.log('editPageSliderImage('+slider_id+', '+id+') success..'+ "\n\n"); console.log(data);
+	    			console.log('editPageSliderImage('+slider_id+', '+id+') success'); console.log(data);
 	    			$('#preview_lbl_'+slider_id).hide('');
 	    			$('#preview_'+slider_id).prop('src', DOMAIN +'/files/'+ data.image.path + data.image.filename);
 	    			$('#preview_'+slider_id).show();
 	    			$('#sl_img_order_'+slider_id).val(data.image.sort_order);
+	    			$('#url_de').val(data.image.url_de);
+	    			$('#url_en').val(data.image.url_en);
 	    			tinyMCE.get('_image_detail_de_'+slider_id).setContent(data.image.detail_de);
 	    			tinyMCE.get('_image_detail_en_'+slider_id).setContent(data.image.detail_en);
 				},
@@ -567,7 +569,7 @@ function savePageSliderImage(event, id) {
 	    processData: false,
         contentType: false,
 	    success:function(data) { 
-	    			console.log('savePageSliderImage Success..'+ "\n\n");
+	    			console.log('savePageSliderImage Success..');
 	    			console.log(data);
 	    			$('#slider_image_form_'+id)[0].reset();
 	    			$('#preview_'+id).hide();
@@ -748,6 +750,8 @@ function editImage(id) {
 	resetCurBlockId();
 	$('#image_id').val(id);
 	if($('#'+IMAGE_BID).length) { $('#'+IMAGE_BID).show(); }
+	$('.menu-icon-active').removeClass('menu-icon-active');
+	if($('.menu-icon-image').length) { $('.menu-icon-image').addClass('menu-icon-active'); }
 	$.ajax({
 	    type: 'GET',
 	    url: get_image_url,
@@ -997,7 +1001,7 @@ function deletePageImage(id) {
 	});	
 }
 
-function toggleInput(type) {	
+function toggleInput(type) {
 	if($('#'+cur_block_id).length) { $('#'+cur_block_id).hide(); } // Close already opened block
 	if(cur_input == type) {
 		resetEdit();
@@ -1499,3 +1503,220 @@ function deleteSpGroup(id) {
 		return false;
 	}	
 }
+
+// Grid image
+
+function hideImageGridForm(id) {
+	$('#image_grid_block_'+id).addClass('no-display');
+	$('#grid_image_form_blk_'+id).hide();
+}
+
+function editGridImage(image_grid_id, id) {
+	scrollToMenu();
+	$('#grid_image_id_'+image_grid_id).val(id);
+	showSliderImageForm(image_grid_id);
+
+	$('#grid_image_save_btn').attr('onclick', 'updateGridImage(event, '+image_grid_id+')');
+	$.ajax({
+	    type: 'GET',
+	    url: get_grid_image_url,
+	    data: { 'id': id },
+	    dataType: 'json',
+	    success:function(data) { 
+	    			console.log('editGridImage success..'+ "\n\n");
+	    			console.log(data);
+	    			showGridImageForm(image_grid_id);
+	    			$('#url_'+image_grid_id).val(data.image.url);
+	    			$('#preview_lbl_'+image_grid_id).hide('');
+	    			$('#preview_'+image_grid_id).prop('src', DOMAIN + data.image.path + data.image.filename);
+	    			$('#preview_'+image_grid_id).show();
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('editGridImage failed.. ');
+	    	    }
+	});
+}
+
+function hideGridImageForm() {
+	$('.edit-section').hide();
+	return false;
+}
+
+function saveGridImage(event, id) {
+	event.preventDefault();
+	var frm = document.getElementById('grid_image_form_'+id);
+	var formData = new FormData(frm);
+	console.log(formData);
+	$.ajax({
+	    type: 'POST',
+	    url: save_grid_image_url,
+	    data: formData,
+	    dataType: 'json',
+	    processData: false,
+        contentType: false,
+	    success:function(data) { 
+	    			console.log('saveGridImage Success..'+ "\n\n");
+	    			console.log(data);
+	    			$('#grid_image_form_'+id)[0].reset();
+	    			$('#preview_'+id).hide();
+	    			hideNewSliderImageForm();
+	    			$('#grid_image').val('');
+	    			var list = '<a href="javascript:reloadPage()" class="image-grid-refresh">Refresh</a><br>';
+	    			var list2 = '';
+	    			var img = null;
+	    			for(i=0; i<data.images.length; i++) {
+	    				img = data.images[i];
+	    				list += '<div id="grid_image_li_'+img.id+'" class="grid-image-li">' +
+					'<a href="javascript:deleteGridImage('+img.id+')" title="Delete" type="button" ' +
+					' class="icon-fixed-width icon-trash trash"><span class="glyphicon glyphicon-trash"></span></a>' +
+					'<a href="javascript:editGridImage('+id+', '+img.id+')"><img src="'+DOMAIN+'/files/grid_image/'+img.filename+
+						'" class="grid-img"></a></div>';
+	    			}
+	    			$('#grid_image_list_'+id).html(list);
+	    			var html = '';
+	    			if(data.images.length > 0) {
+	    				img = data.images[data.images.length-1];
+	    				html = '<div id="grid_image_blk_item_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
+					  			 '<img src="/files/grid_image/'+img.filename+'" style="max-width:60px;border:none;">'+
+					  		   '</div>';
+					  	$('#image_grid_val_'+id).append(html);	   
+	    			}
+	    			var url = document.URL;
+	    			if(url.indexOf('/image_grid') == -1) {
+	    				url += '/image_grid';
+	    			}
+	    			// location.href = url;
+
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('saveGridImage Failed.. ');
+	    	    }
+	});
+}
+
+function deleteGridImage(id) {
+	// if(confirm('Are you sure you want to delete (y/n)?')) {
+		$.ajax({
+		    type: 'GET',
+		    url: delete_grid_image_url,
+		    data: { 'id' : id },
+		    dataType: 'json',
+		    success:function(data) { 
+		    			console.log('deleteGridImage success..');
+		    			var list = $('#image_list');
+		    			$('#grid_image_blk_item_'+id).hide();
+		    			$('#grid_image_li_'+id).hide();
+		    			var url = document.URL;
+		    			if(url.indexOf('/image_grid') == -1) {
+		    				url += '/image_grid';
+		    			}
+		    			// location.href = url;
+					},
+		    error:  function(jqXHR, textStatus, errorThrown) {
+		    		    console.log('deleteGridImage Failed.. ');
+		    	    }
+		});
+	// }
+}
+
+function updateGridImage(event, id) {
+	event.preventDefault();
+	var frm = document.getElementById('grid_image_form_'+id);
+	var formData = new FormData(frm);
+	console.log(formData);
+	$.ajax({
+	    type: 'POST',
+	    url: update_image_grid_url,
+	    data: formData,
+	    dataType: 'json',
+	    processData: false,
+        contentType: false,
+	    success:function(data) { 
+	    	console.log("updateGridImage success..");
+	    	console.log(data);
+			hideNewSliderImageForm();
+			$('#preview_'+id).hide();
+			$('#image_id').val('');
+			// setTextareaContent('_image_detail_'+id, '');
+			$('#gi_'+id).prop('src', DOMAIN + '/images/grid/' + data.item.image);
+			$('#desc_'+id).html(data.item.detail.substr(0, 10) + '...');
+			$('#grid_image_save_btn').attr('onclick', 'saveGridImage(event, '+lastSliderId+')');
+
+			$("#grid_image_status_msg").removeClass('btn-danger').removeClass('btn-info').addClass('btn-success');
+			$("#grid_image_status_msg").html('Image detail updated..');
+			$('#grid_image_status_msg').hide().delay(20).fadeIn('slow');
+			$('#grid_image_status_msg').hide().delay(5000).fadeOut(2500);
+			return;
+		},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('Failed.. ');
+	    	    }
+	});
+}
+
+var cur_image_grid_id = 0;
+
+function editImageGrid(id) {
+	scrollToMenu();
+	resetCurBlockId();
+	$('.edit-section').hide();
+	$('.image_grid_ul').show();
+	$('.image-grid-blk').hide();
+	$('.grid-images-blk').hide();
+	if(cur_image_grid_id > 0) {
+		$('#image_grid_blk_'+cur_image_grid_id).hide();
+		$('#grid_image_list_blk_'+cur_image_grid_id).hide();
+	}
+	cur_image_grid_id = id;
+	$('#image_grid_blk_'+id).show();
+	$('#image_grid_block_'+id).removeClass('no-display').show();
+	$('#grid_image_list_blk_'+id).show();
+	$('#image_grid_block').show();
+}
+
+var lastImageGridId = 0;
+function showGridImageForm(id) {
+	if(lastImageGridId > 0 && $('#image_grid_block_'+lastImageGridId)) {
+		$('#image_grid_block_'+lastImageGridId).addClass('no-display');
+	}
+	image_grid_block_ = id;
+	$('#image_grid_blk_'+id).show();
+	$('#image_grid_block_'+id).removeClass('no-display').show();
+	$('#grid_image_form_blk_'+id).removeClass('no-display').show();
+	$('#image_grid_block').removeClass('no-display').show();
+}
+
+function showGridImagePreview(id) {
+	var frm = document.getElementById('grid_image_form_'+id);
+	var formData = new FormData(frm);
+	$.ajax({
+	    type: 'POST',
+	    url: grid_image_preview_url,
+	    data: formData,
+	    dataType: 'json',
+	    processData: false,
+        contentType: false,
+	    success:function(data) { 
+	    			console.log('showGridImagePreview success..');
+	    			console.log(data);
+	    			$('#preview_lbl_'+id).hide('');
+	    			$('#preview_'+id).prop('src', DOMAIN + data.preivew);
+	    			$('#preview_'+id).show();
+				},
+	    error:  function(jqXHR, textStatus, errorThrown) {
+	    		    console.log('Failed.. ');
+	    	    }
+	});
+}
+
+function resetGridImageForm(id) {
+	$('#grid_image_form_'+id)[0].reset();
+}
+
+function reloadPage() {
+	location.reload();
+}
+
+// Grid image end
+
+

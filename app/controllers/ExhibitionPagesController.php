@@ -144,7 +144,7 @@ class ExhibitionPagesController extends BaseController {
 		    $exhibition_page->tags()->detach(); // detatch tags
 		}
 
-		return Redirect::action('ExhibitionPagesController@index');
+		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('id')]);
 	}
 
 	public function storeSingleExhibitionPage()

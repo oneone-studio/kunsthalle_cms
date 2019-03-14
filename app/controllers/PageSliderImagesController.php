@@ -22,6 +22,8 @@ class PageSliderImagesController extends BaseController {
 	}
 
 	public function savePageSliderImage() {
+		$f = fopen('logs/cms.log', 'w+');
+		fwrite($f, "savePageSliderImage()..\n\n".print_r(Input::all(), true));
 		if(Request::ajax()) {
 			if (Input::hasFile('gallery_image')) {
 
@@ -45,7 +47,8 @@ class PageSliderImagesController extends BaseController {
 		    		$image->detail_de = Input::get('image_detail_de');
 		    		$image->detail_en = Input::get('image_detail_en');
 	    		}
-	    		$image->url = Input::get('url');
+	    		$image->url_de = Input::get('url_de');
+	    		$image->url_en = Input::get('url_en');
 	    		$image->text_position = Input::get('position');
 	    		$image->sort_order = 1;
 	    		$image->save();
@@ -123,7 +126,8 @@ class PageSliderImagesController extends BaseController {
 		    		$image->detail_de = Input::get('image_detail_de');
 		    		$image->detail_en = Input::get('image_detail_en');
 	    		}
-	    		$image->url = Input::get('url');
+	    		$image->url_de = Input::get('url_de');
+	    		$image->url_en = Input::get('url_en');
 	    		$image->text_position = Input::get('position');
 	    		$image->sort_order = Input::get('sort_order');
 	    		$image->save();

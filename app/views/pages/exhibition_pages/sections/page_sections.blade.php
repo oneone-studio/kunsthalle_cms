@@ -208,11 +208,11 @@
 				  		</div>
 				  	  </div>	
 				  	</div>  
-				  	<div id="slider_val_{{$ps->id}}">
+				  	<div id="image_grid_val_{{$ps->id}}">
 					  	@if(count($ps->grid_images))
 					  		@foreach($ps->grid_images as $im)
-					  		   <div id="slider_image_blk_{{$im->id}}" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">
-					  			 <img id="gi_{{$im->id}}" src="/files/grid_image/{{$im->filename}}" style="max-width:60px;border:none;">
+					  		   <div id="grid_image_blk_item_{{$im->id}}" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">
+					  			 <img src="/files/grid_image/{{$im->filename}}" style="max-width:60px;border:none;">
 					  		   </div>
 					  		@endforeach
 					  	@endif

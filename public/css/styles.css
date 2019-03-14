@@ -378,3 +378,30 @@ multiselect .dropdown-menu > li > a {
          /*,
          url('woollaa../fonts/PFDekkaProWeb_Bold/PFDekkaPro-Bold.svg#PFDekkaPro-Bold') format('svg'); /* Legacy iOS */
 }
+
+.grid-image-li {
+	width:90%; font-family:georgia; font-size:14px; font-weight:normal; float:left; margin-bottom:10px; border:0px solid #e1e1e1; padding:5px;
+}
+
+.grid-image-li .trash {
+	margin-left:5px; margin-right:5px; vertical-align:bottom; position:relative;top:6px;
+}
+.grid-image-li .grid-img {
+	max-width:90px; max-height:60px;
+}
+.image-grid-refresh {
+	font-size:11px; color:blue; margin:10px 0;
+}
+.grid-image-list-blk {
+	padding:10px 0px;
+}
+.grid-image-list {
+	width:100%; margin-top:5px; display:block; clear:both;
+}
+
+
+
+
+
+
+

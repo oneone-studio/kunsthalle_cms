@@ -1,6 +1,6 @@
 <!-- ////////////////////   IMAGE GRID   ////////////////////// -->
 <?php $display = 'display:none;'; 
-	  if($action == 'image_grid') { $display = ''; }
+	  // if($action == 'image_grid') { $display = ''; $cur_block_id = 'image_grid_block'; }
 ?>
 <div id="image_grid_block" class="form-group edit-section" style="margin:20px 0px; <?php echo $display;?>">
 	<div class="close-link-div"><a href="javascript:resetEdit()" class="close-link"> X </a></div>
@@ -88,16 +88,15 @@
 				 </div>
     			</li>
 
-    			<li id="grid_image_list_blk_{{$image_grid->id}}" class="grid-images-blk" style="padding:10px 0px; {{$display}}">
-    			   <div id="grid_image_list_{{$image_grid->id}}" style="width:100%; margin-top:5px; display:block; clear:both;">
-    				<a href="javascript:reloadPage()" style="font-size:11px;color:blue;margin:10px 0;">Refresh</a><br>
+    			<li id="grid_image_list_blk_{{$image_grid->id}}" class="grid-images-blk grid-image-list-blk">
+    			   <div id="grid_image_list_{{$image_grid->id}}" class="grid-image-list">
+    				<a href="javascript:reloadPage()" class="image-grid-refresh">Refresh</a><br>
     				@if($image_grid->grid_images)
     					@foreach($image_grid->grid_images as $grd_image)
-    						<div id="grid_image_li_{{$grd_image->id}}" style="width:90%; font-family:georgia; font-size:14px; 
-    							font-weight:normal; float:left; margin-bottom:10px; border:0px solid #e1e1e1; padding:5px;">
+    						<div id="grid_image_li_{{$grd_image->id}}" class="grid-image-li">
     						<a href="javascript:deleteGridImage({{$grd_image->id}})" title="Delete" type="button" 
-    						class="icon-fixed-width icon-trash" style="margin-left:5px; vertical-align:bottom; position:relative;top:6px;"><span class="glyphicon glyphicon-trash"></span></a>
-    						<a href="javascript:editGridImage({{$image_grid->id}}, {{$grd_image->id}})"><img src="{{$DOMAIN}}/files/grid_image/{{$grd_image->filename}}" style="max-width:90px; max-height:60px;"></a></div>
+    						class="icon-fixed-width icon-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
+    						<a href="javascript:editGridImage({{$image_grid->id}}, {{$grd_image->id}})"><img src="{{$DOMAIN}}/files/grid_image/{{$grd_image->filename}}" class="grid-img"></a></div>
     					@endforeach
     				@endif
     			   </div>
@@ -108,211 +107,3 @@
  @endif
 </div>
 </div>
-<script>
-function hideImageGridForm(id) {
-	$('#image_grid_block_'+id).addClass('no-display');
-	$('#grid_image_form_blk_'+id).hide();
-}
-
-function editGridImage(image_grid_id, id) {
-	scrollToMenu();
-	$('#grid_image_id_'+image_grid_id).val(id);
-	showSliderImageForm(image_grid_id);
-
-	$('#grid_image_save_btn').attr('onclick', 'updateGridImage(event, '+image_grid_id+')');
-	$.ajax({
-	    type: 'GET',
-	    url: '/get-grid-image',
-	    data: { 'id': id },
-	    dataType: 'json',
-	    success:function(data) { 
-	    			console.log('editGridImage success..'+ "\n\n");
-	    			console.log(data);
-	    			showGridImageForm(image_grid_id);
-	    			$('#url_'+image_grid_id).val(data.image.url);
-	    			$('#preview_lbl_'+image_grid_id).hide('');
-	    			$('#preview_'+image_grid_id).prop('src', DOMAIN + data.image.path + data.image.filename);
-	    			$('#preview_'+image_grid_id).show();
-				},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('editGridImage failed.. ');
-	    	    }
-	});
-}
-
-function hideGridImageForm() {
-	$('.edit-section').hide();
-	return false;
-}
-
-function saveGridImage(event, id) {
-	event.preventDefault();
-	var frm = document.getElementById('grid_image_form_'+id);
-	var formData = new FormData(frm);
-	console.log(formData);
-	$.ajax({
-	    type: 'POST',
-	    url: '/save-grid-image',
-	    data: formData,
-	    dataType: 'json',
-	    processData: false,
-        contentType: false,
-	    success:function(data) { 
-	    			console.log('saveGridImage Success..'+ "\n\n");
-	    			console.log(data);
-	    			$('#grid_image_form_'+id)[0].reset();
-	    			$('#preview_'+id).hide();
-	    			hideNewSliderImageForm();
-	    			$('#grid_image').val('');
-	    			var list = '<div style="width:100%; display:block; clear:both;">';
-	    			var list2 = '';
-	    			var img = null;
-	    			for(i=0; i<data.images.length; i++) {
-	    				img = data.images[i];
-	    				list += '<div id="grid_image_'+img.id+'" style="width:90%; font-family:georgia; font-size:14px;' +
-					'font-weight:normal; float:left; margin-bottom:10px; border:0px solid #e1e1e1; padding:5px;">' +
-					'<a href="javascript:deleteGridImage('+img.id+')" title="Delete" type="button" ' +
-					' class="icon-fixed-width icon-trash" style="margin-left:5px; vertical-align:bottom; position:relative;top:6px;"><span class="glyphicon glyphicon-trash"></span></a>' +
-					'<a href="javascript:editGridImage('+id+', '+img.id+')"><img src="'+DOMAIN+'/files/grid_image/'+img.filename+
-						'" style="max-width:90px; max-height:60px;"></a></div>';
-	    			}
-	    			list += '</div>';
-	    			$('#grid_image_list_'+id).html(list);
-	    			var html = '';
-	    			if(data.images.length > 0) {
-	    				img = data.images[data.images.length-1];
-	    				html = '<div style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
-					  			 '<img src="/files/grid_image/'+img.filename+'" style="max-width:60px;border:none;">'+
-					  		   '</div>';
-					  	$('#image_grid_val_'+id).append(html);	   
-	    			}
-
-
-				},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('saveGridImage Failed.. ');
-	    	    }
-	});
-}
-
-function deleteGridImage(id) {
-	// if(confirm('Are you sure you want to delete (y/n)?')) {
-		$.ajax({
-		    type: 'GET',
-		    url: '/delete-grid-image',
-		    data: { 'id' : id },
-		    dataType: 'json',
-		    success:function(data) { 
-		    			console.log('deleteGridImage success..');
-		    			var list = $('#image_list');
-		    			$('#grid_image_blk_item_'+id).hide();
-		    			$('#grid_image_li_'+id).hide();
-					},
-		    error:  function(jqXHR, textStatus, errorThrown) {
-		    		    console.log('deleteGridImage Failed.. ');
-		    	    }
-		});
-	// }
-}
-
-function updateGridImage(event, id) {
-	event.preventDefault();
-	var frm = document.getElementById('grid_image_form_'+id);
-	var formData = new FormData(frm);
-	console.log(formData);
-	$.ajax({
-	    type: 'POST',
-	    url: '/update-grid-image',
-	    data: formData,
-	    dataType: 'json',
-	    processData: false,
-        contentType: false,
-	    success:function(data) { 
-	    	console.log("updateGridImage success..");
-	    	console.log(data);
-			hideNewSliderImageForm();
-			$('#preview_'+id).hide();
-			$('#image_id').val('');
-			// setTextareaContent('_image_detail_'+id, '');
-			$('#gi_'+id).prop('src', DOMAIN + '/images/grid/' + data.item.image);
-			// $('#desc_'+id).html(data.item.detail.substr(0, 10) + '...');
-			$('#grid_image_save_btn').attr('onclick', 'saveGridImage(event, '+lastSliderId+')');
-
-			$('#grid_image_form_'+id)[0].reset();
-			$("#grid_image_status_msg").removeClass('btn-danger').removeClass('btn-info').addClass('btn-success');
-			$("#grid_image_status_msg").html('Image detail updated..');
-			$('#grid_image_status_msg').hide().delay(20).fadeIn('slow');
-			$('#grid_image_status_msg').hide().delay(5000).fadeOut(2500);
-			return;
-		},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('updateGridImage failed..');
-	    	    }
-	});
-}
-
-var cur_image_grid_id = 0;
-
-function editImageGrid(id) {
-	scrollToMenu();
-	resetCurBlockId();
-	$('.edit-section').hide();
-	$('.image_grid_ul').show();
-	$('.image-grid-blk').hide();
-	$('.grid-images-blk').hide();
-	if(cur_image_grid_id > 0) {
-		$('#image_grid_blk_'+cur_image_grid_id).hide();
-		$('#grid_image_list_blk_'+cur_image_grid_id).hide();
-	}
-	cur_image_grid_id = id;
-	$('#image_grid_blk_'+id).show();
-	$('#image_grid_block_'+id).removeClass('no-display').show();
-	$('#grid_image_list_blk_'+id).show();
-	$('#image_grid_block').show();
-}
-
-var lastImageGridId = 0;
-function showGridImageForm(id) {
-	if(lastImageGridId > 0 && $('#image_grid_block_'+lastImageGridId)) {
-		$('#image_grid_block_'+lastImageGridId).addClass('no-display');
-	}
-	image_grid_block_ = id;
-	$('#image_grid_blk_'+id).show();
-	$('#image_grid_block_'+id).removeClass('no-display').show();
-	$('#grid_image_form_blk_'+id).removeClass('no-display').show();
-	$('#image_grid_block').removeClass('no-display').show();
-}
-
-function showGridImagePreview(id) {
-	var frm = document.getElementById('grid_image_form_'+id);
-	var formData = new FormData(frm);
-	$.ajax({
-	    type: 'POST',
-	    url: '/grid-image-preview',
-	    data: formData,
-	    dataType: 'json',
-	    processData: false,
-        contentType: false,
-	    success:function(data) { 
-	    			console.log('showGridImagePreview success..');
-	    			console.log(data);
-	    			$('#preview_lbl_'+id).hide('');
-	    			$('#preview_'+id).prop('src', DOMAIN + data.preivew);
-	    			$('#preview_'+id).show();
-				},
-	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('showGridImagePreview failed..');
-	    	    }
-	});
-}
-
-function resetGridImageForm(id) {
-	$('#grid_image_form_'+id)[0].reset();
-}
-
-function reloadPage() {
-	location.reload();
-}
-
-</script>
-
