@@ -533,7 +533,7 @@ function editPageSliderImage(slider_id, id) {
 	$('#slider_id').val(slider_id);
 	showSliderImageForm(slider_id, false);
 
-	$('#gallery_image_save_btn').attr('onclick', 'updatePageSliderImage(event, '+slider_id+')');
+	// $('#gallery_image_save_btn').attr('onclick', 'updatePageSliderImage(event, '+slider_id+')');
 	$.ajax({
 	    type: 'GET',
 	    url: get_page_slider_image_url,
