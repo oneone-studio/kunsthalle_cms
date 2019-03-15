@@ -23,46 +23,51 @@ class PageSliderImagesController extends BaseController {
 
 	public function savePageSliderImage() {
 		$f = fopen('logs/cms.log', 'w+');
-		fwrite($f, "savePageSliderImage()..\n\n".print_r(Input::all(), true));
+		fwrite($f, "savePageSliderImage() [".date('Y-m-d H:i')."]..\n\n".print_r(Input::all(), true));
 		if(Request::ajax()) {
-			if (Input::hasFile('gallery_image')) {
-
-	    		$slider = PageImageSlider::with(['page_slider_images'])->find(Input::get('slider_id'));
-	    		$order = 1;
-	    		if(isset($slider->page_slider_images)) {
-	    			foreach($slider->page_slider_images as $img) {
-	    				$img->sort_order = $img->sort_order + 1;
-	    				$img->save();
-	    			}
-	    		}
-	    		// $order = Input::has('sort_order') ? Input::get('sort_order') : $order;
+    		$slider = PageImageSlider::with(['page_slider_images'])->find(Input::get('slider_id'));
+    		$order = 1;
+    		if(isset($slider->page_slider_images)) {
+    			foreach($slider->page_slider_images as $img) {
+    				$img->sort_order = $img->sort_order + 1;
+    				$img->save();
+    			}
+    		}
+    		$image = null;
+    		if(Input::has('slider_image_id') && Input::get('slider_image_id') > 0) {
+				$image = PageSliderImage::find(Input::get('slider_image_id'));
+				fwrite($f, "\nLoaded image..\n".$image->id."\n".$image->filename);
+    		} else {
+	    		$image = new PageSliderImage();
+	    		fwrite($f, "\nCreating new image..");
+    		}
+    		// $order = Input::has('sort_order') ? Input::get('sort_order') : $order;
+    		if (Input::hasFile('gallery_image')) {
 				$file = Input::file('gallery_image');
 	    		$file->move('images/gallery/', $file->getClientOriginalName());
-
-	    		$image = new PageSliderImage();
 	    		$image->filename = $file->getClientOriginalName();
 	    		$image->path = '/sliders/';
-	    		$image->page_image_slider_id = Input::get('slider_id');
-	    		if(Input::has('image_detail_de')) {
-		    		$image->detail_de = Input::get('image_detail_de');
-		    		$image->detail_en = Input::get('image_detail_en');
-	    		}
-	    		$image->url_de = Input::get('url_de');
-	    		$image->url_en = Input::get('url_en');
-	    		$image->text_position = Input::get('position');
-	    		$image->sort_order = 1;
-	    		$image->save();
+	    	}	
+    		$image->page_image_slider_id = Input::get('slider_id');
+    		if(Input::has('image_detail_de')) {
+	    		$image->detail_de = Input::get('image_detail_de');
+	    		$image->detail_en = Input::get('image_detail_en');
+    		}
+    		$image->url_de = Input::get('url_de');
+    		$image->url_en = Input::get('url_en');
+    		$image->text_position = Input::get('position');
+    		$image->sort_order = 1;
+    		$image->save();
 
-	    		$slider->page_slider_images()->save($image);
-	    		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
-	    		$images = $slider->page_slider_images;
-	    		// $images = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))->get()->sortBy('sort_order');
+    		$slider->page_slider_images()->save($image);
+    		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
+    		$images = $slider->page_slider_images;
+    		// $images = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))->get()->sortBy('sort_order');
 
-				return Response::json(array('error' => false, 'images' => $images), 200);
-			}
+			return Response::json(array('error' => false, 'images' => $images), 200);
 		}
 
-		return Response::json(array('error' => true, 'message' => 'Error creating product'), 422);
+		return Response::json(array('error' => true, 'message' => 'Error processing request'), 422);
 	}
 
 	public function editPageSliderImage() {

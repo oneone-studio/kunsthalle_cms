@@ -66,7 +66,7 @@
 	    		  <div id="slider_image_form_blk_<?php echo $slider->id;?>" style="width:100%; background:#f7f7f7; display:none; clear:both;">
 				   <form id="slider_image_form_<?php echo $slider->id;?>" enctype="multipart/form-data" method="post" action="">
 
-				    <div style="width:130px; float:left;">Slider Image <a href="javascript:resetPageSliderImageForm()" style="color:blue; display:inline; margin-left:5px; font-size:11px;">new</a></div>
+				    <div style="width:130px; float:left;">Slider Image <a href="javascript:resetPageSliderImageForm({{$slider->id}})" style="color:blue; display:inline; margin-left:5px; font-size:11px;">new</a></div>
 				    <div id="image_pane" style="width:50%; float:left; display:inline;">
 					    <input type="file" name="gallery_image" id="gallery_image_{{$slider->id}}" style="vertical-align:top; margin-bottom:5px;"
 					      onchange="showPageSliderImagePreview({{$slider->id}})">
@@ -103,7 +103,7 @@
 				    {{ Form::hidden('id', $page->id) }}
 				    {{ Form::hidden('cs_id', $cs_id) }}
 				    {{ Form::hidden('slider_id', $slider->id) }}
-				    {{ Form::hidden('slider_image_id', 0)}}
+				    <input type="hidden" name='slider_image_id' id="slider_image_id_{{$slider->id}}" value="0">
 				  
 				  </form>
 				 </div>

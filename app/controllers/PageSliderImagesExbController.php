@@ -23,35 +23,44 @@ class PageSliderImagesExbController extends BaseController {
 
 	public function savePageSliderImage() {
 		if(Request::ajax()) {
-			if (Input::hasFile('gallery_image')) {
-
-	    		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
-	    		$order = 1;
-	    		if($slider->page_slider_images) {
-	    			$order = count($slider->page_slider_images) + 1;
-	    		}
-				$file = Input::file('gallery_image');
-	    		$file->move('files/sliders', $file->getClientOriginalName());
-
-	    		$isNew = false;
+    		$slider = PageImageSlider::with(['page_slider_images'])->find(Input::get('slider_id'));
+    		$order = 1;
+    		if(isset($slider->page_slider_images)) {
+    			foreach($slider->page_slider_images as $img) {
+    				$img->sort_order = $img->sort_order + 1;
+    				$img->save();
+    			}
+    		}
+    		$image = null;
+    		if(Input::has('slider_image_id') && (int)Input::get('slider_image_id') > 0) {
+				$image = PageSliderImage::find(Input::get('slider_image_id'));
+    		} else {
 	    		$image = new PageSliderImage();
-	    		// if(Input::has('image_id') && is_numeric(Input::get('image_id')) && intval(Input::get('image_id')) > 0) {
-	    		// 	$image = PageSliderImage::find(Input::get('image_id'));
-	    		// }
+    		}
+    		// $order = Input::has('sort_order') ? Input::get('sort_order') : $order;
+    		if (Input::hasFile('gallery_image')) {
+				$file = Input::file('gallery_image');
+	    		$file->move('images/gallery/', $file->getClientOriginalName());
 	    		$image->filename = $file->getClientOriginalName();
 	    		$image->path = '/sliders/';
-	    		$image->page_image_slider_id = Input::get('slider_id');
-	    		$image->detail = Input::get('image_detail');
-	    		$image->sort_order = $order;
-	    		$image->save();
+	    	}	
+    		$image->page_image_slider_id = Input::get('slider_id');
+    		if(Input::has('image_detail_de')) {
+	    		$image->detail_de = Input::get('image_detail_de');
+	    		$image->detail_en = Input::get('image_detail_en');
+    		}
+    		$image->url_de = Input::get('url_de');
+    		$image->url_en = Input::get('url_en');
+    		$image->text_position = Input::get('position');
+    		$image->sort_order = 1;
+    		$image->save();
 
-	    		$slider->page_slider_images()->save($image);
-	    		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
-	    		$images = $slider->page_slider_images;
-	    		// $images = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))->get()->sortBy('sort_order');
+    		$slider->page_slider_images()->save($image);
+    		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
+    		$images = $slider->page_slider_images;
+    		// $images = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))->get()->sortBy('sort_order');
 
-				return Response::json(array('error' => false, 'images' => $images), 200);
-			}
+			return Response::json(array('error' => false, 'images' => $images), 200);
 		}
 
 		return Response::json(array('error' => true, 'message' => 'Error creating product'), 422);
