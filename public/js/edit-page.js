@@ -432,6 +432,7 @@ var cur_slider_id = 0;
 
 function openAndEditImageSlider(id) {
 	scrollToMenu();
+	resetEdit();
 	activateBtn('slider');
 	$('.slider-blk').hide();
 	$('.slider-images-blk').hide();
@@ -1524,8 +1525,7 @@ function hideImageGridForm(id) {
 function editGridImage(image_grid_id, id) {
 	scrollToMenu();
 	$('#grid_image_id_'+image_grid_id).val(id);
-	// showSliderImageForm(image_grid_id);
-
+	resetEdit();
 	$.ajax({
 	    type: 'GET',
 	    url: get_grid_image_url,
