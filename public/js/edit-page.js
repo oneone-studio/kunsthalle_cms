@@ -1584,10 +1584,12 @@ function saveGridImage(event, id) {
 	    			$('#grid_image_list_'+id).html(list);
 	    			var html = '';
 	    			if(data.images.length > 0) {
-	    				img = data.images[data.images.length-1];
-	    				html += '<div id="grid_image_blk_item_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
-					  			 '<img src="/files/grid_image/'+img.filename+'" style="max-width:60px;border:none;">'+
-					  		   '</div>';
+	    				for(var i in data.images) {
+	    					img = data.images[i];
+		    				html += '<div id="grid_image_blk_item_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
+						  			 '<img src="/files/grid_image/'+img.filename+'" style="max-width:60px;border:none;">'+
+						  		   '</div>';
+	    				}
 	    			}
 	    			$('#image_grid_val_'+id).html(html);
 	    			var url = document.URL;
@@ -1720,7 +1722,10 @@ function showGridImagePreview(id) {
 }
 
 function resetGridImageForm(id) {
-	$('#grid_image_form_'+id)[0].reset();
+	$('#preview_'+id).hide();
+	$('#url_'+id).val('');	
+	$('#grid_image_id_'+id).val('');
+	// $('#grid_image_form_'+id)[0].reset();
 }
 
 function reloadPage() {
