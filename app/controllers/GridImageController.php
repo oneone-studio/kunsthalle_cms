@@ -36,8 +36,8 @@ class GridImageController extends BaseController {
 
 	public function save() {
 		// echo '<pre>'; print_r(Input::all());exit;
-		$f = fopen('test.log', 'w+');
-		fwrite($f, print_r(Input::all(), true));
+		$f = fopen('cms.log', 'w+');
+		fwrite($f, "save() [".date('Y-m-d H:i')."]\n\n". print_r(Input::all(), true));
 		$save_image = false;
 		$filename = '';
 		if(Input::has('image_grid_id')) {

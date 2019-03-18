@@ -423,10 +423,16 @@ function cancelEditSlider(event, id) {
 	}
 }
 
+function activateBtn(sel) {
+	$('.menu-icon-active').removeClass('menu-icon-active');
+	if($('.menu-icon-'+sel).length) { $('.menu-icon-'+sel).addClass('menu-icon-active'); }
+}
+
 var cur_slider_id = 0;
 
 function openAndEditImageSlider(id) {
 	scrollToMenu();
+	activateBtn('slider');
 	$('.slider-blk').hide();
 	$('.slider-images-blk').hide();
 	if(cur_slider_id > 0) {
@@ -434,6 +440,8 @@ function openAndEditImageSlider(id) {
 		$('#slider_image_list_blk_'+cur_slider_id).hide();
 	}
 	cur_slider_id = id;
+	cur_block_id = SLIDER_BID;
+	cur_input = 'slider';
 	showSliderSection();
 	$('#slider_blk_'+id).show();
 	$('#slider_image_list_blk_'+id).show();
@@ -533,7 +541,6 @@ function editPageSliderImage(slider_id, id) {
 	$('#slider_id').val(slider_id);
 	showSliderImageForm(slider_id, false);
 
-	// $('#gallery_image_save_btn').attr('onclick', 'updatePageSliderImage(event, '+slider_id+')');
 	$.ajax({
 	    type: 'GET',
 	    url: get_page_slider_image_url,
@@ -1462,7 +1469,8 @@ function editAudio(id, aUrl) {
 
 function convToSlug(fld) {
 	var str = fld.value;
-	str = str.trim().toLowerCase().replace(' ', '-');
+	str = str.toLowerCase();
+	str = str.split(" ").join('-');
 	fld.value = str;
 }
 
@@ -1518,7 +1526,6 @@ function editGridImage(image_grid_id, id) {
 	$('#grid_image_id_'+image_grid_id).val(id);
 	showSliderImageForm(image_grid_id);
 
-	$('#grid_image_save_btn').attr('onclick', 'updateGridImage(event, '+image_grid_id+')');
 	$.ajax({
 	    type: 'GET',
 	    url: get_grid_image_url,
@@ -1651,7 +1658,7 @@ function updateGridImage(event, id) {
 			return;
 		},
 	    error:  function(jqXHR, textStatus, errorThrown) {
-	    		    console.log('Failed.. ');
+	    		    console.log('updateGridImage() Failed..');
 	    	    }
 	});
 }
@@ -1659,6 +1666,7 @@ function updateGridImage(event, id) {
 var cur_image_grid_id = 0;
 
 function editImageGrid(id) {
+	activateBtn('image_grid');
 	scrollToMenu();
 	resetCurBlockId();
 	$('.edit-section').hide();
