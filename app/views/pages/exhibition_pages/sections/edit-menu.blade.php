@@ -1,11 +1,11 @@
 <!--  ///////////////////////////   TEASER END   ///////////////////////////////// -->
 
 <?php
-	$banner_icon_class = (strpos($_SERVER['REQUEST_URI'], '/banner')) ? 'menu-icon-active' : ''; }
-	$downloads_icon_class = (strpos($_SERVER['REQUEST_URI'], '/downloads')) ? 'menu-icon-active' : ''; }
-	$image_grid_icon_class = (strpos($_SERVER['REQUEST_URI'], '/image_grid')) ? 'menu-icon-active' : ''; }
-	$slider_icon_class = (strpos($_SERVER['REQUEST_URI'], '/new_slider')) ? 'menu-icon-active' : ''; }
-	$sponsor_icon_class = (strpos($_SERVER['REQUEST_URI'], '/new_sponsor') || strpos($_SERVER['REQUEST_URI'], '/sponsor')) ? 'menu-icon-active' : ''; }
+	$banner_icon_class = (strpos($_SERVER['REQUEST_URI'], '/banner')) ? 'menu-icon-active' : '';
+	$downloads_icon_class = (strpos($_SERVER['REQUEST_URI'], '/downloads')) ? 'menu-icon-active' : '';
+	$image_grid_icon_class = (strpos($_SERVER['REQUEST_URI'], '/image_grid')) ? 'menu-icon-active' : '';
+	$slider_icon_class = (strpos($_SERVER['REQUEST_URI'], '/new_slider')) ? 'menu-icon-active' : '';
+	$sponsor_icon_class = (strpos($_SERVER['REQUEST_URI'], '/new_sponsor') || strpos($_SERVER['REQUEST_URI'], '/sponsor')) ? 'menu-icon-active' : '';
 ?>
 
 <div id="cp_block" class="form-group" style="margin-top:20px;">
