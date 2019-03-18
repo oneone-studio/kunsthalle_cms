@@ -1524,7 +1524,7 @@ function hideImageGridForm(id) {
 function editGridImage(image_grid_id, id) {
 	scrollToMenu();
 	$('#grid_image_id_'+image_grid_id).val(id);
-	showSliderImageForm(image_grid_id);
+	// showSliderImageForm(image_grid_id);
 
 	$.ajax({
 	    type: 'GET',
@@ -1585,11 +1585,11 @@ function saveGridImage(event, id) {
 	    			var html = '';
 	    			if(data.images.length > 0) {
 	    				img = data.images[data.images.length-1];
-	    				html = '<div id="grid_image_blk_item_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
+	    				html += '<div id="grid_image_blk_item_'+img.id+'" style="width:60px; float:left; border:1px solid #d9d9d9;margin-right:5px;">'+
 					  			 '<img src="/files/grid_image/'+img.filename+'" style="max-width:60px;border:none;">'+
 					  		   '</div>';
-					  	$('#image_grid_val_'+id).append(html);	   
 	    			}
+	    			$('#image_grid_val_'+id).html(html);
 	    			var url = document.URL;
 	    			if(url.indexOf('/image_grid') == -1) {
 	    				url += '/image_grid';
