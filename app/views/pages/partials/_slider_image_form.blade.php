@@ -1,6 +1,6 @@
 <div style="width:130px; float:left;">Slider Image <a href="javascript:resetPageSliderImageForm({{$slider->id}})" style="color:blue; display:inline; margin-left:5px; font-size:11px;">new</a>
 </div>
-<div id="image_pane" style="width:50%; float:left; display:inline;">
+<div id="image_pane_{{$slider->id}}" style="width:50%; float:left; display:inline;">
     <input type="file" name="gallery_image" id="gallery_image_{{$slider->id}}" style="vertical-align:top; margin-bottom:5px;"
       onchange="showPageSliderImagePreview({{$slider->id}})">
     <br>
@@ -11,11 +11,11 @@
     </div>
     <br>
     <div style="min-width:600px; position:relative; top:9px; clear:both;">
-    	<textarea name="_image_detail_de_{{$slider->id}}" id="_image_detail_de_{{$slider->id}}" class="tm_editor" 
+    	<textarea name="image_detail_de" id="_image_detail_de_{{$slider->id}}" class="tm_editor" 
        style="width:100%; height:40px;"></textarea>
     	<div class="inp-de">DE</div><br/>
     	<div style="clear:both;margin-top:20px;"></div>
-    	<textarea name="_image_detail_en_{{$slider->id}}" id="_image_detail_en_{{$slider->id}}" class="tm_editor" 
+    	<textarea name="image_detail_en" id="_image_detail_en_{{$slider->id}}" class="tm_editor" 
        style="width:100%; height:40px;"></textarea>
     	<div class="inp-en">EN</div><br/>
     </div>

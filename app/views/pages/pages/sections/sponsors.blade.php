@@ -26,12 +26,12 @@
     	      <div id="sg_form_blk_{{$grp->id}}" style="width:100%; margin:15px 0;float:left; display:none;">
     			  <form id="sponsor_form_{{$grp->id}}" method="POST" action="/sponsors/save" accept-charset="UTF-8" enctype="multipart/form-data">
     			    @include('pages.partials._sponsor_form')
-                    
+
                     {{ Form::hidden('cs_id', $cs_id, ['id' => 'cs_id']) }}
                     {{ Form::hidden('menu_item_id', $menu_item_id, ['id' => 'menu_item_id']) }}
     				<input type="hidden" name="page_id" id="page_id_{{$grp->id}}" value="{{$page->id}}">
                     <input type="hidden" name="sponsor_id" id="sponsor_id_{{$grp->id}}" value="0">
-    			    <input type="hidden" name="sponsor_grp_id" id="sponsor_grp_id_{{$grp->id}}" value="0">
+    			    <input type="hidden" name="sponsor_grp_id" id="sponsor_grp_id_{{$grp->id}}" value="{{$grp->id}}">
     			  </form>					      	
     	      </div>
 

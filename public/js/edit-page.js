@@ -309,6 +309,7 @@ function showSliderImageForm(id, reset) {
 	if(lastSliderId > 0 && $('#slider_pane_'+lastSliderId)) {
 		$('#slider_pane_'+lastSliderId).addClass('no-display');
 	}
+
 	lastSliderId = id;
 	if(reset) {
 		$('#preview_'+id).hide();
@@ -319,10 +320,10 @@ function showSliderImageForm(id, reset) {
 	}
 
 	$('#slider_image_form_blk_'+id).show();
-	$('#slider_pane_'+id).removeClass('no-display');
-	$('#slider_image_form_'+id).removeClass('no-display');
-	$('#slider_image_id').val(id);
-	$('#page_content').hide();
+	$('#slider_pane_'+id).removeClass('no-display').show();
+	$('#slider_image_form_'+id).removeClass('no-display').show();
+	$('#slider_image_id').val(id).show();
+	$('#page_content').hide().show();
 	$('#page_image_slider_block').removeClass('no-display').show();
 }
 
@@ -1216,7 +1217,7 @@ function editSponsorGroup(id) {
 function addSponsor(id, grp_title) {
 	$('#sponsor_group_val').html(grp_title);
 	$('#sg_form_blk_'+id).show();
-	$('#sponsor_grp_id').val(id);
+	$('#sponsor_grp_id_'+id).val(id);
 	$('#sponsor_id_'+id).val(0);
 	$('#sponsor_preview_'+id).hide();
 	$('#sponsor_url_'+id).val('');

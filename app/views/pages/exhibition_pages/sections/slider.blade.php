@@ -27,11 +27,9 @@
         <ul style="width:580px; list-style:none; margin-left:0; margin-top:10px; padding-left:0;">
 	    	@foreach($page->page_image_sliders as $slider)
 	    	    <?php 
-	    	    // echo '<h3 style="color:red;">SL: '. $slider->id . '</h3>';
 	    	    ++$slider_cnt;	
-	    	    if($action == 'new_slider' && $slider_cnt == count($page->page_image_sliders)) { $display = ''; }					    	          
+	    	    if($action == 'new_slider' && $slider_cnt == count($page->page_image_sliders)) { $display = ''; }          
 	    	    ?>
-
 	    		<li id="slider_blk_{{$slider->id}}" class="slider-blk" style="width:580px; <?php echo $display;?>">
 	    		  <form id="image_slider_form_<?php echo $slider->id;?>" method="post" action="">
 	    		   	  @include('pages.partials._image_slider_form')
@@ -41,9 +39,9 @@
 	    		  <div style="width:100%; clear:both;">
 	    		  	<button id="slider_image_status_msg" class="pure-button" style="display:none; float:right;"></button>
 	    		  </div>
-	    		  <div id="slider_image_form_blk_<?php echo $slider->id;?>" style="width:100%; background:#f7f7f7; display:none; clear:both;">
+	    		  <div id="slider_image_form_blk_<?php echo $slider->id;?>" style="width:100%; background:#f7f7f7;clear:both;">
 				   <form id="slider_image_form_<?php echo $slider->id;?>" enctype="multipart/form-data" method="post" action="">
-				    @include('pages.partials._image_slider_form')
+				    @include('pages.partials._slider_image_form')
 
 				    {{ Form::hidden('id', $page->id) }}
 				    {{ Form::hidden('slider_id', $slider->id, ['id' => 'slider_id']) }}
