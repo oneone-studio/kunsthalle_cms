@@ -11,13 +11,13 @@
 	    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'onkeyup' => 'convToSlug(this)']); ?>
 	</div>    
 	<div class="form-group">
-	    <label for="exampleInputEmail1" style="float:left;"><?php echo Form::label('start_date', 'Start Date'); ?></label>
-		<div style="width:400px; display:inline-block; margin-left:4px; margin-bottom:10px;">    
+	    <label for="exampleInputEmail1" style="float:left;">Start Date</label>
+		<div style="width:400px; display:inline-block; margin-left:4px; margin-bottom:1px;">    
 	    	<?php echo Form::text('start_date', null, ['style' => 'width:100px;']); ?>
 	    </div>
-	</div>	
+	</div>    
 	<div class="form-group">
-	    <label for="exampleInputEmail1" style="float:left;"><?php echo Form::label('end_date', 'End Date'); ?></label>
+	    <label for="exampleInputEmail1" style="float:left;">End Date</label>
 		<div style="width:400px; display:inline-block; margin-left:4px; margin-bottom:10px;">    
 	    	<?php echo Form::text('end_date', null, ['style' => 'width:100px;']); ?>
 	    	<span id="end_date_err" style="margin-left:10px;font-size:12px; color:red;"></span>

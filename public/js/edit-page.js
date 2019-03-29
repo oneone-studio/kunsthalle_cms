@@ -38,6 +38,7 @@ function editSection(sec, id) {
 
 function editPageContent(id) {
 	resetEdit();
+	activateBtn('content');
 	scrollToMenu();
 	resetCurBlockId();
 	if($('#'+PAGE_CONTENT_BID).length) { $('#'+PAGE_CONTENT_BID).show(); }
@@ -114,6 +115,7 @@ function editH2text(id) {
 	scrollToMenu();
 	resetCurBlockId();
 	resetEdit();
+	activateBtn('h2text');
 	h2textId = id;
 	$('#h2text_id').val(id);
 	$('#'+H2TEXT_BID).show();
@@ -1215,12 +1217,14 @@ function addSponsor(id, grp_title) {
 	$('#sponsor_group_val').html(grp_title);
 	$('#sg_form_blk_'+id).show();
 	$('#sponsor_grp_id').val(id);
+	$('#sponsor_id_'+id).val(0);
+	$('#sponsor_preview_'+id).hide();
+	$('#sponsor_url_'+id).val('');
 }
 
 function editSponsor(grp_id, id) {
-	scrollTo('sponsors_block');
-	$('#sponsor_grp_id').val(grp_id);
-	$('#sponsor_id').val(id);
+	$('#sponsor_grp_id_'+grp_id).val(grp_id);
+	$('#sponsor_id_'+grp_id).val(id);
 	$.ajax({
 	    type: 'GET',
 	    url: get_sponsor_url,
@@ -1229,7 +1233,7 @@ function editSponsor(grp_id, id) {
 	    success:function(data) { 
 	    			console.log('editSponsor success'); console.log(data);
 	    			$('#sponsor_group_val').html(data.item.headline_de);
-	    			$('#sponsor_url').val(data.item.url);
+	    			$('#sponsor_url_'+grp_id).val(data.item.url);
 	    			$('#sponsor_preview_'+grp_id).attr('src', DOMAIN+'/files/sponsors/'+ data.item.logo);
 	    			$('#sponsor_preview_'+grp_id).show();
 	    			$('#sg_form_blk_'+grp_id).show();
