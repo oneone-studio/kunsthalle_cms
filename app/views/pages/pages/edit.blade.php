@@ -69,8 +69,8 @@
     	}
     ?>
 
-<script src="/js/page_vars.js"></script>
-<script src="/js/edit-page.js"></script>
+<script src="/js/page_vars.js?v=201903291840"></script>
+<script src="/js/edit-page.js?v=201903291840"></script>
 <script>
 var DOMAIN = HTTP+'://<?php echo $_SERVER['SERVER_NAME'];?>';
 var cur_block_id = '<?php echo $cur_block_id;?>';

@@ -23,19 +23,21 @@ class PageSliderImagesExbController extends BaseController {
 
 	public function savePageSliderImage() {
 		if(Request::ajax()) {
+			$update = false;
     		$slider = PageImageSlider::with(['page_slider_images'])->find(Input::get('slider_id'));
-    		$order = 1;
-    		if(isset($slider->page_slider_images)) {
-    			foreach($slider->page_slider_images as $img) {
-    				$img->sort_order = $img->sort_order + 1;
-    				$img->save();
-    			}
-    		}
     		$image = null;
     		if(Input::has('slider_image_id') && (int)Input::get('slider_image_id') > 0) {
 				$image = PageSliderImage::find(Input::get('slider_image_id'));
+				$update = true;
     		} else {
 	    		$image = new PageSliderImage();
+	    		$order = 1;
+	    		if(isset($slider->page_slider_images)) {
+	    			foreach($slider->page_slider_images as $img) {
+	    				$img->sort_order = $img->sort_order + 1;
+	    				$img->save();
+	    			}
+	    		}
     		}
     		// $order = Input::has('sort_order') ? Input::get('sort_order') : $order;
     		if (Input::hasFile('gallery_image')) {
@@ -52,13 +54,16 @@ class PageSliderImagesExbController extends BaseController {
     		$image->url_de = Input::get('url_de');
     		$image->url_en = Input::get('url_en');
     		$image->text_position = Input::get('position');
-    		$image->sort_order = 1;
+    		if($update) {
+	    		$image->sort_order = Input::has('sort_order') ? Input::get('sort_order') : 1;
+    		} else {
+    			$image->sort_order = 1;
+    		}
     		$image->save();
 
     		$slider->page_slider_images()->save($image);
     		$slider = PageImageSlider::with('page_slider_images')->find(Input::get('slider_id'));
     		$images = $slider->page_slider_images;
-    		// $images = PageSliderImage::where('page_image_slider_id', Input::get('slider_id'))->get()->sortBy('sort_order');
 
 			return Response::json(array('error' => false, 'images' => $images), 200);
 		}

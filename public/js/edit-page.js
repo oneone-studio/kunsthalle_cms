@@ -558,6 +558,7 @@ function editPageSliderImage(slider_id, id) {
 	    			$('#sl_img_order_'+slider_id).val(data.image.sort_order);
 	    			$('#url_de').val(data.image.url_de);
 	    			$('#url_en').val(data.image.url_en);
+	    			$('#sl_img_order_'+slider_id).val(data.image.sort_order);
 	    			if(data.image.detail_de != null) { tinyMCE.get('_image_detail_de_'+slider_id).setContent(data.image.detail_de); }
 	    			if(data.image.detail_en != null) { tinyMCE.get('_image_detail_en_'+slider_id).setContent(data.image.detail_en); }
 				},
