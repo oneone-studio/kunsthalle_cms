@@ -49,7 +49,6 @@ class ExhibitionPagesController extends BaseController {
 
 	public function store()
 	{
-		// echo 'update()<pre>'; print_r(Input::all()); exit;
 		if(Input::has('title_de')) {
 			$exhibition_page = new ExhibitionPage;
 			$exhibition_page->title_de = Input::get('title_de');

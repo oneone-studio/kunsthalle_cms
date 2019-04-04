@@ -38,18 +38,24 @@ class FooterPagesController extends BaseController {
 	public function store()
 	{
 		// echo 'update()<pre>'; print_r(Input::all()); exit;
-		$footer_page = new Page();
-		$footer_page->title_de = Input::get('title_de');
-		$footer_page->title_en = Input::get('title_en');
-		$footer_page->sort_order = Input::get('sort_order');
-		$footer_page->page_type = 'footer';
-		$footer_page->save();
+		$page = new Page();
+		$page->title_de = Input::get('title_de');
+		$page->title_en = Input::get('title_en');
+		$page->seo_page_title_de = Input::get('seo_page_title_de');
+		$page->seo_page_title_en = Input::get('seo_page_title_en');
+		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
+		$page->sort_order = Input::get('sort_order');
+		$page->active_de = Input::has('active_de') ? 1 : 0;
+		$page->active_en = Input::has('active_en') ? 1 : 0;
+		$page->page_type = 'footer';
+		$page->save();
 
 		$pc = new PageContent();
-		$pc->page_id = $footer_page->id;
+		$pc->page_id = $page->id;
 		$pc->save();
 
-		return Redirect::action('FooterPagesController@edit', ['id' => $footer_page->id]);
+		return Redirect::action('FooterPagesController@edit', ['id' => $page->id]);
 	}
 
 	public function edit($id, $action = null)
@@ -65,19 +71,25 @@ class FooterPagesController extends BaseController {
 
 	public function update()
 	{
-		// echo 'update()<pre>'; print_r(Input::all()); exit;	
-		$footer_page = Page::findOrFail(Input::get('id'));
-		$footer_page->title_de = Input::get('title_de');
-		$footer_page->title_en = Input::get('title_en');
-		$footer_page->sort_order = Input::get('sort_order');
-		$footer_page->save();
+		// echo 'update()<pre>'; print_r(Input::all()); exit;
+		$page = Page::findOrFail(Input::get('id'));
+		$page->title_de = Input::get('title_de');
+		$page->title_en = Input::get('title_en');
+		$page->seo_page_title_de = Input::get('seo_page_title_de');
+		$page->seo_page_title_en = Input::get('seo_page_title_en');
+		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
+		$page->sort_order = Input::get('sort_order');
+		$page->active_de = Input::has('active_de') ? 1 : 0;
+		$page->active_en = Input::has('active_en') ? 1 : 0;
+		$page->save();
 
-		$pc = PageContent::where('page_id', $footer_page->id)->first();
+		$pc = PageContent::where('page_id', $page->id)->first();
 		$pc->content_de = Input::get('content_de');
 		$pc->content_en = Input::get('content_en');
 		$pc->save();
 
-        return Redirect::action('FooterPagesController@index');
+        return Redirect::action('FooterPagesController@edit', ['id' => $page->id]);
 	}
 
 	public function saveDLProtection() {

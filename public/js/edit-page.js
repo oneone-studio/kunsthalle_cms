@@ -1475,7 +1475,7 @@ function editAudio(id, aUrl) {
 }
 
 function convToSlug(fld) {
-	var str = fld.value;
+	var str = fld.value.trim();
 	str = str.toLowerCase();
 	str = str.split(" ").join('-');
 	fld.value = str;
