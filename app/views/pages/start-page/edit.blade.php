@@ -14,8 +14,29 @@
 				    {{ Form::text('title_de', $page->title_de, ['placeholder' => 'Title [de]', 'disabled' => true, 'style' => 'width:300px;']) }}
 				    {{ Form::text('title_en', $page->title_en, ['placeholder' => 'Title [en]', 'disabled' => true, 'style' => 'width:300px;']) }}
 				</div>    
+				<div class="form-group">
+				    <label for="title">SEO Page Title [de]:</label>
+				    {{ Form::text('seo_page_title_de', $page->seo_page_title_de, ['placeholder' => 'SEO Page Title [de]', 'style' => 'width:500px;']) }}
+			        <div class="inp-de" style="top:2px;">DE</div><br/>
+					<div style="clear:both;"></div>
+				    {{ Form::text('seo_page_title_en', $page->seo_page_title_en, ['placeholder' => 'SEO Page Title [en]', 'style' => 'width:500px;']) }}
+			        <div class="inp-en" style="top:2px;">EN</div><br/>
+				</div>    
+				<div class="form-group">
+				    <label for="title">SEO Page Description [de]:</label>
+				    {{ Form::text('seo_page_desc_de', $page->seo_page_desc_de, ['placeholder' => 'SEO Page Description [de]', 'style' => 'width:500px;']) }}
+			        <div class="inp-de" style="top:2px;">DE</div><br/>
+					<div style="clear:both;"></div>
+				    {{ Form::text('seo_page_desc_en', $page->seo_page_desc_en, ['placeholder' => 'SEO Page Description [en]', 'style' => 'width:500px;']) }}
+			        <div class="inp-en" style="top:2px;">EN</div><br/>
+				</div>
 
-			    {{ Form::hidden('id', $page->id) }}
+				<div class="form-group">
+				    <label for="exampleInputEmail1"></label>
+				     <?php echo Form::submit('Save', array('class' => 'btn btn-primary', 'style' => 'height:30px; padding:3px 15px 5px 15px')); ?>
+				</div>            
+
+		    {{ Form::hidden('id', $page->id) }}
 
 			{{ Form::close() }}		
 

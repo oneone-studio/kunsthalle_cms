@@ -415,8 +415,8 @@ class PagesController extends BaseController {
 		$page->seo_page_title_en = Input::get('seo_page_title_en');
 		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
 		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
-		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
-		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
+		$slug_de = (Input::has('slug_de')) ? strtolower(str_replace(' ', '-', Input::get('slug_de'))) : strtolower(str_replace(' ', '-', Input::get('title_de')));
+		$slug_en = (Input::has('slug_en')) ? strtolower(str_replace(' ', '-', Input::get('slug_en'))) : strtolower(str_replace(' ', '-', Input::get('title_en')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
 		foreach($reps as $char => $rep) {
 			$slug_de = str_replace($char, $rep, $slug_de);
@@ -439,30 +439,37 @@ class PagesController extends BaseController {
 		$page->active_en = Input::has('active_en') ? 1 : 0;
 		$page->save();
 
-		$cs = ContentSection::find(Input::get('cs_id'));
-		if($cs->type == 'page') {
-			$cs->title_de = Input::get('title_de');
-			$cs->title_en = Input::get('title_en');
-			$cs->active = Input::has('active_de') ? 1 : 0;
-			$cs->active_de = Input::has('active_de') ? 1 : 0;
-			$cs->active_en = Input::has('active_en') ? 1 : 0;
-			$cs->save();
-		}
-		if($cs->type == 'page_section') {
-			$query = 'select count(id) as cnt from pages where content_section_id = '. $cs->id;
-			$res = DB::select($query);
-			if($res) {
-				if($res[0]->cnt == 0) {
-					$cs->active = 0;
-					$cs->active_de = 0;
-					$cs->active_en = 0;
-					$cs->save();
+		if(Input::has('cs_id')) {
+			$cs = ContentSection::find(Input::get('cs_id'));
+			if($cs->type == 'page') {
+				$cs->title_de = Input::get('title_de');
+				$cs->title_en = Input::get('title_en');
+				$cs->active = Input::has('active_de') ? 1 : 0;
+				$cs->active_de = Input::has('active_de') ? 1 : 0;
+				$cs->active_en = Input::has('active_en') ? 1 : 0;
+				$cs->save();
+			}
+			if($cs->type == 'page_section') {
+				$query = 'select count(id) as cnt from pages where content_section_id = '. $cs->id;
+				$res = DB::select($query);
+				if($res) {
+					if($res[0]->cnt == 0) {
+						$cs->active = 0;
+						$cs->active_de = 0;
+						$cs->active_en = 0;
+						$cs->save();
+					}
 				}
 			}
+
+	        // return Redirect::action('ContentSectionsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
+			return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id')]);
 		}
 
-        // return Redirect::action('ContentSectionsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
-		return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id')]);
+		$uri = $_SERVER['HTTP_REFERER'];
+		if(strpos($uri, 'edit-start-page')) {
+			return Redirect::action('PagesController@editStartPage');
+		}
 	}
 
 	public static function getPageSections($page_id = 0) {

@@ -189,6 +189,19 @@ p {
 	font-size: 12px;
 }
 
+.side_nav li .cur {
+	color:orange;
+	/*border-bottom:1px solid orangered;*/
+	/*background: #f8f8f8;*/
+}
+.side_nav li a {
+	padding-left:4px;
+}
+.side_nav li .cur a {
+	/*border-left:2px solid orangered;*/
+	color:orangered;
+}
+
 /* Page Content */
 .page_content {
 	width:70%; 
