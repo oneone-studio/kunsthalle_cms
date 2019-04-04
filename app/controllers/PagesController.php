@@ -402,6 +402,9 @@ class PagesController extends BaseController {
 
 	public function update()
 	{
+		$uri = $_SERVER['HTTP_REFERER'];
+		$is_start_page = strpos($uri, 'edit-start-page') ? true : false;
+
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
@@ -409,37 +412,40 @@ class PagesController extends BaseController {
 		}
 		$page = Page::findOrFail(Input::get('id'));
 
-		$page->title_de = Input::get('title_de');
-		$page->title_en = Input::get('title_en');
 		$page->seo_page_title_de = Input::get('seo_page_title_de');
 		$page->seo_page_title_en = Input::get('seo_page_title_en');
 		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
 		$page->seo_page_desc_en = Input::get('seo_page_desc_en');
-		$slug_de = (Input::has('slug_de')) ? strtolower(str_replace(' ', '-', Input::get('slug_de'))) : strtolower(str_replace(' ', '-', Input::get('title_de')));
-		$slug_en = (Input::has('slug_en')) ? strtolower(str_replace(' ', '-', Input::get('slug_en'))) : strtolower(str_replace(' ', '-', Input::get('title_en')));
-		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
-		foreach($reps as $char => $rep) {
-			$slug_de = str_replace($char, $rep, $slug_de);
-			$slug_en = str_replace($char, $rep, $slug_en);
+
+		if(!$is_start_page) {
+			$page->title_de = Input::get('title_de');
+			$page->title_en = Input::get('title_en');
+			$slug_de = (Input::has('slug_de')) ? strtolower(str_replace(' ', '-', Input::get('slug_de'))) : strtolower(str_replace(' ', '-', Input::get('title_de')));
+			$slug_en = (Input::has('slug_en')) ? strtolower(str_replace(' ', '-', Input::get('slug_en'))) : strtolower(str_replace(' ', '-', Input::get('title_en')));
+			$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
+			foreach($reps as $char => $rep) {
+				$slug_de = str_replace($char, $rep, $slug_de);
+				$slug_en = str_replace($char, $rep, $slug_en);
+			}
+			$page->slug_de = $slug_de;
+			$page->slug_en = $slug_en;
+			$page->cluster_id = Input::get('cluster_id');
+			if(Input::has('contacts') && count(Input::get('contacts'))) {
+				$page->contacts()->sync(Input::get('contacts')); // attach contacts
+			} else {
+			    $page->contacts()->detach(); // detatch contacts
+			}
+			if(Input::has('tags') && count(Input::get('tags'))) {
+				$page->tags()->sync(Input::get('tags')); // attach tags
+			} else {
+			    $page->tags()->detach(); // detatch tags
+			}
+			$page->active_de = Input::has('active_de') ? 1 : 0;
+			$page->active_en = Input::has('active_en') ? 1 : 0;
 		}
-		$page->slug_de = $slug_de;
-		$page->slug_en = $slug_en;
-		$page->cluster_id = Input::get('cluster_id');
-		if(Input::has('contacts') && count(Input::get('contacts'))) {
-			$page->contacts()->sync(Input::get('contacts')); // attach contacts
-		} else {
-		    $page->contacts()->detach(); // detatch contacts
-		}
-		if(Input::has('tags') && count(Input::get('tags'))) {
-			$page->tags()->sync(Input::get('tags')); // attach tags
-		} else {
-		    $page->tags()->detach(); // detatch tags
-		}
-		$page->active_de = Input::has('active_de') ? 1 : 0;
-		$page->active_en = Input::has('active_en') ? 1 : 0;
 		$page->save();
 
-		if(Input::has('cs_id')) {
+		if(!$is_start_page && Input::has('cs_id')) {
 			$cs = ContentSection::find(Input::get('cs_id'));
 			if($cs->type == 'page') {
 				$cs->title_de = Input::get('title_de');
@@ -466,8 +472,7 @@ class PagesController extends BaseController {
 			return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 'id' => Input::get('id')]);
 		}
 
-		$uri = $_SERVER['HTTP_REFERER'];
-		if(strpos($uri, 'edit-start-page')) {
+		if($is_start_page) {
 			return Redirect::action('PagesController@editStartPage');
 		}
 	}
