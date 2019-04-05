@@ -1,4 +1,5 @@
 <?php
+	$is_exb = false;
 	$download_form_action = '/downloads/save';
 	
 	$display = 'display:none;'; $icon_class = 'expand';

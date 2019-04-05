@@ -12,6 +12,10 @@
 				    <div id="dl_file_lbl" style="font-size:11px;position:relative;left:16px;margin-top:10px;">{{{ strlen($page->dl_terms_file) > 4 ? $page->dl_terms_file : 'No file' }}}
 				    </div>				    
 				    <input type="hidden" name="page_id" value="{{$page->id}}">
+				    <?php if(!$is_exb): ?>
+					    {{ Form::hidden('menu_item_id', $menu_item_id, ['id' => 'menu_item_id']) }}
+					    {{ Form::hidden('cs_id', $cs_id, ['id' => 'cs_id']) }}
+				    <?php endif; ?>
 				  </form>   
 				  <div style="clear:both; padding:10px 0;"><hr></div>
 				  <form id="download_form" method="POST" action="{{$download_form_action}}" accept-charset="UTF-8" enctype="multipart/form-data" 
