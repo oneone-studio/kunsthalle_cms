@@ -162,6 +162,7 @@ class DownloadsController extends BaseController {
 
 	public static function moveFile($loc_dir, $rem_dir, $file) {
 		$filename = $file->getClientOriginalName();
+		$filename = str_replace(' ', '_', $filename);
 		if(!$file->move($rem_dir, $filename)) {
     		$file->move($loc_dir, $filename);
     		if(!copy($loc_dir.$filename, $rem_dir.$filename)) {
@@ -176,6 +177,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		$file->move('files/downloads/', $filename);
 	    		$preivew = '/files/downloads/' . $filename;
 
@@ -193,6 +195,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		$file->move('files/downloads/', $filename);
 	    		$preivew = '/files/downloads/' . $filename;
 

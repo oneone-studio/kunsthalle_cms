@@ -14,7 +14,7 @@
 				    <input type="hidden" name="page_id" value="{{$page->id}}">
 				  </form>   
 				  <div style="clear:both; padding:10px 0;"><hr></div>
-				  <form id="download_form" method="POST" action="/exb-downloads/save" accept-charset="UTF-8" enctype="multipart/form-data" 
+				  <form id="download_form" method="POST" action="{{$download_form_action}}" accept-charset="UTF-8" enctype="multipart/form-data" 
 				     ><input name="_token" type="hidden">
 				    <div style="clear:both;"></div>
 				    <label for="download_file" style="float:left;margin-top:3px;width:130px;">File 

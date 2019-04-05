@@ -145,6 +145,7 @@ class DownloadsExbController extends BaseController {
 
 	public static function moveFile($loc_dir, $rem_dir, $file) {
 		$filename = $file->getClientOriginalName();
+		$filename = str_replace(' ', '_', $filename);
 		if(!$file->move($rem_dir, $filename)) {
     		$file->move($loc_dir, $filename);
     		if(!copy($loc_dir.$filename, $rem_dir.$filename)) {
@@ -159,6 +160,7 @@ class DownloadsExbController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		$file->move('files/downloads/', $filename);
 	    		$preivew = '/files/downloads/' . $filename;
 
@@ -169,6 +171,22 @@ class DownloadsExbController extends BaseController {
 		}
 
 		return Response::json(array('error' => true, 'message' => 'Error processing image'), 422);
+	}
+
+	public function uploadThumb() {
+		if(Request::ajax()) {
+			if (Input::hasFile('thumb')) {
+				$file = Input::file('thumb');
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
+	    		$file->move('files/downloads/', $filename);
+	    		$preivew = '/files/downloads/' . $filename;
+
+				return Response::json(array('error' => false, 'preivew' => $preivew), 200);
+			}
+		}
+
+		return Response::json(array('error' => true, 'message' => 'Error processing request'), 422);
 	}
 
 	public function getDownload() {

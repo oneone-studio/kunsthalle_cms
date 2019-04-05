@@ -6,7 +6,7 @@
 		    	  		?>
 		    	  		<div id="download_blk_{{$sp['id']}}" style="width:{{$w}}px;float:left;margin-right:20px;">
 							<a href="javascript:deleteDownload({{$sp['id']}})" style="color:orangered;font-size:14px;">x </a><br>
-			    	  		<div style="width:{{$w}}px;float:left;padding:5px; border:1px solid #e9e9e9; cursor:pointer;" onclick="editDownload({{$sp['id']}})">
+			    	  		<div style="width:{{$w-5}}px;word-wrap:break-word;float:left;padding:5px; border:1px solid #e9e9e9; cursor:pointer;" onclick="editDownload({{$sp['id']}})">
 			    	  		<?php 
 			    	  		$filename = $sp['filename'];
 			    	  		if(strstr($sp['filename'], '.pdf')) { $filename = $sp['thumb_image']; }
