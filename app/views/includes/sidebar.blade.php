@@ -2,7 +2,13 @@
 <?php
 $lastSBSectionId = 0;
 ?>
-
+<style>
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+.plus .minus {
+  font-size:20px !important;text-decoration:none; font-weight:bold;
+}
+</style>
 <div class="sidebar" style="margin-right:10px;">
 
 	   <ul class="side_nav sidebar-l1">
@@ -19,26 +25,26 @@ $lastSBSectionId = 0;
        @if($sidebar && count($sidebar))		  
          @foreach($sidebar['menu_items'] as $mi)
          
-             <li ><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}" style="margin-left:0px;">{{$mi['menu_item']['title_de']}}</a>
+             <li><div class="menu-tem-title"><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}" style="margin-left:0px;">{{$mi['menu_item']['title_de']}}</a>
               <?php 
                 $mi_display = (isset($menu_item_id) && $mi['menu_item']['id'] == $menu_item_id) ? 'inline' : 'none';
 
                 if($mi_display == 'none') { 
                     echo '<a id="toggle_cs_'.$mi['menu_item']['id'].'" href="javascript:expandSBSection('.$mi['menu_item']['id'].
-                      ')" style="font-size:16px;text-decoration:none;">+</a>'; 
+                      ')" class="plus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">+</a>'; 
                 } else { 
                     echo '<a id="toggle_cs_'.$mi['menu_item']['id'].'"  href="javascript:collapseSBSection('.$mi['menu_item']['id'].')"
-                      style="font-size:16px;text-decoration:none;">-</a>'; 
+                      class="minus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">-</a>'; 
                     $lastSBSectionId = $mi['menu_item']['id'];
                 }
-              ?>
-                <br>
+              ?></div>
+                <div style="clear:both;"></div>
                 <div id="page_opt_<?php echo $mi['menu_item']['id'];?>" style="width:100px;display:inline; margin-left:0px;">
                 <a href="/content/content-sections/create/{{$mi['menu_item']['id']}}" 
-                    style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;">+ Section</a>
+                    style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;"><span class="toggle-icon">+</span> Section</a>
                 <div style="width:10px; text-align:center; display:inline-block; color:blue; font-size:14px;">|</div>
                 <a href="/content/content-sections/create-sp/{{$mi['menu_item']['id']}}" 
-                   style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;text-decoration:none;">+ Page</a>
+                   style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;text-decoration:none;"><span class="toggle-icon">+</span> Page</a>
                 </div>
              <ul id="cs_list_{{$mi['menu_item']['id']}}" style="display:<?php echo $mi_display;?>;margin-left:0;position:relative;">
 
@@ -55,15 +61,9 @@ $lastSBSectionId = 0;
          	   			@if(count($cs->pages) > 0)
          	   				<ul class="sidebar-l3" style="margin-left:0;">
          	   				  @foreach($cs->pages as $p) 
-                        <?php $style = ' style="text-decoration:none;"';
-                              $li_style = ' style="padding:1px 2px 0px 0px;display:table;text-decoration:none;"';
-                              if(isset($page) && $page->id == $p->id) { 
-                                  $style = ' style="color:orangered;"'; 
-                                  $li_style = ' style="padding:1px 2px 1px 0px;display:table; color:orangered;"'; 
-                              }
-                        ?>
-         	   				  	<li <?php echo $li_style;?> ><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$p->id}}"
-                         <?php echo $style;?> >{{$p->title_de}}</a></li>
+                        <?php $class = (isset($page) && $page->id == $p->id) ? ' class="cur"' : ''; ?>
+         	   				  	<li {{$class}} ><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$p->id}}"
+                         >{{$p->title_de}}</a></li>
          	   				  @endforeach	
          	   				</ul>
          	   			@endif
@@ -71,15 +71,9 @@ $lastSBSectionId = 0;
                @endif
                @if($cs->type == 'page')
                   @if(count($cs->pages))
-                    <?php $style = 'margin-left:0;';
-                          $li_style = ' style="padding:1px 2px 0px 0px;display:block;margin-top:5px;"';
-                          if(isset($page) && $page->id == $cs->pages[0]->id) { 
-                              $style = ' style="color:orangered;"'; 
-                              $li_style = ' style="padding:1px 2px 1px 0px; color:orangered;"'; 
-                          }
-                    ?>
-                    <li <?php echo $li_style;?> ><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$cs->pages[0]->id}}"
-                        <?php echo $style;?> >{{$cs->pages[0]->title_de}} </a></li>
+                    <?php $class = (isset($page) && $page->id == $cs->pages[0]->id) ? ' class="cur"' : ''; ?>
+                    <li {{$class}}><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$cs->pages[0]->id}}"
+                        >{{$cs->pages[0]->title_de}} </a></li>
                   @endif
                @endif
 
@@ -131,5 +125,4 @@ function hideOpt(id) {
     $('#page_opt_'+id).hide();
   }
 }
-
 </script>

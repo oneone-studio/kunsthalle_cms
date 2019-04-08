@@ -276,6 +276,12 @@ p {
 .sb-section-title a {
 	color:blue;
 }
+.menu-tem-title {
+	background:#f8f8f8; border-bottom:1px solid lightgray;
+}
+.toggle-icon {
+	font-size:16px; display:inline-block; margin-right:3px;margin-top:2px;
+}
 
 a {
 	cursor:pointer;
