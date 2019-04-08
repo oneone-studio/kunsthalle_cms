@@ -4,9 +4,9 @@
 @section('content')
 
     <div class="page_content">
-      <h3>Content Section</h3>
-      <p>
-		{{ Form::open(array('route' => 'content_sections.store', 'method' => 'post')) }}
+        <h3>Content Section</h3>
+        <p>
+		  {{ Form::open(array('route' => 'content_sections.store', 'method' => 'post')) }}
 		    
 			<div class="form-group nl">
 			    <label for="exampleInputEmail1"><?php echo Form::label('title_de', 'Title'); ?></label>
@@ -39,22 +39,31 @@
 			    	<option value="l">Large </option>
 			    </select>
 			</div>
+			<div class="form-group nl" style="padding-top:10px;">
+				<label for="kevents" style="float:left;">Active [DE]:</label>
+				<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_de" id="active_de" 
+					></label></div>
+				<div style="clear:both;"></div>
+				<label for="kevents" style="float:left;">Active [EN]:</label>
+				<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_en" id="active_en" 
+					></label></div>
+			</div>
 
 			<div class="form-group">
 			    <label for="exampleInputEmail1"></label>
 			     <?php echo Form::submit('Save', array('class' => 'btn btn-primary', 'style' => 'height:30px; padding:3px 15px 5px 15px')); ?>
 			</div>            
 
-				<input type="hidden" name="menu_item_id" value="{{$menu_item_id}}">
+			<input type="hidden" name="menu_item_id" value="{{$menu_item_id}}">
 
-			{{ Form::close() }}  
+		  {{ Form::close() }}  
 
-			@if ($errors->any())
-			    <ul>
-			        {{ implode('', $errors->all('<li class="error">:message</li>')) }}
-			    </ul>
-			@endif
-      </p> 
-    </div>
+		  @if ($errors->any())
+		    <ul>
+		        {{ implode('', $errors->all('<li class="error">:message</li>')) }}
+		    </ul>
+		  @endif
+  		</p> 
+	</div>
 
 @stop

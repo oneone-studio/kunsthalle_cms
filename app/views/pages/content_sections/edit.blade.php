@@ -42,6 +42,15 @@
 			    	<option value="l" @if($content_section->teaser_size == 'l') selected="selected" @endif >Large </option>
 			    </select>
 			</div>
+			<div class="form-group nl" style="padding-top:10px;">
+				<label for="kevents" style="float:left;">Active [DE]:</label>
+				<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_de" id="active_de" 
+					@if($content_section->active_de == 1) checked="checked" @endif ></label></div>
+				<div style="clear:both;"></div>
+				<label for="kevents" style="float:left;">Active [EN]:</label>
+				<div style="position:relative;left:20px;top:-2px;display:inline-block"><input type="checkbox" name="active_en" id="active_en" 
+					@if($content_section->active_en == 1) checked="checked" @endif ></label></div>
+			</div>
 
 			<div class="form-group">
 			    <label for="exampleInputEmail1"></label>

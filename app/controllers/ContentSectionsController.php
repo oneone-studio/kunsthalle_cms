@@ -98,6 +98,8 @@ class ContentSectionsController extends BaseController {
 		$content_section->type = 'page_section';
 		$content_section->sort_order = $order;
 		$content_section->teaser_size = Input::get('teaser_size');
+		$content_section->active_de = Input::has('active_de') ? 1 : 0;
+		$content_section->active_en = Input::has('active_en') ? 1 : 0;
 		$content_section->save();
 
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
@@ -138,7 +140,8 @@ class ContentSectionsController extends BaseController {
 		$content_section->detail_de = Input::get('detail_de');
 		$content_section->detail_en = Input::get('detail_en');
 		$content_section->teaser_size = Input::get('teaser_size');
-		$content_section->active = Input::has('active') ? Input::get('active') : 1;
+		$content_section->active_de = Input::has('active_de') ? 1 : 0;
+		$content_section->active_en = Input::has('active_en') ? 1 : 0;
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
 			$content_section->contacts()->sync(Input::get('contacts')); // attach contacts
 		} else {
@@ -146,7 +149,8 @@ class ContentSectionsController extends BaseController {
 		}
 		$content_section->save();
 
-        return Redirect::action('MenuItemsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
+        // return Redirect::action('MenuItemsController@index', ['menu_item_id' => Input::get('menu_item_id')]);
+        return Redirect::action('ContentSectionsController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'id' => Input::get('id')]);
 	}
 	
 	public function destroy($menu_item_id, $id) {

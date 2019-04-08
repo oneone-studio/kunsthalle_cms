@@ -18,7 +18,7 @@
 			    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug DE', 'onclick' => 'setSlug(this)', 
 			            'onkeyup' => 'setSlug(this)', 'onblur' => 'setSlug(this)']); ?>
 			    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug EN', 'onclick' => 'setSlug(this)', 
-			            'onkeyup' => 'setSlug(this)'], 'onblur' => 'setSlug(this)'); ?>
+			            'onkeyup' => 'setSlug(this)', 'onblur' => 'setSlug(this)']); ?>
 			</div>    
 
 			<div class="form-group">
