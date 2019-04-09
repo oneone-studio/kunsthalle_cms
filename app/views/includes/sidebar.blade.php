@@ -24,27 +24,35 @@ a:hover { text-decoration: none; }
    	   
        @if($sidebar && count($sidebar))		  
          @foreach($sidebar['menu_items'] as $mi)
-         
-             <li><div class="menu-tem-title"><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}" style="margin-left:0px;">{{$mi['menu_item']['title_de']}}</a>
-              <?php 
-                $mi_display = (isset($menu_item_id) && $mi['menu_item']['id'] == $menu_item_id) ? 'inline' : 'none';
+              
+            <?php 
+              $mi_display = (isset($menu_item_id) && $mi['menu_item']['id'] == $menu_item_id) ? 'inline' : 'none';
+              $mi_id = $mi['menu_item']['id'];
+              $toggle_href = '';
+              $toggle_el = '';
+              if($mi_display == 'none') {
+                  $toggle_href = 'javascript:expandSBSection('.$mi['menu_item']['id'].')';
+                  $toggle_el = '<a id="toggle_cs_'.$mi['menu_item']['id'].'" href="'.$toggle_href.'" class="plus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">+</a>'; 
+              } else { 
+                  $toggle_href = 'javascript:collapseSBSection('.$mi['menu_item']['id'].')';
+                  $toggle_el = '<a id="toggle_cs_'.$mi['menu_item']['id'].'"  href="'.$toggle_href.'"
+                    class="minus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">-</a>'; 
+                  $lastSBSectionId = $mi['menu_item']['id'];
+              }
+            ?>
 
-                if($mi_display == 'none') { 
-                    echo '<a id="toggle_cs_'.$mi['menu_item']['id'].'" href="javascript:expandSBSection('.$mi['menu_item']['id'].
-                      ')" class="plus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">+</a>'; 
-                } else { 
-                    echo '<a id="toggle_cs_'.$mi['menu_item']['id'].'"  href="javascript:collapseSBSection('.$mi['menu_item']['id'].')"
-                      class="minus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">-</a>'; 
-                    $lastSBSectionId = $mi['menu_item']['id'];
-                }
-              ?></div>
+             <li><div class="menu-item-title"><a href="{{$toggle_href}}" class="toggle-el-{{$mi_id}}" 
+                  style="margin-left:0px;">{{$mi['menu_item']['title_de']}}</a>
+                  <div style="width:60px;float:right;"><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}">[Edit]</a></div>
+                  {{ $toggle_el }}
+                </div>
                 <div style="clear:both;"></div>
                 <div id="page_opt_<?php echo $mi['menu_item']['id'];?>" style="width:100px;display:inline; margin-left:0px;">
                 <a href="/content/content-sections/create/{{$mi['menu_item']['id']}}" 
-                    style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;"><span class="toggle-icon">+</span> Section</a>
+                    class="menu-item-line-2"><div class="toggle-icon">+</div> Section</a>
                 <div style="width:10px; text-align:center; display:inline-block; color:blue; font-size:14px;">|</div>
                 <a href="/content/content-sections/create-sp/{{$mi['menu_item']['id']}}" 
-                   style="margin-left:0px;font-size:11px;font-weight:normal;color:#333;text-decoration:none;"><span class="toggle-icon">+</span> Page</a>
+                   class="menu-item-line-2"><div class="toggle-icon">+</div> Page</a>
                 </div>
              <ul id="cs_list_{{$mi['menu_item']['id']}}" style="display:<?php echo $mi_display;?>;margin-left:0;position:relative;">
 
@@ -99,15 +107,17 @@ function expandSBSection(id) {
   lastSBSectionId = id;
   if($('#toggle_cs_'+id).length) {
     $('#toggle_cs_'+id).attr('href', 'javascript:collapseSBSection('+id+')').html('-');
+    $('.toggle-el-'+id).attr('href', 'javascript:collapseSBSection('+id+')');
   }
   if($('#cs_list_'+id).length) {
-    $('#cs_list_'+id).show();
+    $('#cs_list_'+id).fadeIn(200).show();
   }
 }
 
 function collapseSBSection(id) {
   if($('#toggle_cs_'+id).length) {
     $('#toggle_cs_'+id).attr('href', 'javascript:expandSBSection('+id+')').html('+');
+    $('.toggle-el-'+id).attr('href', 'javascript:expandSBSection('+id+')');
   }
   if($('#cs_list_'+id).length) {
     $('#cs_list_'+id).hide();
