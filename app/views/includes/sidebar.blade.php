@@ -9,7 +9,7 @@ a:hover { text-decoration: none; }
   font-size:20px !important;text-decoration:none; font-weight:bold;
 }
 </style>
-<div class="sidebar" style="margin-right:10px;">
+<div class="sidebar">
 
 	   <ul class="side_nav sidebar-l1">
 	  @if(is_array($sidebar))
@@ -49,7 +49,7 @@ a:hover { text-decoration: none; }
                 <div id="page_opt_{{$mi_id}}" style="width:100px;display:inline; margin-left:0px;">
                   <a href="/content/content-sections/create/{{$mi['menu_item']['id']}}" 
                       class="menu-item-line-2"><div class="toggle-icon">+</div> Section</a>
-                  <div style="width:10px; text-align:center; display:inline-block; color:blue; font-size:14px;">|</div>
+                  <div class="sep">|</div>
                   <a href="/content/content-sections/create-sp/{{$mi['menu_item']['id']}}" 
                      class="menu-item-line-2"><div class="toggle-icon">+</div> Page</a>
                 </div>
@@ -61,16 +61,15 @@ a:hover { text-decoration: none; }
             <?php 
                 $cs_display = (isset($cs_id) && ($cs['id'] == $cs_id)) ? 'color:red;' : '';
             ?>
-         	   		<li style="display:<?php echo $cs_display;?>;"><a href="/content/content-sections/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}" 
-                    style="margin-left:0;display:inline-block;margin-bottom:10px;">{{$cs['title_de']}}</a>
-         	   			<a href="/content/pages/create-sp/{{$mi['menu_item']['id']}}/{{$cs->id}}" class="form-link" 
-                    style="font-size:11px; font-weight:normal;">[+Page]</a>
+         	   		<li class="li-cs" style="display:<?php echo $cs_display;?>;"><a class="li-cs-title"
+                  href="/content/content-sections/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}">{{$cs['title_de']}}</a>
+         	   			<a href="/content/pages/create-sp/{{$mi['menu_item']['id']}}/{{$cs->id}}" class="form-link li-cs-links">[+Page]</a>
          	   			@if(count($cs->pages) > 0)
          	   				<ul class="sidebar-l3" style="margin-left:0;">
          	   				  @foreach($cs->pages as $p) 
                         <?php $class = (isset($page) && $page->id == $p->id) ? ' class="cur"' : ''; ?>
-         	   				  	<li {{$class}} ><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$p->id}}"
-                         >{{$p->title_de}}</a></li>
+         	   				  	<li {{$class}} ><div><a href="/content/pages/edit/{{$mi['menu_item']['id']}}/{{$cs->id}}/{{$p->id}}"
+                         >{{$p->title_de}}</a></div></li>
          	   				  @endforeach	
          	   				</ul>
          	   			@endif
