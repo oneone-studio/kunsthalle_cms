@@ -32,27 +32,26 @@ a:hover { text-decoration: none; }
               $toggle_el = '';
               if($mi_display == 'none') {
                   $toggle_href = 'javascript:expandSBSection('.$mi['menu_item']['id'].')';
-                  $toggle_el = '<a id="toggle_cs_'.$mi['menu_item']['id'].'" href="'.$toggle_href.'" class="plus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">+</a>'; 
+                  $toggle_el = '<a id="toggle_cs_'.$mi['menu_item']['id'].'" href="'.$toggle_href.'" class="plus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;"><img src="/images/down_arrow.png" class="toggle-arrow"></a>'; 
               } else { 
                   $toggle_href = 'javascript:collapseSBSection('.$mi['menu_item']['id'].')';
                   $toggle_el = '<a id="toggle_cs_'.$mi['menu_item']['id'].'"  href="'.$toggle_href.'"
-                    class="minus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;">-</a>'; 
+                    class="minus" style="font-size:18px;text-decoration:none;font-weight:bold;position:relative;top:2px;"><img src="/images/up_arrow.png" class="toggle-arrow"></a>'; 
                   $lastSBSectionId = $mi['menu_item']['id'];
               }
             ?>
 
-             <li><div class="menu-item-title"><a href="{{$toggle_href}}" class="toggle-el-{{$mi_id}}" 
+             <li id="toggle_mi_{{$mi_id}}" {{$toggle_href}}><div class="menu-item-title"><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}" class="toggle-el-{{$mi_id}}" 
                   style="margin-left:0px;">{{$mi['menu_item']['title_de']}}</a>
-                  <div style="width:60px;float:right;"><a href="/content/menu-items/edit/{{$mi['menu_item']['id']}}">[Edit]</a></div>
                   {{ $toggle_el }}
                 </div>
                 <div style="clear:both;"></div>
-                <div id="page_opt_<?php echo $mi['menu_item']['id'];?>" style="width:100px;display:inline; margin-left:0px;">
-                <a href="/content/content-sections/create/{{$mi['menu_item']['id']}}" 
-                    class="menu-item-line-2"><div class="toggle-icon">+</div> Section</a>
-                <div style="width:10px; text-align:center; display:inline-block; color:blue; font-size:14px;">|</div>
-                <a href="/content/content-sections/create-sp/{{$mi['menu_item']['id']}}" 
-                   class="menu-item-line-2"><div class="toggle-icon">+</div> Page</a>
+                <div id="page_opt_{{$mi_id}}" style="width:100px;display:inline; margin-left:0px;">
+                  <a href="/content/content-sections/create/{{$mi['menu_item']['id']}}" 
+                      class="menu-item-line-2"><div class="toggle-icon">+</div> Section</a>
+                  <div style="width:10px; text-align:center; display:inline-block; color:blue; font-size:14px;">|</div>
+                  <a href="/content/content-sections/create-sp/{{$mi['menu_item']['id']}}" 
+                     class="menu-item-line-2"><div class="toggle-icon">+</div> Page</a>
                 </div>
              <ul id="cs_list_{{$mi['menu_item']['id']}}" style="display:<?php echo $mi_display;?>;margin-left:0;position:relative;">
 
@@ -99,6 +98,8 @@ a:hover { text-decoration: none; }
 
 <script>
 var lastSBSectionId = <?php echo $lastSBSectionId;?>;
+var down_arrow = '<img src="/images/down_arrow.png" class="toggle-arrow">';
+var up_arrow = '<img src="/images/up_arrow.png" class="toggle-arrow">';
 
 function expandSBSection(id) {
   if(lastSBSectionId > 0) {
@@ -106,7 +107,8 @@ function expandSBSection(id) {
   }
   lastSBSectionId = id;
   if($('#toggle_cs_'+id).length) {
-    $('#toggle_cs_'+id).attr('href', 'javascript:collapseSBSection('+id+')').html('-');
+    $('#toggle_cs_'+id).attr('href', 'javascript:collapseSBSection('+id+')').html(up_arrow); //.html('-');
+    $('#toggle_mi_'+id).attr('href', 'javascript:collapseSBSection('+id+')');
     $('.toggle-el-'+id).attr('href', 'javascript:collapseSBSection('+id+')');
   }
   if($('#cs_list_'+id).length) {
@@ -116,7 +118,8 @@ function expandSBSection(id) {
 
 function collapseSBSection(id) {
   if($('#toggle_cs_'+id).length) {
-    $('#toggle_cs_'+id).attr('href', 'javascript:expandSBSection('+id+')').html('+');
+    $('#toggle_cs_'+id).attr('href', 'javascript:expandSBSection('+id+')').html(down_arrow); // '+');
+    $('#toggle_mi_'+id).attr('href', 'javascript:expandSBSection('+id+')');
     $('.toggle-el-'+id).attr('href', 'javascript:expandSBSection('+id+')');
   }
   if($('#cs_list_'+id).length) {
