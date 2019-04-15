@@ -4,7 +4,7 @@
 <?php //echo '<pre>'; print_r($pages); 
 ?>
 @section('content')
-  
+  <form id="exb_index_form" method="get" action="/content/exhibition-pages/delete-pages/">
     <div class="page_content" style="position:relative">
       <p class="page-title">Exhibition Pages 
         <a href="/content/pages/create-exb-page" class="link">New</a>
@@ -12,7 +12,7 @@
 
       <table class="table table-striped table-bordered" style="width:100%; height:auto; position:absolute; top:45px; font-size:12px; font-weight:normal;">
          <tr>
-          <th style="width:40px; text-align:center;"><a href="/content/exhibition-pages/delete-all" title="Delete" type="button" class="icon-fixed-width icon-trash"></a></span>
+          <th style="width:40px; text-align:center;"><a href="javascript:submitById('exb_index_form')" title="Delete" type="button" class="icon-fixed-width icon-trash"></a></span>
           <!-- <span class="glyphicon glyphicon-trash"></span> --></a></th>
           <th><strong>Title</strong></th>
           <th style="width:100px;"><strong>Main Teaser</strong></th>
@@ -20,7 +20,7 @@
          </tr>
       @foreach($pages as $p)
         <tr>
-          <td><input type="checkbox" name="id[]" value="{{ $p->id }}" style="display:block; margin: 4px auto 2px auto;"></td>
+          <td><input type="checkbox" name="id{{$p->id}}" value="{{ $p->id }}" style="display:block; margin: 4px auto 2px auto;"/></td>
           <td>{{ $p->title_de }}</td>
 
           <td style="width:90px;">
@@ -35,6 +35,7 @@
         </tr>
 
       @endforeach
+      </table>
     </div>
-
+  </form>
 @stop

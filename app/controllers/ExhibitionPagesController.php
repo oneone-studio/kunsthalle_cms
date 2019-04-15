@@ -89,6 +89,7 @@ class ExhibitionPagesController extends BaseController {
 	}
 
 	public function save() {
+		echo '<pre>'; print_r(Input::all());exit;
 		$start_date = Input::get('start_date');
 		if($start_date && strlen($start_date) > 0) {
 			if(strpos($start_date, '/')) {
@@ -105,14 +106,14 @@ class ExhibitionPagesController extends BaseController {
 		}
 
 		if(!Input::has('id')) {
-			$exhibition_page = new ExhibitionPage;
-			$exhibition_page->page_type = 'exhibition';
+			$exb_page = new ExhibitionPage;
+			$exb_page->page_type = 'exhibition';
 		} else {
-			$exhibition_page = Page::findOrFail(Input::get('id'));
+			$exb_page = Page::findOrFail(Input::get('id'));
 		}
 
-		$exhibition_page->title_de = Input::get('title_de');
-		$exhibition_page->title_en = Input::get('title_en');
+		$exb_page->title_de = Input::get('title_de');
+		$exb_page->title_en = Input::get('title_en');
 		$slug_de = strtolower(str_replace(' ', '-', Input::get('slug_de')));
 		$slug_en = strtolower(str_replace(' ', '-', Input::get('slug_en')));
 		$reps = [ 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ß' => 'ss' ];
@@ -120,30 +121,30 @@ class ExhibitionPagesController extends BaseController {
 			$slug_de = str_replace($char, $rep, $slug_de);
 			$slug_en = str_replace($char, $rep, $slug_en);
 		}
-		$exhibition_page->slug_de = $slug_de;
-		$exhibition_page->slug_en = $slug_en;
-		$exhibition_page->seo_page_title_de = Input::get('seo_page_title_de');
-		$exhibition_page->seo_page_title_en = Input::get('seo_page_title_en');
-		$exhibition_page->seo_page_desc_de = Input::get('seo_page_desc_de');
-		$exhibition_page->seo_page_desc_en = Input::get('seo_page_desc_en');
-		$exhibition_page->start_date = $start_date;
-		$exhibition_page->end_date = $end_date;
-		$exhibition_page->active_de = Input::has('active_de') ? 1 : 0;
-		$exhibition_page->active_en = Input::has('active_en') ? 1 : 0;
-		$exhibition_page->cluster_id = Input::get('cluster_id');
-		$exhibition_page->save();
+		$exb_page->slug_de = $slug_de;
+		$exb_page->slug_en = $slug_en;
+		$exb_page->seo_page_title_de = Input::get('seo_page_title_de');
+		$exb_page->seo_page_title_en = Input::get('seo_page_title_en');
+		$exb_page->seo_page_desc_de = Input::get('seo_page_desc_de');
+		$exb_page->seo_page_desc_en = Input::get('seo_page_desc_en');
+		$exb_page->start_date = $start_date;
+		$exb_page->end_date = $end_date;
+		$exb_page->active_de = Input::has('active_de') ? 1 : 0;
+		$exb_page->active_en = Input::has('active_en') ? 1 : 0;
+		$exb_page->cluster_id = Input::get('cluster_id');
+		$exb_page->save();
 		if(Input::has('contacts') && count(Input::get('contacts'))) {
-			$exhibition_page->contacts()->sync(Input::get('contacts')); // attach contacts
+			$exb_page->contacts()->sync(Input::get('contacts')); // attach contacts
 		} else {
-		    $exhibition_page->contacts()->detach(); // detatch contacts
+		    $exb_page->contacts()->detach(); // detatch contacts
 		}
 		if(Input::has('tags') && count(Input::get('tags'))) {
-			$exhibition_page->tags()->sync(Input::get('tags')); // attach tags
+			$exb_page->tags()->sync(Input::get('tags')); // attach tags
 		} else {
-		    $exhibition_page->tags()->detach(); // detatch tags
+		    $exb_page->tags()->detach(); // detatch tags
 		}
 
-		return Redirect::action('ExhibitionPagesController@edit', ['id' => Input::get('id')]);
+		return Redirect::action('ExhibitionPagesController@edit', ['id' => $exb_page->id]);
 	}
 
 	public function storeSingleExhibitionPage()
@@ -396,6 +397,21 @@ class ExhibitionPagesController extends BaseController {
 		}
 
 		return Response::json(array('error' => false), 200);
+	}
+
+	public function deletePages() {
+		$ids = Input::all();
+		foreach($ids as $id) {
+			PageSection::where('page_id', $id)->delete();
+			$sliders = PageImageSlider::where('page_id', $id)->get();
+			foreach($sliders as $s) {
+				PageSliderImage::where('page_image_slider_id', $s->id)->delete();
+			}
+			PageImageSlider::where('page_id', $id)->delete();
+			Page::where('id', $id)->delete();
+		}
+
+		return Redirect::action('ExhibitionPagesController@index');
 	}
 
 	public function saveBanner() {

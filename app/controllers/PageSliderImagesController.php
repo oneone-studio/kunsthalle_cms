@@ -11,12 +11,6 @@ class PageSliderImagesController extends BaseController {
 
 	public function store() {
 		$input = Input::all();
-		// echo '<pre>'; print_r($input); exit;
-
-		// $content = new Content();
-		// $content->content_de = Input::get('content_de');
-		// $content->content_en = Input::get('content_en');
-		// $content->save();
 
         return Redirect::action('ContentsController@index', ['page_id' => Input::get('page_id')]);
 	}
@@ -55,6 +49,8 @@ class PageSliderImagesController extends BaseController {
     		}
     		$image->url_de = Input::get('url_de');
     		$image->url_en = Input::get('url_en');
+    		$image->active_de = Input::has('active_de') ? 1 : 0;
+    		$image->active_en = Input::has('active_en') ? 1 : 0;
     		$image->text_position = Input::get('position');
     		if($update) {
 	    		$image->sort_order = Input::has('sort_order') ? Input::get('sort_order') : 1;
@@ -114,7 +110,7 @@ class PageSliderImagesController extends BaseController {
 	}
 
 	public function updatePageSliderImage() {
-		$f = fopen('test.log', 'w+');
+		$f = fopen('logs/slide.log', 'w+');
 		fwrite($f, "updatePageSliderImage..\n\n". print_r(Input::all(), true));
 		if(Request::ajax()) {
 			if(Input::has('image_id') || Input::has('slide_id')) {
@@ -137,6 +133,8 @@ class PageSliderImagesController extends BaseController {
 	    		}
 	    		$image->url_de = Input::get('url_de');
 	    		$image->url_en = Input::get('url_en');
+	    		$image->active_de = Input::has('active_de') ? 1 : 0;
+	    		$image->active_en = Input::has('active_en') ? 1 : 0;
 	    		$image->text_position = Input::get('position');
 	    		$image->sort_order = Input::get('sort_order');
 	    		$image->save();

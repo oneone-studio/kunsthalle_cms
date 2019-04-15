@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- {{ HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'); }} -->
-{{ HTML::script('js/common.js'); }}
+{{ HTML::script('js/common.js?v=201904151041'); }}
 
 {{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'); }}
 <!-- {{ HTML::script('https://code.jquery.com/qunit/qunit-1.19.0.js'); }} -->
@@ -23,11 +23,11 @@
   <!-- include libraries BS3 - ->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" />
   <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-  <!-- include summernote - ->
+  < !-- include summernote - ->
   {{ HTML::style('js/summernote/dist/summernote.css'); }}
   {{ HTML::script('js/summernote/dist/summernote.js'); }}
 
-<!-- Summernote WYSIWYG END -->
+< !-- Summernote WYSIWYG END -->
 
 {{ HTML::style('js/chosen/docsupport/prism.css'); }}
 {{ HTML::style('js/chosen/chosen.css'); }}

@@ -56,7 +56,8 @@ class ContactsController extends BaseController {
 		$contact->last_name = Input::get('last_name');
 		$contact->title = Input::get('title');
 		$contact->department_id = Input::get('department');
-		$contact->function = Input::get('function');
+		$contact->function_de = Input::get('function_de');
+		$contact->function_en = Input::get('function_en');
 		$contact->phone = Input::get('phone');
 		$contact->email = Input::get('email');
 		$contact->sort_order = Input::get('sort_order');
@@ -79,7 +80,8 @@ class ContactsController extends BaseController {
 		$contact->last_name = Input::get('last_name');
 		$contact->title = Input::get('title');
 		$contact->department_id = Input::get('department');
-		$contact->function = Input::get('function');
+		$contact->function_de = Input::get('function_de');
+		$contact->function_en = Input::get('function_en');
 		$contact->phone = Input::get('phone');
 		$contact->email = Input::get('email');
 		$contact->sort_order = Input::get('sort_order');

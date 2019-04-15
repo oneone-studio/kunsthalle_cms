@@ -543,6 +543,7 @@ Route::post('/content/exhibition-pages/save', array('before' => 'auth', 'as' => 
 Route::get('/content/exhibition-pages/delete/{id}', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@destroy']);
 Route::post('upload-exb-page-image', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@uploadExhibitionPageImage']);
 Route::post('save-page-image', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@saveBanner']);
+Route::get('/content/exhibition-pages/delete-pages/', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@deletePages']);
 Route::post('/content/exhibition-pages/saveBanner', array('before' => 'auth', 'as' => 'exb-page.image.save', 'uses' => 'ExhibitionPagesController@saveBanner'));
 Route::get('delete-page-image', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@deletePageImage']);
 Route::get('get-banner', ['before' => 'auth', 'uses' => 'ExhibitionPagesController@getBanner']);
@@ -702,6 +703,7 @@ Route::post('save-image', ['before' => 'auth', 'uses' => 'ImagesController@saveI
 // Image Grid
 // Route::post('/image-grid/save', array('as' => 'image_grid.store', 'uses' => 'ImageGridController@store'));
 Route::post('/image-grid/save', array('before' => 'auth', 'as' => 'image_grid.store', 'uses' => 'ImageGridController@store'));
+Route::post('/update-page-image_grid-image', 'ImageGridController@save');
 Route::get('delete-image-grid', ['before' => 'auth', 'uses' => 'ImageGridController@deleteImageGrid']);
 
 Route::get('delete-exb-image-grid', ['before' => 'auth', 'uses' => 'ImageGridExbController@deleteImageGrid']);

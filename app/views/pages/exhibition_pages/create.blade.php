@@ -46,6 +46,23 @@
 				</div>		
 
 				<div class="form-group">
+				    <label for="title">SEO Page Title [de]:</label>
+				    {{ Form::text('seo_page_title_de', null, ['placeholder' => 'SEO Page Title [de]', 'style' => 'width:500px;']) }}
+			        <div class="inp-de" style="top:2px;">DE</div><br/>
+					<div style="clear:both;"></div>
+				    {{ Form::text('seo_page_title_en', null, ['placeholder' => 'SEO Page Title [en]', 'style' => 'width:500px;']) }}
+			        <div class="inp-en" style="top:2px;">EN</div><br/>
+				</div>    
+				<div class="form-group">
+				    <label for="title">SEO Page Description [de]:</label>
+				    {{ Form::text('seo_page_desc_de', null, ['placeholder' => 'SEO Page Description [de]', 'style' => 'width:500px;']) }}
+			        <div class="inp-de" style="top:2px;">DE</div><br/>
+					<div style="clear:both;"></div>
+				    {{ Form::text('seo_page_desc_en', null, ['placeholder' => 'SEO Page Description [en]', 'style' => 'width:500px;']) }}
+			        <div class="inp-en" style="top:2px;">EN</div><br/>
+				</div>
+
+				<div class="form-group">
 		            {{ Form::submit('Submit', array('class' => 'btn btn-primary', 'style' => 'height:30px; padding:3px 15px 5px 15px')) }}
 		        </div>
 

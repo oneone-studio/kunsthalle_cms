@@ -32,8 +32,12 @@
 				    <!-- {{ Form::text('department', null, ['placeholder' => '']) }} -->
 				</div>
 				<div class="form-group" class="nl">
-				    <label for="title">{{ Form::label('function', 'Funktion:') }}</label>
-				    {{ Form::text('function', null, ['placeholder' => '']) }}
+				    {{ Form::label('function_de', 'Funktion [de]:') }}
+				    {{ Form::text('function_de', null, ['placeholder' => '']) }}
+				</div>
+				<div class="form-group" class="nl">
+				    {{ Form::label('function_en', 'Funktion [en]:') }}
+				    {{ Form::text('function_en', null, ['placeholder' => '']) }}
 				</div>
 				<div class="form-group" class="nl">
 				    <label for="title">{{ Form::label('phone', 'Telefon:') }}</label>

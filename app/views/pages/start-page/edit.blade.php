@@ -156,6 +156,19 @@
 										    <div id="slide_text" style="width:100%;float:left;">
 										    </div>
 									    </div>
+									    <div style="clear:both;"></div>
+										<div class="form-group nl" style="padding-top:10px;">
+											<label for="kevents" style="width:130px;float:left;">Active [DE]:</label>
+											<div style="position:relative;top:-4px !important;display:inline-block"><input type="checkbox" name="active_de" id="active_de"></label></div>
+											<div style="clear:both;"></div>
+											<label for="kevents" style="width:130px;float:left;">Active [EN]:</label>
+											<div style="position:relative;top:-4px !important;display:inline-block"><input type="checkbox" name="active_en" id="active_en"></label></div>
+										</div>
+									    <div style="clear:both;"></div>
+										<!-- <div class="form-group" class="nl">
+										    <label for="kevents" style="width:130px;float:left;">Order:</label>
+										    <input type="number" name="sort_order" id="sort_order" style="width:40px;display:inline-block;">
+										</div> -->
 									    <br>
 									    <div style="clear:both;"></div>
 									    <div style="width:70%; float:left; display:block; margin-left:130px;">
@@ -163,6 +176,7 @@
 										    <button id="cancel_slider_btn_{{$slider->id}}" class="button-error pure-button button-small" 
 										      onclick="hideSliderImageForm( {{$slider->id}})" style="display:inline-block;position:relative;top:-2px; margin-left:3px;height:27px; margin-top:1px; padding:3px 15px 5px 15px">Cancel</button>
 										</div>
+
 									    <input name="slide_id" id="slide_id_{{$slider->id}}" type="hidden">
 									    <input name="image_detail" id="image_detail_{{$slider->id}}" type="hidden">
 								    </div>
@@ -737,6 +751,9 @@ function editPageSliderImage(slider_id, id) {
 	    			$('#sort_order_'+slider_id).val(data.image.sort_order);
 	    			$('#url_de').val(data.image.url_de);
 	    			$('#url_en').val(data.image.url_en);
+	    			if(data.image.active_de == 1) { $('#active_de').prop('checked', true); } else { $('#active_de').prop('checked', false); }
+	    			if(data.image.active_en == 1) { $('#active_en').prop('checked', true); } else { $('#active_en').prop('checked', false); }
+	    			$('#sort_order').val = (!isNaN(data.image.sort_order)) ? data.image.sort_order : 1;
 	    			var html = '';
 	    			for(var i in data.image.slide_text) {
 	    				tx = data.image.slide_text[i];

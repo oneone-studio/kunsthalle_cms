@@ -559,6 +559,8 @@ function editPageSliderImage(slider_id, id) {
 	    			$('#url_de').val(data.image.url_de);
 	    			$('#url_en').val(data.image.url_en);
 	    			$('#sl_img_order_'+slider_id).val(data.image.sort_order);
+	    			if(data.image.active_de == 1) { $('#active_de').prop('checked', true); } else { $('#active_de').prop('checked', false); }
+	    			if(data.image.active_en == 1) { $('#active_en').prop('checked', true); } else { $('#active_en').prop('checked', false); }
 	    			if(data.image.detail_de != null) { tinyMCE.get('_image_detail_de_'+slider_id).setContent(data.image.detail_de); }
 	    			if(data.image.detail_en != null) { tinyMCE.get('_image_detail_en_'+slider_id).setContent(data.image.detail_en); }
 				},
