@@ -803,4 +803,29 @@ class PagesController extends BaseController {
 
 		return Response::json(array('error' => false, 'text' => $text), 200);
 	}
+
+	public function checkSlug() {
+		if(Input::has('slug') && Input::has('page_id')) {
+			$slug = strtolower(Input::get('slug'));
+			$page_id = Input::get('page_id');
+			$lang = (Input::has('lang')) ? Input::get('lang') : 'en';
+			$page_type = (Input::has('page_type')) ? Input::get('page_type') : 'normal';
+			$query = 'select id, slug_'.$lang.' from pages 
+					  where slug_'.$lang.' = "'.$slug.'"
+					    and page_type = "'.$page_type.'"';
+			$result = DB::select($query);
+			$is_valid = true;
+			$matches = 0;
+			if(isset($result)) {
+				foreach($result as $res) {
+					if($res->id != $page_id && strtolower($res->{'slug_'.$lang}) == $slug) { ++$matches; }
+				}
+			}
+			$is_valid = ($matches > 0) ? false : true;
+
+			return Response::json(array('error' => false, 'is_valid' => $is_valid), 200);
+		}
+
+		return Response::json(array('error' => false, 'is_valid' => false), 200);
+	}
 }

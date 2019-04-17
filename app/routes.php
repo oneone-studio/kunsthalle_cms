@@ -792,6 +792,8 @@ Route::get('/page-sections/del-page-section/{menu_item_id}/{cs_id}/{page_id}/{ps
 Route::get('/page-sections/move-up/{menu_item_id}/{cs_id}/{page_id}/{ps_id}', ['before' => 'auth', 'uses' => 'PageSectionsController@moveUp']);
 Route::get('/page-sections/move-down/{menu_item_id}/{cs_id}/{page_id}/{ps_id}', ['before' => 'auth', 'uses' => 'PageSectionsController@moveDown']);
 
+Route::get('/content/pages/check-slug', 'PagesController@checkSlug');
+
 // For exhibition pages
 // Route::get('/content/exb-page-contents', 'PageContentsExbController@index');
 // Route::get('/content/exb-page-contents/create', 'PageContentsExbController@create');

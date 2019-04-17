@@ -7,8 +7,8 @@
 	</div>    
 	<div class="form-group nl">
 	    <?php echo Form::label('slug', 'Slug [de]'); ?>
-	    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [de]', 'onkeyup' => 'convToSlug(this)']); ?>
-	    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'onkeyup' => 'convToSlug(this)']); ?>
+	    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [de]', 'class' => 'slug_de', 'onkeyup' => 'convToSlug(this);', 'onblur' => 'validateSlug(this, '.$page->id.', "exhibition", "de");']); ?>
+	    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'class' => 'slug_en', 'onkeyup' => 'convToSlug(this);', 'onblur' => 'validateSlug(this, '.$page->id.', "exhibition", "en");']); ?>
 	</div>    
 	<div class="form-group">
 	    <label for="exampleInputEmail1" style="float:left;">Start Date</label>
@@ -73,7 +73,7 @@
 		<div style="clear:both;"></div>
 	    {{ Form::text('seo_page_desc_en', $page->seo_page_desc_en, ['placeholder' => 'SEO Page Description [en]', 'style' => 'width:500px;']) }}
         <div class="inp-en" style="top:2px;">EN</div><br/>
-	</div>    
+	</div>
 
 	<div class="form-group">
 	    <label for="exampleInputEmail1"></label>
@@ -82,4 +82,11 @@
 	</div>            
     {{ Form::hidden('id', $page->id) }}
 
-{{ Form::close() }}		
+<script>
+$(function() {
+	if($('.slug_de').length) { validateSlug($('.slug_de', $('#page_id').val(), 'exhibition', 'de')); }
+	if($('.slug_en').length) { validateSlug($('.slug_en', $('#page_id').val(), 'exhibition', 'en')); }
+});
+</script>
+
+{{ Form::close() }}
