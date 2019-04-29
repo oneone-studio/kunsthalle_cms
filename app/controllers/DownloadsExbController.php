@@ -88,21 +88,21 @@ class DownloadsExbController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$filename = strtolower($file->getClientOriginalName());
-	    		// $file->move($local_dir, $download_file);
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->filename = $filename;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$filename = strtolower($file->getClientOriginalName());
-	    		// $file->move('files/downloads/', $terms_file);
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->terms_file = $filename;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$filename = strtolower($file->getClientOriginalName());
-	    		// $file->move('files/downloads/', $thumb);
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->thumb_image = $filename;
 	    	}	
@@ -117,20 +117,21 @@ class DownloadsExbController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$filename = strtolower($file->getClientOriginalName());
-	    		// $file->move('files/downloads/', $download_file);
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->filename = $filename;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$filename = strtolower($file->getClientOriginalName());
-	    		// $file->move('files/downloads/', $filename);
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->terms_file = $filename;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->thumb_image = $filename;
 	    	}	

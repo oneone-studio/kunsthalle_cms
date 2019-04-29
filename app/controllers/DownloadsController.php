@@ -85,28 +85,25 @@ class DownloadsController extends BaseController {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 				$download_file = str_replace(' ', '_', $download_file);
-	    		// $file->move('files/downloads/', $download_file);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->filename = $download_file;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
-				$terms_file = strtolower($file->getClientOriginalName());
-				$terms_file = str_replace(' ', '_', $terms_file);
-	    		// $file->move('files/downloads/', $terms_file);
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->terms_file = $terms_file;
+	    		$dl->terms_file = $filename;
 	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
-				$thumb = strtolower($file->getClientOriginalName());
-				$thumb = str_replace(' ', '_', $thumb);
-	    		// $file->move('files/downloads/', $thumb);
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->thumb_image = $thumb;
+	    		$dl->thumb_image = $filename;
 	    		if(!Input::has('link_title_de') || strlen(Input::get('link_title_de')) == 0) {
 	    			$link_title = $file->getClientOriginalName();
 	    		}
@@ -125,30 +122,24 @@ class DownloadsController extends BaseController {
     		$link_title = '';
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
-				$download_file = strtolower($file->getClientOriginalName());
-				$download_file = str_replace(' ', '_', $download_file);
-	    		// $file->move('files/downloads/', $download_file);
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->filename = $download_file;
-	    		// if(!Input::has('link_title') || strlen(Input::get('link_title')) == 0) {
-	    		// 	$link_title = $file->getClientOriginalName();
-	    		// }
+	    		$dl->filename = $filename;
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
-				$terms_file = strtolower($file->getClientOriginalName());
-				$terms_file = str_replace(' ', '_', $terms_file);
-	    		// $file->move('files/downloads/', $terms_file);
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->terms_file = $terms_file;
+	    		$dl->terms_file = $filename;
 	    	}	
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
-				$thumb = strtolower($file->getClientOriginalName());
-				$thumb = str_replace(' ', '_', $thumb);
-	    		// $file->move('files/downloads/', $thumb);
+				$filename = strtolower($file->getClientOriginalName());
+				$filename = str_replace(' ', '_', $filename);
 	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->thumb_image = $thumb;
+	    		$dl->thumb_image = $filename;
 	    	}	
 			$dl->page_id = Input::get('page_id');	
     		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
