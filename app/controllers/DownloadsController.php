@@ -68,7 +68,7 @@ class DownloadsController extends BaseController {
 	public function save() {
 		// echo '<pre>'; print_r(Input::all()); exit;
 		$local_dir = 'files/downloads/';
-		$remote_dir = '../../'.SITE_DIR.'/public/files/downloads/';
+		$remote_dir = '../../'.SITE_DIR.'/public/downloads/';
 
 		$page = Page::find(Input::get('page_id'));
 		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
@@ -84,6 +84,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
+				$download_file = str_replace(' ', '_', $download_file);
 	    		// $file->move('files/downloads/', $download_file);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->filename = $download_file;
@@ -91,6 +92,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
+				$terms_file = str_replace(' ', '_', $terms_file);
 	    		// $file->move('files/downloads/', $terms_file);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->terms_file = $terms_file;
@@ -101,6 +103,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
+				$thumb = str_replace(' ', '_', $thumb);
 	    		// $file->move('files/downloads/', $thumb);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->thumb_image = $thumb;
@@ -123,6 +126,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
+				$download_file = str_replace(' ', '_', $download_file);
 	    		// $file->move('files/downloads/', $download_file);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->filename = $download_file;
@@ -133,6 +137,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
+				$terms_file = str_replace(' ', '_', $terms_file);
 	    		// $file->move('files/downloads/', $terms_file);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->terms_file = $terms_file;
@@ -140,6 +145,7 @@ class DownloadsController extends BaseController {
 			if (Input::hasFile('thumb')) {
 				$file = Input::file('thumb');
 				$thumb = strtolower($file->getClientOriginalName());
+				$thumb = str_replace(' ', '_', $thumb);
 	    		// $file->move('files/downloads/', $thumb);
 	    		self::moveFile($local_dir, $remote_dir, $file);
 	    		$dl->thumb_image = $thumb;
