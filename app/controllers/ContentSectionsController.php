@@ -95,6 +95,8 @@ class ContentSectionsController extends BaseController {
 		$content_section->headline_en = Input::get('headline_en');
 		$content_section->detail_de = Input::get('detail_de');
 		$content_section->detail_en = Input::get('detail_en');
+		$content_section->slug_de = Input::get('slug_de');
+		$content_section->slug_en = Input::get('slug_en');
 		$content_section->type = 'page_section';
 		$content_section->sort_order = $order;
 		$content_section->teaser_size = Input::get('teaser_size');
@@ -139,6 +141,8 @@ class ContentSectionsController extends BaseController {
 		$content_section->headline_en = Input::get('headline_en');
 		$content_section->detail_de = Input::get('detail_de');
 		$content_section->detail_en = Input::get('detail_en');
+		$content_section->slug_de = Input::get('slug_de');
+		$content_section->slug_en = Input::get('slug_en');
 		$content_section->teaser_size = Input::get('teaser_size');
 		$content_section->active_de = Input::has('active_de') ? 1 : 0;
 		$content_section->active_en = Input::has('active_en') ? 1 : 0;

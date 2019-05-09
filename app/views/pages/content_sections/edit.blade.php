@@ -14,6 +14,11 @@
 			    <?php echo Form::text('title_en', null, ['id' => 'title_en', 'style' => 'width:300px;', 'placeholder' => 'Title EN']); ?> <span style="color:#9e9e9e; display:none; vertical-align:bottom;">en</span>
 			</div>
 			<div class="form-group nl">
+			    <?php echo Form::label('slug', 'Slug [de]'); ?>
+			    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [de]', 'onkeyup' => 'setSlug(this)']); ?>
+			    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'onkeyup' => 'convToSlug(this)']); ?>
+			</div>    
+			<div class="form-group nl">
 			    <div style="float:left;margin-top:6px;margin-right:8px;">Headline:</div>
 			    <?php echo Form::text('headline_de', null, ['id' => 'headline_de', 'style' => 'width:300px;', 'placeholder' => 'DE']); ?>
 			    <?php echo Form::text('headline_en', null, ['id' => 'headline_en', 'style' => 'width:300px;', 'placeholder' => 'EN']); ?>
