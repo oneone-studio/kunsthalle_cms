@@ -32,9 +32,9 @@
 				    <div style="clear:both;"></div>
 				    <div class="preview-data">
 					    <div id="download_item" style="width:10%; float:left; display:inline;"></div>      
-					    <div style="clear:both;"></div>
-					    <label for="" style="float:left;width:130px;">Preview</label>
-					    <div style="width:10%; float:left; display:inline;">
+					    <div style="clear:both;" class="main-preview"></div>
+					    <label for="" style="float:left;width:130px;" class="main-preview">Preview</label>
+					    <div style="width:10%; float:left; display:inline;" class="main-preview">
 					      <?php $display = 'display:none;'; ?>
 						      <div style="width:100px !important; height:100px; cursor:pointer; display:inline-block; margin-top:5px; margin-left:0px; 
 						      	background-size:cover; border:1px dashed #e3e3e3;"><img id="download_preview" src="#" style="max-width:100px; max-height:100px; 

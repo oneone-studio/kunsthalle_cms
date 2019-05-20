@@ -851,11 +851,14 @@ function uploadDLFile() {
 	    				$('.preview-data').show(); 
 	    			}
 	    			if((file.indexOf('.png') > -1) || (file.indexOf('.jpg') > -1) || (file.indexOf('.gif') > -1)) {
+	    				$('.main-preview').show();
 		    			$('#download_preview').prop('src', DOMAIN + data.preivew);
 		    			$('#download_preview').show();
 	    			}
 	    			if(data.type == 'pdf') {
-	    				$('.preview-data').hide(); 
+	    				// $('.preview-data').hide();
+	    				$('.main-preview').hide();
+	    				$('#download_preview').hide();
 	    				$('.dl-filename-data').show();
 	    				$('#dl_filename').html(data.filename);
 	    			}
@@ -1301,7 +1304,9 @@ function editDownload(id) {
 	    				$('.dl-filename-data').hide(); $('.preview-data').show(); 
 	    			}
 	    			if(data.type == 'pdf') { 
-	    				$('.preview-data').hide(); 
+	    				// $('.preview-data').hide();
+	    				$('#download_preview').hide();
+	    				$('.main-preview').show();
 	    				$('.dl-filename-data').show();
 	    				$('#dl_filename').html(data.filename);
 	    			}

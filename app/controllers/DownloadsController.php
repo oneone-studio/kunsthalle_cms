@@ -109,8 +109,8 @@ class DownloadsController extends BaseController {
 	    		}
 	    	}	
 
-    		$dl->link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-    		$dl->link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+    		$dl->link_title_de = $link_title_de;
+    		$dl->link_title_en = $link_title_en;
 			$dl->save();
 
 		} else {
@@ -119,7 +119,6 @@ class DownloadsController extends BaseController {
     		$dl->link_title_en = $link_title_en;
     		$dl->protected = $protected;
     		$dl->sort_order = $sort_order;
-    		$link_title = '';
 			if (Input::hasFile('download_file')) {
 				$file = Input::file('download_file');
 				$filename = strtolower($file->getClientOriginalName());
@@ -142,12 +141,12 @@ class DownloadsController extends BaseController {
 	    		$dl->thumb_image = $filename;
 	    	}	
 			$dl->page_id = Input::get('page_id');	
-    		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
-			$link_title_de = substr($link_title_de, 0, strpos($link_title_de, '.'));
-			$dl->link_title_de = $link_title_de;
-    		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
-			$link_title_en = substr($link_title_en, 0, strpos($link_title_en, '.'));
-			$dl->link_title_en = $link_title_en;
+   //  		$link_title_de = (Input::has('link_title_de') && strlen(Input::get('link_title_de')) > 0) ? Input::get('link_title_de') : '';
+			// $link_title_de = substr($link_title_de, 0, strpos($link_title_de, '.'));
+			// $dl->link_title_de = $link_title_de;
+   //  		$link_title_en = (Input::has('link_title_en') && strlen(Input::get('link_title_en')) > 0) ? Input::get('link_title_en') : '';
+			// $link_title_en = substr($link_title_en, 0, strpos($link_title_en, '.'));
+			// $dl->link_title_en = $link_title_en;
 			$dl->save();
 
 			$page->downloads()->save($dl);
