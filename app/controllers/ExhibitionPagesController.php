@@ -89,7 +89,7 @@ class ExhibitionPagesController extends BaseController {
 	}
 
 	public function save() {
-		echo '<pre>'; print_r(Input::all());exit;
+		// echo '<pre>'; print_r(Input::all());exit;
 		$start_date = Input::get('start_date');
 		if($start_date && strlen($start_date) > 0) {
 			if(strpos($start_date, '/')) {
@@ -293,6 +293,7 @@ class ExhibitionPagesController extends BaseController {
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
+				$terms_file = str_replace(' ', '_', $terms_file);
 	    		$file->move('files/downloads/', $terms_file);
 	    		$page->dl_terms_file = $terms_file;
 	    	}	
@@ -465,6 +466,7 @@ class ExhibitionPagesController extends BaseController {
 			if (Input::hasFile('banner_image')) {
 				$file = Input::file('banner_image');
 				$img = strtolower($file->getClientOriginalName());
+				$img = str_replace(' ', '_', $img);
 	    		$file->move('files/exhibition_pages/', $img);
 	    		$preivew = '/files/exhibition_pages/' . $img;
 

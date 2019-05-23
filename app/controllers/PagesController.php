@@ -182,6 +182,8 @@ class PagesController extends BaseController {
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
 				$terms_file = strtolower($file->getClientOriginalName());
+				$terms_file = strtolower($file->getClientOriginalName());
+				$terms_file = str_replace(' ', '_', $terms_file);
 	    		$file->move('files/downloads/', $terms_file);
 	    		$page->dl_terms_file = $terms_file;
 	    	}	
@@ -662,6 +664,7 @@ class PagesController extends BaseController {
 			if (Input::hasFile('banner_image')) {
 				$file = Input::file('banner_image');
 				$img = strtolower($file->getClientOriginalName());
+				$img = str_replace(' ', '_', $img);
 	    		$file->move('files/pages/', $img);
 	    		$preivew = '/files/pages/' . $img;
 
