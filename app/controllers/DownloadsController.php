@@ -66,6 +66,7 @@ class DownloadsController extends BaseController {
 	}
 
 	public function save() {
+		$f = fopen('logs/download.log', 'w+');
 		// echo '<pre>'; print_r(Input::all()); exit;
 		$local_dir = 'files/downloads/';
 		$remote_dir = '../../'.SITE_DIR.'/public/downloads/';
@@ -85,8 +86,16 @@ class DownloadsController extends BaseController {
 				$file = Input::file('download_file');
 				$download_file = strtolower($file->getClientOriginalName());
 				$download_file = str_replace(' ', '_', $download_file);
-	    		self::moveFile($local_dir, $remote_dir, $file);
-	    		$dl->filename = $download_file;
+		        $site_dl_dir = 'public/downloads/';
+		        $remote_file = $site_dl_dir.$download_file;
+	    		self::moveFile($file->getClientOriginalName(), $remote_file);
+	    		//self::moveFile($local_dir, $remote_dir, $file);
+		        // $sftp_c->chdir($site_dl_dir);
+		        $moved = false;
+		        if($sftp_c->put($site_dl_dir.$download_file, $file->getClientOriginalName())) { $moved = true; }
+		        if(!$moved) {
+		        	fwrite($f, "\nFailed to movie file: ".$site_dl_dir.$download_file);
+		        }
 	    	}	
 			if (Input::hasFile('terms_file')) {
 				$file = Input::file('terms_file');
@@ -155,6 +164,21 @@ class DownloadsController extends BaseController {
 		return Redirect::action('PagesController@edit', ['menu_item_id' => Input::get('menu_item_id'), 'cs_id' => Input::get('cs_id'), 
 				'id' => Input::get('page_id'), 'action' => 'downloads']);
 	}
+
+
+	public static function moveFile_($fileObj, $rem_file) {
+        $host = Config::get('vars.SFTP_HOST');
+        $port = Config::get('vars.SFTP_PORT');
+        $user = Config::get('vars.SFTP_USER');
+        $pass = Config::get('vars.SFTP_PW');
+        $sftp_c = new Net_SFTP($host);
+        if (!$sftp_c->login($user, $pass)) {
+            return Response::json(array('error' => true, 'message' => 'sftp login failed..'), 400);    
+        }
+        if(!$sftp_c->put($rem_file, $fileObj->getClientOriginalName())) { return false; }
+
+        return true;
+	}	        
 
 	public static function moveFile($loc_dir, $rem_dir, $file) {
 		$filename = $file->getClientOriginalName();
