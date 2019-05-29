@@ -13,6 +13,11 @@
 			    <?php echo Form::text('title_de', null, ['style' => 'width:300px;', 'placeholder' => 'Title DE']); ?>
 			    <?php echo Form::text('title_en', null, ['id' => 'title_en', 'style' => 'width:300px;', 'placeholder' => 'Title EN']); ?> <span style="color:#9e9e9e; display:none; vertical-align:bottom;">en</span>
 			</div>
+			<div class="form-group nl">
+			    <?php echo Form::label('slug', 'Slug [de]'); ?>
+			    <?php echo Form::text('slug_de', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [de]', 'onkeyup' => 'convToSlug(this)']); ?>
+			    <?php echo Form::text('slug_en', null, ['style' => 'width:300px;', 'placeholder' => 'Slug [en]', 'onkeyup' => 'convToSlug(this)']); ?>
+			</div>    
 			<div class="form-group">
 			    <label for="title">SEO Page Title [de]:</label>
 			    {{ Form::text('seo_page_title_de', $page->seo_page_title_de, ['placeholder' => 'SEO Page Title [de]', 'style' => 'width:500px;']) }}

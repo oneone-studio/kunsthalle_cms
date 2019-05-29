@@ -41,6 +41,8 @@ class FooterPagesController extends BaseController {
 		$page = new Page();
 		$page->title_de = Input::get('title_de');
 		$page->title_en = Input::get('title_en');
+		$page->slug_de = Input::get('slug_de');
+		$page->slug_en = Input::get('slug_en');
 		$page->seo_page_title_de = Input::get('seo_page_title_de');
 		$page->seo_page_title_en = Input::get('seo_page_title_en');
 		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
@@ -75,6 +77,8 @@ class FooterPagesController extends BaseController {
 		$page = Page::findOrFail(Input::get('id'));
 		$page->title_de = Input::get('title_de');
 		$page->title_en = Input::get('title_en');
+		$page->slug_de = Input::get('slug_de');
+		$page->slug_en = Input::get('slug_en');
 		$page->seo_page_title_de = Input::get('seo_page_title_de');
 		$page->seo_page_title_en = Input::get('seo_page_title_en');
 		$page->seo_page_desc_de = Input::get('seo_page_desc_de');
