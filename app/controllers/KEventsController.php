@@ -143,10 +143,14 @@ class KEventsController extends BaseController {
 						foreach($list as $pg) {
 							$pg_slug = $pg->slug_de;
 							$link = Config::get('vars.domain').'de/sb-page/'.$mi_title.'/'.$sec_title.'/'.$pg_slug;
-							$pages[] = [ 'title' => $pg->title_de, 'link' => $link ];
+							if(StringHelper::isCleanSlug($link)) {
+								$pages[] = [ 'title' => $pg->title_de, 'link' => $link ];
+							}
 						}
 						if(count($pages) > 0) {
-							$page_sections[] = [ 'title' => $sec->title_de, 'link' => $sec_link, 'pages' => $pages ];
+							if(StringHelper::isCleanSlug($sec_link)) {
+								$page_sections[] = [ 'title' => $sec->title_de, 'link' => $sec_link, 'pages' => $pages ];
+							}
 						}
 					}
 				}
@@ -165,7 +169,9 @@ class KEventsController extends BaseController {
 						foreach($list as $pg) {
 							$pg_slug = $pg->slug_de;
 							$link = Config::get('vars.domain').'de/'.$mi_title.'/'.$pg_slug;
-							$pages[] = ['id' => $pg->id, 'title' => $pg->title_de, 'link' => $link];
+							if(StringHelper::isCleanSlug($link)) {
+								$pages[] = ['id' => $pg->id, 'title' => $pg->title_de, 'link' => $link];
+							}
 						}
 						if(count($pages) > 0) {
 							$normal_pages[] = [ 'title' => $mi_title, 'pages' => $pages ];
@@ -184,14 +190,16 @@ class KEventsController extends BaseController {
 			foreach($results as $pg) {
 				$pg_slug = $pg->slug_de;
 				$link = Config::get('vars.domain').'de/view/exhibitions/exb-page/'.$pg_slug;
-				$exb_pages[] = ['title' => $pg->title_de, 'link' => $link];
+				if(StringHelper::isCleanSlug($link)) {
+					$exb_pages[] = ['title' => $pg->title_de, 'link' => $link];
+				}
 			}
 		}
 
 		$page_links['page_sections'] = $page_sections;
 		$page_links['normal_pages'] = $normal_pages;
 		$page_links['exb_pages'] = $exb_pages;
-		// echo '<pre>'; print_r($exb_pages); exit;		
+		// echo '<pre>'; print_r($page_sections); exit;		
 		// echo '<pre>'; print_r($page_links); exit;		
 
 		$weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
