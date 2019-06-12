@@ -20,7 +20,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nListing events";
 		$events = KEvent::all()->sortByDesc('start_date');	
@@ -50,7 +50,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nCreating event";
 
@@ -74,7 +74,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nEditing event\nInputs: ". print_r(Input::all(), true);
 		$k_event = KEvent::with(['tags', 'entrance', 'kEventCost', 'event_dates'])->find($id);
@@ -127,24 +127,30 @@ class KEventsController extends BaseController {
 		$normal_pages = [];
 		$pg_secs = [];
 		foreach($mn_items as &$mi) {
-			$mi_title = str_replace(' ', '-', strtolower($mi->title_en));
+			$mi_title = $mi->slug_de;
 			$c_secs = ContentSection::where('menu_item_id', $mi->id)
+								->where('active_de', 1)
 								->where('type', 'page_section')->get();
 			// Section pages
 			if($c_secs) {
 				foreach($c_secs as $sec) {
-					$sec_title = str_replace(' ', '-', strtolower($sec->title_en));
-					$list = Page::where('content_section_id', $sec->id)->get();
-					$sec_link = 'http://kunsthalle-bremen.de/'.$mi_title.'/'.$sec_title;
+					// $sec_title = str_replace(' ', '-', strtolower($sec->title_en));
+					$sec_title = $sec->slug_de;
+					$list = Page::where('content_section_id', $sec->id)->where('active_de', 1)->get();
+					$sec_link = Config::get('vars.domain').'de/'.$mi_title.'/'.$sec_title;
 					if($list) {
 						$pages = [];
 						foreach($list as $pg) {
-							$pg_slug = str_replace(' ', '-', strtolower($pg->title_en));
-							$link = 'http://kunsthalle-bremen.de/sb-page/'.$mi_title.'/'.$sec_title.'/'.$pg_slug;
-							$pages[] = [ 'title' => $pg->title_de, 'link' => $link ];
+							$pg_slug = $pg->slug_de;
+							$link = Config::get('vars.domain').'de/sb-page/'.$mi_title.'/'.$sec_title.'/'.$pg_slug;
+							if(StringHelper::isCleanSlug($link)) {
+								$pages[] = [ 'title' => $pg->title_de, 'link' => $link ];
+							}
 						}
 						if(count($pages) > 0) {
-							$page_sections[] = [ 'title' => $sec->title_de, 'link' => $sec_link, 'pages' => $pages ];
+							if(StringHelper::isCleanSlug($sec_link)) {
+								$page_sections[] = [ 'title' => $sec->title_de, 'link' => $sec_link, 'pages' => $pages ];
+							}
 						}
 					}
 				}
@@ -152,17 +158,20 @@ class KEventsController extends BaseController {
 			// // Normal pages
 			$c_secs = ContentSection::where('menu_item_id', $mi->id)
 						->where('type', 'page')
+						->where('active_de', 1)
 						->get();
 			if($c_secs) {
 				foreach($c_secs as $sec) {
 					$list = Page::where('content_section_id', $sec->id)							
-							->where('page_type', 'normal')->get();
+							->where('page_type', 'normal')->where('active_de', 1)->get();
 					if($list) {
 						$pages = [];
 						foreach($list as $pg) {
-							$pg_slug = str_replace(' ', '-', strtolower($pg->title_en));
-							$link = 'http://kunsthalle-bremen.de/'.$mi_title.'/'.$pg_slug;
-							$pages[] = ['id' => $pg->id, 'title' => $pg->title_de, 'link' => $link];
+							$pg_slug = $pg->slug_de;
+							$link = Config::get('vars.domain').'de/'.$mi_title.'/'.$pg_slug;
+							if(StringHelper::isCleanSlug($link)) {
+								$pages[] = ['id' => $pg->id, 'title' => $pg->title_de, 'link' => $link];
+							}
 						}
 						if(count($pages) > 0) {
 							$normal_pages[] = [ 'title' => $mi_title, 'pages' => $pages ];
@@ -179,15 +188,19 @@ class KEventsController extends BaseController {
 		$results = DB::select($query);
 		if($results) {
 			foreach($results as $pg) {
-				$pg_slug = str_replace(' ', '-', strtolower($pg->title_en));
-				$link = 'http://kunsthalle-bremen.de/view/exhibitions/exb-page/'.$pg_slug;
-				$exb_pages[] = ['title' => $pg->title_de, 'link' => $link];
+				$pg_slug = $pg->slug_de;
+				$link = Config::get('vars.domain').'de/view/exhibitions/exb-page/'.$pg_slug;
+				if(StringHelper::isCleanSlug($link)) {
+					$exb_pages[] = ['title' => $pg->title_de, 'link' => $link];
+				}
 			}
 		}
 
 		$page_links['page_sections'] = $page_sections;
 		$page_links['normal_pages'] = $normal_pages;
 		$page_links['exb_pages'] = $exb_pages;
+		// echo '<pre>'; print_r($page_sections); exit;		
+		// echo '<pre>'; print_r($page_links); exit;		
 
 		$weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
 		$data = [ 'k_event' => $k_event, 'exhibitions' => $exhibitions_arr, 'weekdays' => $weekdays, 'tags' => $tags, 
@@ -203,7 +216,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nUpdating event\nInputs: ". print_r(Input::all(), true);
 
@@ -440,7 +453,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nUpdating event\nInputs: ". print_r(Input::all(), true);
 
@@ -510,7 +523,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 
 		$log = "\nDeleting event date\nInputs: ". print_r(Input::all(), true);
@@ -552,7 +565,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 
 		$log = "\nDeleting event(s)\nInputs: ". print_r(Input::all(), true);
@@ -573,7 +586,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 
 		$log = "\nDeleting event(s)\Id: ". $id;
@@ -588,7 +601,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nDeleting page link\nInputs: ". print_r(Input::all(), true);
 
@@ -607,7 +620,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nSaving event\nInputs: ". print_r(Input::all(), true);
 
@@ -689,7 +702,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nUploading image\nInputs: ". print_r(Input::all(), true);
 
@@ -715,7 +728,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nDeleting image\nInputs: ". print_r(Input::all(), true);
 
@@ -738,7 +751,7 @@ class KEventsController extends BaseController {
 		if(!AuthHelper::checkUser()) {
 			Auth::logout();
 			Session::forget('auth');
-			return Redirect::to('http://www.google.com');
+			return Redirect::to('/login');
 		}
 		$log = "\nDuplicating event image\nInputs: ". print_r(Input::all(), true);
 
